@@ -1,0 +1,100 @@
+.true_focus {
+  --focus-color: var(--point-dark);
+  --focus-offset: 7px;
+  --focus-corner-size: 12px;
+  --focus-line-width: 1.5px;
+
+  display: inline-block;
+  position: relative;
+  color: inherit;
+}
+
+.true_focus_content {
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+  transition:
+    filter 0.28s ease,
+    transform 0.28s ease,
+    opacity 0.28s ease;
+}
+
+.true_focus_corner {
+  position: absolute;
+  width: var(--focus-corner-size);
+  height: var(--focus-corner-size);
+  opacity: 0;
+  pointer-events: none;
+  border-color: var(--focus-color);
+  transition:
+    opacity 0.2s ease,
+    transform 0.28s cubic-bezier(0.32, 0, 0.18, 1),
+    filter 0.28s ease;
+}
+
+.true_focus_corner_top_left {
+  left: calc(var(--focus-offset) * -1);
+  top: calc(var(--focus-offset) * -1);
+  border-left: var(--focus-line-width) solid;
+  border-top: var(--focus-line-width) solid;
+  transform: translate(5px, 5px);
+}
+
+.true_focus_corner_top_right {
+  right: calc(var(--focus-offset) * -1);
+  top: calc(var(--focus-offset) * -1);
+  border-right: var(--focus-line-width) solid;
+  border-top: var(--focus-line-width) solid;
+  transform: translate(-5px, 5px);
+}
+
+.true_focus_corner_bottom_left {
+  left: calc(var(--focus-offset) * -1);
+  bottom: calc(var(--focus-offset) * -1);
+  border-left: var(--focus-line-width) solid;
+  border-bottom: var(--focus-line-width) solid;
+  transform: translate(5px, -5px);
+}
+
+.true_focus_corner_bottom_right {
+  right: calc(var(--focus-offset) * -1);
+  bottom: calc(var(--focus-offset) * -1);
+  border-right: var(--focus-line-width) solid;
+  border-bottom: var(--focus-line-width) solid;
+  transform: translate(-5px, -5px);
+}
+
+.home_note:hover .true_focus_content,
+.home_note:focus-visible .true_focus_content {
+  filter:
+    contrast(1.05)
+    drop-shadow(0 0 8px rgba(181, 155, 184, 0.44))
+    drop-shadow(0 12px 24px rgba(181, 155, 184, 0.32));
+  transform: translateY(-1px);
+}
+
+.home_note:hover .true_focus_content .tit_exbold_32,
+.home_note:hover .true_focus_content .tit_italic_32,
+.home_note:focus-visible .true_focus_content .tit_exbold_32,
+.home_note:focus-visible .true_focus_content .tit_italic_32 {
+  background: linear-gradient(
+    100deg,
+    var(--prism-stone-start) 0%,
+    var(--prism-stone-mid) 54%,
+    var(--prism-stone-start) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.home_note:hover .true_focus_corner,
+.home_note:focus-visible .true_focus_corner {
+  opacity: 1;
+  transform: translate(0, 0);
+  filter: drop-shadow(0 0 8px rgba(181, 155, 184, 0.76));
+}
+
+.home_note .true_focus {
+  --focus-color: var(--prism-stone-start);
+}

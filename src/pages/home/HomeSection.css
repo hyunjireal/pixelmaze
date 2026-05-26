@@ -1,0 +1,364 @@
+﻿.home_page {
+  position: absolute;
+  inset: 0;
+  height: 100svh;
+  max-height: 100svh;
+  background: transparent;
+  color: var(--text-main);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.home_page_active {
+  pointer-events: auto;
+}
+
+.home_page_about_open {
+  overflow-y: auto;
+}
+
+.home_view {
+  position: relative;
+  width: max(100svw, 177.78svh);
+  height: max(100svh, 56.25svw);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: transparent;
+}
+
+.home_stage {
+  position: absolute;
+  inset: 0;
+}
+
+.home_maze_nav,
+.home_note {
+  position: absolute;
+}
+
+.home_maze_nav {
+  z-index: 3;
+  left: 50vw;
+  top: 50vh;
+  width: min(52vw, 1086px);
+  aspect-ratio: 1;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.7s ease 0.15s;
+}
+
+.home_page_active .home_maze_nav {
+  opacity: 1;
+}
+
+.home_maze_extension {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transform: translate(-50%, -50%);
+}
+
+.home_maze_extension {
+  z-index: 3;
+  overflow: visible;
+  pointer-events: none;
+  stroke: var(--line-soft);
+  stroke-width: 4.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.home_maze_extension path {
+  fill: none;
+}
+
+.home_maze_symbol {
+  opacity: 0;
+  filter: brightness(0) saturate(100%) invert(30%) sepia(1%) saturate(643%)
+    hue-rotate(202deg) brightness(96%) contrast(90%);
+  transition: opacity 0.9s ease 0.7s;
+}
+
+.home_symbol_trail_dot {
+  fill: var(--point-dark);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.home_route_measure_path {
+  fill: none;
+  stroke: none;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.home_route_trace_dash {
+  fill: none;
+  stroke: var(--hover-charcoal);
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+  transition: opacity 0.12s ease;
+}
+
+.home_maze_extension_line {
+  fill: none;
+  opacity: 0.58;
+  transition:
+    stroke 0.45s ease,
+    opacity 0.45s ease,
+    stroke-width 0.45s ease,
+    filter 0.45s ease;
+}
+
+.home_maze_extension_line path {
+  stroke-dasharray: none;
+  stroke-dashoffset: 0;
+}
+
+.home_maze_extension_line_active {
+  opacity: 0.96;
+  stroke-width: 5.2;
+  filter: drop-shadow(0 0 2px rgba(86, 86, 87, 0.18));
+}
+
+.home_maze_extension_start {
+  fill: var(--point-dark);
+  stroke: var(--point-dark);
+  stroke-width: 5;
+  opacity: 0;
+  transition:
+    fill 0.36s ease,
+    stroke 0.36s ease,
+    filter 0.36s ease;
+}
+
+.home_page_active .home_maze_extension_start {
+  animation: home_menu_dot_in 0.65s ease 1.05s forwards;
+}
+
+.home_maze_extension_end {
+  fill: var(--point-dark);
+  stroke: var(--point-dark);
+  stroke-width: 5;
+  opacity: 0;
+  transition:
+    fill 0.36s ease,
+    stroke 0.36s ease,
+    filter 0.36s ease;
+}
+
+.home_page_active .home_maze_extension_end {
+  animation: home_menu_dot_in 0.65s ease 1.22s forwards;
+}
+
+.home_note {
+  z-index: 5;
+  color: rgba(43, 43, 44, 0.64);
+  font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+  font-size: clamp(16px, 1.76vw, 36px);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-decoration: none;
+  white-space: nowrap;
+  opacity: 0;
+}
+
+.home_page_active .home_note {
+  animation: home_note_in 0.7s ease forwards;
+  transition: color 0.2s ease;
+}
+
+.home_note:hover {
+  color: var(--hover-charcoal);
+}
+
+.home_note_active {
+  color: var(--text-main);
+}
+
+.home_page_active .home_maze_symbol {
+  opacity: 0.95;
+}
+
+.home_stage:has(.home_note_profile:hover) .home_maze_extension_line_profile,
+.home_stage:has(.home_note_profile:focus-visible) .home_maze_extension_line_profile,
+.home_stage:has(.home_note_work:hover) .home_maze_extension_line_work,
+.home_stage:has(.home_note_work:focus-visible) .home_maze_extension_line_work,
+.home_stage:has(.home_note_about:hover) .home_maze_extension_line_about,
+.home_stage:has(.home_note_about:focus-visible) .home_maze_extension_line_about,
+.home_stage:has(.home_note_contact:hover) .home_maze_extension_line_contact,
+.home_stage:has(.home_note_contact:focus-visible) .home_maze_extension_line_contact {
+  stroke: var(--prism-stone-start);
+  opacity: 0.96;
+  stroke-width: 5.2;
+  filter:
+    drop-shadow(0 0 4px rgba(217, 202, 219, 0.86))
+    drop-shadow(0 10px 18px rgba(181, 155, 184, 0.26));
+}
+
+.home_stage:has(.home_note_profile:hover) .home_maze_extension_line_profile path,
+.home_stage:has(.home_note_profile:focus-visible) .home_maze_extension_line_profile path,
+.home_stage:has(.home_note_work:hover) .home_maze_extension_line_work path,
+.home_stage:has(.home_note_work:focus-visible) .home_maze_extension_line_work path,
+.home_stage:has(.home_note_about:hover) .home_maze_extension_line_about path,
+.home_stage:has(.home_note_about:focus-visible) .home_maze_extension_line_about path,
+.home_stage:has(.home_note_contact:hover) .home_maze_extension_line_contact path,
+.home_stage:has(.home_note_contact:focus-visible) .home_maze_extension_line_contact path {
+  stroke: var(--prism-stone-start);
+}
+
+.home_stage:has(.home_note_profile:hover) .home_maze_extension_line_profile circle,
+.home_stage:has(.home_note_profile:focus-visible) .home_maze_extension_line_profile circle,
+.home_stage:has(.home_note_work:hover) .home_maze_extension_line_work circle,
+.home_stage:has(.home_note_work:focus-visible) .home_maze_extension_line_work circle,
+.home_stage:has(.home_note_about:hover) .home_maze_extension_line_about circle,
+.home_stage:has(.home_note_about:focus-visible) .home_maze_extension_line_about circle,
+.home_stage:has(.home_note_contact:hover) .home_maze_extension_line_contact circle,
+.home_stage:has(.home_note_contact:focus-visible) .home_maze_extension_line_contact circle {
+  fill: var(--prism-stone-start);
+  stroke: var(--prism-stone-start);
+  filter:
+    drop-shadow(0 0 7px rgba(217, 202, 219, 0.9))
+    drop-shadow(0 8px 16px rgba(181, 155, 184, 0.42));
+}
+
+.home_page_about_open .home_note:not(.home_note_active) {
+  opacity: 0.18;
+  transition: opacity 0.5s ease;
+}
+
+.home_page_about_open .home_note_active {
+  opacity: 0;
+  transform: translateY(-36px);
+  transition:
+    opacity 0.65s ease,
+    transform 0.65s ease;
+}
+
+.home_page_about_open .home_maze_nav {
+  opacity: 0.24;
+  transition: opacity 0.85s ease;
+}
+
+.home_destination_bloom {
+  fill: var(--point-dark);
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: home_destination_bloom 1.35s ease 10.35s forwards;
+}
+
+.home_note_profile {
+  left: 7.8%;
+  top: 26.2%;
+  transform: translate(0, 0); /* About Me ?꾩튂 議곗젙 */
+}
+
+.home_note .tit_exbold_32,
+.home_note .tit_italic_32 {
+  font-size: 48px;
+}
+
+.home_note_work {
+  left: 5.8%;
+  top: 57.6%;
+  transform: translate(0, 0); /* My Works ?꾩튂 議곗젙 */
+}
+
+.home_note_about {
+  left: 80.1%;
+  top: 25.2%;
+  font-size: clamp(12px, 1.17vw, 24px);
+  transform: translate(0, 0); /* My Favorite ?꾩튂 議곗젙 */
+}
+
+.home_note_contact {
+  left: 84.7%;
+  top: 63.5%;
+  transform: translate(0, 0); /* Contact Me ?꾩튂 議곗젙 */
+}
+
+@media (max-aspect-ratio: 16 / 9) {
+  .home_view {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.home_note_profile {
+  animation-delay: 1.15s;
+}
+
+.home_note_work {
+  animation-delay: 1.3s;
+}
+
+.home_note_about {
+  animation-delay: 1.45s;
+}
+
+.home_note_contact {
+  animation-delay: 1.6s;
+}
+
+@keyframes home_menu_dot_in {
+  from {
+    opacity: 0;
+    transform: scale(0.72);
+    transform-origin: center;
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+    transform-origin: center;
+  }
+}
+
+@keyframes home_note_in {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes home_destination_bloom {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  42% {
+    opacity: 0.28;
+    transform: scale(2.6);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(4.7);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home_maze_symbol,
+  .home_maze_extension_start,
+  .home_maze_extension_end,
+  .home_note {
+    animation-duration: 0.01ms;
+    animation-delay: 0s;
+  }
+}

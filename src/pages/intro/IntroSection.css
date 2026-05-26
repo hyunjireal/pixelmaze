@@ -1,0 +1,110 @@
+.intro_page {
+  position: absolute;
+  inset: 0;
+  height: 100svh;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.intro_page_leaving {
+  pointer-events: none;
+}
+
+.intro_content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 24px;
+  opacity: 0;
+  transform: translate(var(--content_tx), var(--content_ty));
+  animation: intro_content_reveal 1.1s ease 2.05s forwards;
+  transition: transform 0.24s ease-out;
+}
+
+.intro_title {
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 600;
+  font-size: 130px;
+  line-height: 1;
+  letter-spacing: 0.25em;
+  color: var(--text-main);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.intro_sub {
+  font-family: var(--font_body);
+  font-weight: 600;
+  font-size: 32px;
+  color: var(--text-main);
+  margin: 0;
+  letter-spacing: 0;
+}
+
+.intro_enter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 28px;
+  background: transparent;
+  border: 1.5px solid var(--text-main);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font_body);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  color: var(--text-main);
+  text-transform: uppercase;
+  transform: translate(var(--button_tx), var(--button_ty));
+  transition: background 0.2s, color 0.2s, transform 0.24s ease-out;
+}
+
+.intro_enter:hover {
+  background: var(--hover-charcoal);
+  border-color: var(--hover-charcoal);
+  color: var(--bg-light);
+}
+
+.intro_page_leaving .intro_content {
+  animation: intro_content_exit 1s ease forwards;
+}
+
+@keyframes intro_content_reveal {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes intro_content_exit {
+  to {
+    opacity: 0;
+    filter: blur(5px);
+    transform: translate(var(--content_tx), calc(var(--content_ty) - 12px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro_content,
+  .intro_enter {
+    transition: none;
+  }
+
+  .intro_content,
+  .intro_page_leaving .intro_content {
+    animation-duration: 0.01ms;
+    animation-delay: 0s;
+  }
+}

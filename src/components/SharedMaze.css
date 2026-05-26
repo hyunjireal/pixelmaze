@@ -1,0 +1,165 @@
+.shared_maze {
+  position: fixed;
+  z-index: 1;
+  left: 50vw;
+  top: 50vh;
+  width: min(52vw, 1086px);
+  aspect-ratio: 1;
+  opacity: 0.64;
+  pointer-events: none;
+  transform: translate(
+    calc(-50% + var(--maze_tx, 0px)),
+    calc(-50% + var(--maze_ty, 0px))
+  );
+  filter: contrast(1);
+  transition: transform 0.32s ease-out;
+}
+
+.shared_maze_draw path,
+.shared_maze_draw circle,
+.shared_maze_draw ellipse,
+.shared_maze_draw line {
+  stroke: var(--maze-line);
+}
+
+.shared_maze_points svg > * {
+  stroke: var(--point-dark);
+  fill: var(--point-dark);
+}
+
+.shared_maze_points svg circle[fill='none'],
+.shared_maze_points svg path[fill='none'],
+.shared_maze_points svg ellipse[fill='none'] {
+  fill: none;
+  stroke: var(--point-dark);
+}
+
+.shared_maze_svg_layer,
+.shared_maze_svg_layer svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  transform: translate(-50%, -50%);
+}
+
+.shared_maze_svg_layer svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.shared_maze_connect {
+  width: 107.1%;
+  height: 110.5%;
+}
+
+.shared_maze_line {
+  width: 100%;
+  height: 100%;
+}
+
+.shared_maze_dot {
+  width: 106.1%;
+  height: 109.5%;
+  transform: translate(
+    calc(-50% + var(--point_tx, 0px)),
+    calc(-50% + var(--point_ty, 0px))
+  );
+  transition: transform 0.32s ease-out;
+}
+
+.shared_maze_draw path,
+.shared_maze_draw circle,
+.shared_maze_draw ellipse,
+.shared_maze_draw line {
+  opacity: 0;
+  animation: shared_maze_draw 2.8s cubic-bezier(0.38, 0, 0.16, 1) forwards;
+  animation-delay: var(--segment_delay, 0s);
+}
+
+.shared_maze_points svg > * {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation:
+    shared_point_reveal 1.2s ease forwards,
+    shared_point_float 7.5s ease-in-out infinite;
+  animation-delay: 1.6s, 2.8s;
+}
+
+.shared_maze_points svg > *:nth-child(3n + 1) {
+  animation-duration: 1.2s, 8.8s;
+  animation-delay: 1.8s, 2.9s;
+}
+
+.shared_maze_points svg > *:nth-child(3n + 2) {
+  animation-duration: 1.2s, 10s;
+  animation-delay: 2s, 3.1s;
+  animation-name: shared_point_reveal, shared_point_float_alt;
+}
+
+@keyframes shared_maze_draw {
+  0% {
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes shared_point_reveal {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shared_point_float {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(5px, -7px);
+  }
+}
+
+@keyframes shared_point_float_alt {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-6px, 4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shared_maze,
+  .shared_maze_dot {
+    transition: none;
+  }
+
+  .shared_maze_draw path,
+  .shared_maze_draw circle,
+  .shared_maze_draw ellipse,
+  .shared_maze_draw line,
+  .shared_maze_points svg > * {
+    animation-duration: 0.01ms;
+    animation-delay: 0s;
+  }
+}

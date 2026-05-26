@@ -1,0 +1,1062 @@
+﻿@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500..800;1,500..800&family=Exo+2:wght@100..900&display=swap');
+
+:root {
+  --bg-main: #F3F2F2;
+  --bg-light: #FAF9F9;
+
+  --maze-line: #9F9FA1;
+  --line-soft: #AEAEAF;
+  --point-dark: #565657;
+
+  --text-main: #0E0E0F;
+
+  --hover-silver: #8A8A8A;
+  --hover-taupe: #9B9188;
+  --hover-charcoal: #2B2B2C;
+  --prism-stone-start: #B59BB8;
+  --prism-stone-mid: #D9CADB;
+  --prism-stone-end: #B59BB8;
+
+  --font_body: Pretendard, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', sans-serif;
+  --font_tit: 'Playfair Display', Georgia, 'Times New Roman', serif;
+
+  --font_r: 400;
+  --font_m: 500;
+  --font_sb: 600;
+  --font_b: 700;
+  --font_eb: 800;
+
+  --font_size_14: 14px;
+  --font_size_15: 15px;
+  --font_size_16: 16px;
+  --font_size_17: 17px;
+  --font_size_18: 18px;
+  --font_size_19: 19px;
+  --font_size_20: 20px;
+  --font_size_21: 21px;
+  --font_size_22: 22px;
+  --font_size_23: 23px;
+  --font_size_24: 24px;
+  --font_size_25: 25px;
+  --font_size_26: 26px;
+  --font_size_27: 27px;
+  --font_size_28: 28px;
+  --font_size_29: 29px;
+  --font_size_30: 30px;
+  --font_size_31: 31px;
+  --font_size_32: 32px;
+
+  --line_height_body: 1.5;
+  --line_height_tit: 1.16;
+
+  font-family:
+    var(--font_body);
+  color: var(--text-main);
+  background: var(--bg-main);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.body_r_14,
+.body_r_15,
+.body_r_16,
+.body_r_17,
+.body_r_18,
+.body_r_19,
+.body_r_20,
+.body_r_21,
+.body_r_22,
+.body_r_23,
+.body_r_24,
+.body_r_25,
+.body_r_26,
+.body_r_27,
+.body_r_28,
+.body_r_29,
+.body_r_30,
+.body_r_31,
+.body_r_32 {
+  font-weight: var(--font_r);
+}
+
+.body_m_14,
+.body_m_15,
+.body_m_16,
+.body_m_17,
+.body_m_18,
+.body_m_19,
+.body_m_20,
+.body_m_21,
+.body_m_22,
+.body_m_23,
+.body_m_24,
+.body_m_25,
+.body_m_26,
+.body_m_27,
+.body_m_28,
+.body_m_29,
+.body_m_30,
+.body_m_31,
+.body_m_32 {
+  font-weight: var(--font_m);
+}
+
+.body_sb_14,
+.body_sb_15,
+.body_sb_16,
+.body_sb_17,
+.body_sb_18,
+.body_sb_19,
+.body_sb_20,
+.body_sb_21,
+.body_sb_22,
+.body_sb_23,
+.body_sb_24,
+.body_sb_25,
+.body_sb_26,
+.body_sb_27,
+.body_sb_28,
+.body_sb_29,
+.body_sb_30,
+.body_sb_31,
+.body_sb_32 {
+  font-weight: var(--font_sb);
+}
+
+.body_b_14,
+.body_b_15,
+.body_b_16,
+.body_b_17,
+.body_b_18,
+.body_b_19,
+.body_b_20,
+.body_b_21,
+.body_b_22,
+.body_b_23,
+.body_b_24,
+.body_b_25,
+.body_b_26,
+.body_b_27,
+.body_b_28,
+.body_b_29,
+.body_b_30,
+.body_b_31,
+.body_b_32 {
+  font-weight: var(--font_b);
+}
+
+.body_r_14,
+.body_r_15,
+.body_r_16,
+.body_r_17,
+.body_r_18,
+.body_r_19,
+.body_r_20,
+.body_r_21,
+.body_r_22,
+.body_r_23,
+.body_r_24,
+.body_r_25,
+.body_r_26,
+.body_r_27,
+.body_r_28,
+.body_r_29,
+.body_r_30,
+.body_r_31,
+.body_r_32,
+.body_m_14,
+.body_m_15,
+.body_m_16,
+.body_m_17,
+.body_m_18,
+.body_m_19,
+.body_m_20,
+.body_m_21,
+.body_m_22,
+.body_m_23,
+.body_m_24,
+.body_m_25,
+.body_m_26,
+.body_m_27,
+.body_m_28,
+.body_m_29,
+.body_m_30,
+.body_m_31,
+.body_m_32,
+.body_sb_14,
+.body_sb_15,
+.body_sb_16,
+.body_sb_17,
+.body_sb_18,
+.body_sb_19,
+.body_sb_20,
+.body_sb_21,
+.body_sb_22,
+.body_sb_23,
+.body_sb_24,
+.body_sb_25,
+.body_sb_26,
+.body_sb_27,
+.body_sb_28,
+.body_sb_29,
+.body_sb_30,
+.body_sb_31,
+.body_sb_32,
+.body_b_14,
+.body_b_15,
+.body_b_16,
+.body_b_17,
+.body_b_18,
+.body_b_19,
+.body_b_20,
+.body_b_21,
+.body_b_22,
+.body_b_23,
+.body_b_24,
+.body_b_25,
+.body_b_26,
+.body_b_27,
+.body_b_28,
+.body_b_29,
+.body_b_30,
+.body_b_31,
+.body_b_32 {
+  font-family: var(--font_body);
+  font-style: normal;
+  line-height: var(--line_height_body);
+  letter-spacing: 0;
+}
+
+.tit_m_14,
+.tit_m_15,
+.tit_m_16,
+.tit_m_17,
+.tit_m_18,
+.tit_m_19,
+.tit_m_20,
+.tit_m_21,
+.tit_m_22,
+.tit_m_23,
+.tit_m_24,
+.tit_m_25,
+.tit_m_26,
+.tit_m_27,
+.tit_m_28,
+.tit_m_29,
+.tit_m_30,
+.tit_m_31,
+.tit_m_32,
+.tit_mItalic_14,
+.tit_mItalic_15,
+.tit_mItalic_16,
+.tit_mItalic_17,
+.tit_mItalic_18,
+.tit_mItalic_19,
+.tit_mItalic_20,
+.tit_mItalic_21,
+.tit_mItalic_22,
+.tit_mItalic_23,
+.tit_mItalic_24,
+.tit_mItalic_25,
+.tit_mItalic_26,
+.tit_mItalic_27,
+.tit_mItalic_28,
+.tit_mItalic_29,
+.tit_mItalic_30,
+.tit_mItalic_31,
+.tit_mItalic_32 {
+  font-weight: var(--font_m);
+}
+
+.tit_sb_14,
+.tit_sb_15,
+.tit_sb_16,
+.tit_sb_17,
+.tit_sb_18,
+.tit_sb_19,
+.tit_sb_20,
+.tit_sb_21,
+.tit_sb_22,
+.tit_sb_23,
+.tit_sb_24,
+.tit_sb_25,
+.tit_sb_26,
+.tit_sb_27,
+.tit_sb_28,
+.tit_sb_29,
+.tit_sb_30,
+.tit_sb_31,
+.tit_sb_32,
+.tit_sbItalic_14,
+.tit_sbItalic_15,
+.tit_sbItalic_16,
+.tit_sbItalic_17,
+.tit_sbItalic_18,
+.tit_sbItalic_19,
+.tit_sbItalic_20,
+.tit_sbItalic_21,
+.tit_sbItalic_22,
+.tit_sbItalic_23,
+.tit_sbItalic_24,
+.tit_sbItalic_25,
+.tit_sbItalic_26,
+.tit_sbItalic_27,
+.tit_sbItalic_28,
+.tit_sbItalic_29,
+.tit_sbItalic_30,
+.tit_sbItalic_31,
+.tit_sbItalic_32 {
+  font-weight: var(--font_sb);
+}
+
+.tit_b_14,
+.tit_b_15,
+.tit_b_16,
+.tit_b_17,
+.tit_b_18,
+.tit_b_19,
+.tit_b_20,
+.tit_b_21,
+.tit_b_22,
+.tit_b_23,
+.tit_b_24,
+.tit_b_25,
+.tit_b_26,
+.tit_b_27,
+.tit_b_28,
+.tit_b_29,
+.tit_b_30,
+.tit_b_31,
+.tit_b_32,
+.tit_bItalic_14,
+.tit_bItalic_15,
+.tit_bItalic_16,
+.tit_bItalic_17,
+.tit_bItalic_18,
+.tit_bItalic_19,
+.tit_bItalic_20,
+.tit_bItalic_21,
+.tit_bItalic_22,
+.tit_bItalic_23,
+.tit_bItalic_24,
+.tit_bItalic_25,
+.tit_bItalic_26,
+.tit_bItalic_27,
+.tit_bItalic_28,
+.tit_bItalic_29,
+.tit_bItalic_30,
+.tit_bItalic_31,
+.tit_bItalic_32 {
+  font-weight: var(--font_b);
+}
+
+.tit_eb_14,
+.tit_eb_15,
+.tit_eb_16,
+.tit_eb_17,
+.tit_eb_18,
+.tit_eb_19,
+.tit_eb_20,
+.tit_eb_21,
+.tit_eb_22,
+.tit_eb_23,
+.tit_eb_24,
+.tit_eb_25,
+.tit_eb_26,
+.tit_eb_27,
+.tit_eb_28,
+.tit_eb_29,
+.tit_eb_30,
+.tit_eb_31,
+.tit_eb_32,
+.tit_ebItalic_14,
+.tit_ebItalic_15,
+.tit_ebItalic_16,
+.tit_ebItalic_17,
+.tit_ebItalic_18,
+.tit_ebItalic_19,
+.tit_ebItalic_20,
+.tit_ebItalic_21,
+.tit_ebItalic_22,
+.tit_ebItalic_23,
+.tit_ebItalic_24,
+.tit_ebItalic_25,
+.tit_ebItalic_26,
+.tit_ebItalic_27,
+.tit_ebItalic_28,
+.tit_ebItalic_29,
+.tit_ebItalic_30,
+.tit_ebItalic_31,
+.tit_ebItalic_32 {
+  font-weight: var(--font_eb);
+}
+
+.tit_m_14,
+.tit_m_15,
+.tit_m_16,
+.tit_m_17,
+.tit_m_18,
+.tit_m_19,
+.tit_m_20,
+.tit_m_21,
+.tit_m_22,
+.tit_m_23,
+.tit_m_24,
+.tit_m_25,
+.tit_m_26,
+.tit_m_27,
+.tit_m_28,
+.tit_m_29,
+.tit_m_30,
+.tit_m_31,
+.tit_m_32,
+.tit_sb_14,
+.tit_sb_15,
+.tit_sb_16,
+.tit_sb_17,
+.tit_sb_18,
+.tit_sb_19,
+.tit_sb_20,
+.tit_sb_21,
+.tit_sb_22,
+.tit_sb_23,
+.tit_sb_24,
+.tit_sb_25,
+.tit_sb_26,
+.tit_sb_27,
+.tit_sb_28,
+.tit_sb_29,
+.tit_sb_30,
+.tit_sb_31,
+.tit_sb_32,
+.tit_b_14,
+.tit_b_15,
+.tit_b_16,
+.tit_b_17,
+.tit_b_18,
+.tit_b_19,
+.tit_b_20,
+.tit_b_21,
+.tit_b_22,
+.tit_b_23,
+.tit_b_24,
+.tit_b_25,
+.tit_b_26,
+.tit_b_27,
+.tit_b_28,
+.tit_b_29,
+.tit_b_30,
+.tit_b_31,
+.tit_b_32,
+.tit_eb_14,
+.tit_eb_15,
+.tit_eb_16,
+.tit_eb_17,
+.tit_eb_18,
+.tit_eb_19,
+.tit_eb_20,
+.tit_eb_21,
+.tit_eb_22,
+.tit_eb_23,
+.tit_eb_24,
+.tit_eb_25,
+.tit_eb_26,
+.tit_eb_27,
+.tit_eb_28,
+.tit_eb_29,
+.tit_eb_30,
+.tit_eb_31,
+.tit_eb_32 {
+  font-style: normal;
+}
+
+.tit_mItalic_14,
+.tit_mItalic_15,
+.tit_mItalic_16,
+.tit_mItalic_17,
+.tit_mItalic_18,
+.tit_mItalic_19,
+.tit_mItalic_20,
+.tit_mItalic_21,
+.tit_mItalic_22,
+.tit_mItalic_23,
+.tit_mItalic_24,
+.tit_mItalic_25,
+.tit_mItalic_26,
+.tit_mItalic_27,
+.tit_mItalic_28,
+.tit_mItalic_29,
+.tit_mItalic_30,
+.tit_mItalic_31,
+.tit_mItalic_32,
+.tit_sbItalic_14,
+.tit_sbItalic_15,
+.tit_sbItalic_16,
+.tit_sbItalic_17,
+.tit_sbItalic_18,
+.tit_sbItalic_19,
+.tit_sbItalic_20,
+.tit_sbItalic_21,
+.tit_sbItalic_22,
+.tit_sbItalic_23,
+.tit_sbItalic_24,
+.tit_sbItalic_25,
+.tit_sbItalic_26,
+.tit_sbItalic_27,
+.tit_sbItalic_28,
+.tit_sbItalic_29,
+.tit_sbItalic_30,
+.tit_sbItalic_31,
+.tit_sbItalic_32,
+.tit_bItalic_14,
+.tit_bItalic_15,
+.tit_bItalic_16,
+.tit_bItalic_17,
+.tit_bItalic_18,
+.tit_bItalic_19,
+.tit_bItalic_20,
+.tit_bItalic_21,
+.tit_bItalic_22,
+.tit_bItalic_23,
+.tit_bItalic_24,
+.tit_bItalic_25,
+.tit_bItalic_26,
+.tit_bItalic_27,
+.tit_bItalic_28,
+.tit_bItalic_29,
+.tit_bItalic_30,
+.tit_bItalic_31,
+.tit_bItalic_32,
+.tit_ebItalic_14,
+.tit_ebItalic_15,
+.tit_ebItalic_16,
+.tit_ebItalic_17,
+.tit_ebItalic_18,
+.tit_ebItalic_19,
+.tit_ebItalic_20,
+.tit_ebItalic_21,
+.tit_ebItalic_22,
+.tit_ebItalic_23,
+.tit_ebItalic_24,
+.tit_ebItalic_25,
+.tit_ebItalic_26,
+.tit_ebItalic_27,
+.tit_ebItalic_28,
+.tit_ebItalic_29,
+.tit_ebItalic_30,
+.tit_ebItalic_31,
+.tit_ebItalic_32 {
+  font-style: italic;
+}
+
+.tit_m_14,
+.tit_m_15,
+.tit_m_16,
+.tit_m_17,
+.tit_m_18,
+.tit_m_19,
+.tit_m_20,
+.tit_m_21,
+.tit_m_22,
+.tit_m_23,
+.tit_m_24,
+.tit_m_25,
+.tit_m_26,
+.tit_m_27,
+.tit_m_28,
+.tit_m_29,
+.tit_m_30,
+.tit_m_31,
+.tit_m_32,
+.tit_sb_14,
+.tit_sb_15,
+.tit_sb_16,
+.tit_sb_17,
+.tit_sb_18,
+.tit_sb_19,
+.tit_sb_20,
+.tit_sb_21,
+.tit_sb_22,
+.tit_sb_23,
+.tit_sb_24,
+.tit_sb_25,
+.tit_sb_26,
+.tit_sb_27,
+.tit_sb_28,
+.tit_sb_29,
+.tit_sb_30,
+.tit_sb_31,
+.tit_sb_32,
+.tit_b_14,
+.tit_b_15,
+.tit_b_16,
+.tit_b_17,
+.tit_b_18,
+.tit_b_19,
+.tit_b_20,
+.tit_b_21,
+.tit_b_22,
+.tit_b_23,
+.tit_b_24,
+.tit_b_25,
+.tit_b_26,
+.tit_b_27,
+.tit_b_28,
+.tit_b_29,
+.tit_b_30,
+.tit_b_31,
+.tit_b_32,
+.tit_eb_14,
+.tit_eb_15,
+.tit_eb_16,
+.tit_eb_17,
+.tit_eb_18,
+.tit_eb_19,
+.tit_eb_20,
+.tit_eb_21,
+.tit_eb_22,
+.tit_eb_23,
+.tit_eb_24,
+.tit_eb_25,
+.tit_eb_26,
+.tit_eb_27,
+.tit_eb_28,
+.tit_eb_29,
+.tit_eb_30,
+.tit_eb_31,
+.tit_eb_32,
+.tit_mItalic_14,
+.tit_mItalic_15,
+.tit_mItalic_16,
+.tit_mItalic_17,
+.tit_mItalic_18,
+.tit_mItalic_19,
+.tit_mItalic_20,
+.tit_mItalic_21,
+.tit_mItalic_22,
+.tit_mItalic_23,
+.tit_mItalic_24,
+.tit_mItalic_25,
+.tit_mItalic_26,
+.tit_mItalic_27,
+.tit_mItalic_28,
+.tit_mItalic_29,
+.tit_mItalic_30,
+.tit_mItalic_31,
+.tit_mItalic_32,
+.tit_sbItalic_14,
+.tit_sbItalic_15,
+.tit_sbItalic_16,
+.tit_sbItalic_17,
+.tit_sbItalic_18,
+.tit_sbItalic_19,
+.tit_sbItalic_20,
+.tit_sbItalic_21,
+.tit_sbItalic_22,
+.tit_sbItalic_23,
+.tit_sbItalic_24,
+.tit_sbItalic_25,
+.tit_sbItalic_26,
+.tit_sbItalic_27,
+.tit_sbItalic_28,
+.tit_sbItalic_29,
+.tit_sbItalic_30,
+.tit_sbItalic_31,
+.tit_sbItalic_32,
+.tit_bItalic_14,
+.tit_bItalic_15,
+.tit_bItalic_16,
+.tit_bItalic_17,
+.tit_bItalic_18,
+.tit_bItalic_19,
+.tit_bItalic_20,
+.tit_bItalic_21,
+.tit_bItalic_22,
+.tit_bItalic_23,
+.tit_bItalic_24,
+.tit_bItalic_25,
+.tit_bItalic_26,
+.tit_bItalic_27,
+.tit_bItalic_28,
+.tit_bItalic_29,
+.tit_bItalic_30,
+.tit_bItalic_31,
+.tit_bItalic_32,
+.tit_ebItalic_14,
+.tit_ebItalic_15,
+.tit_ebItalic_16,
+.tit_ebItalic_17,
+.tit_ebItalic_18,
+.tit_ebItalic_19,
+.tit_ebItalic_20,
+.tit_ebItalic_21,
+.tit_ebItalic_22,
+.tit_ebItalic_23,
+.tit_ebItalic_24,
+.tit_ebItalic_25,
+.tit_ebItalic_26,
+.tit_ebItalic_27,
+.tit_ebItalic_28,
+.tit_ebItalic_29,
+.tit_ebItalic_30,
+.tit_ebItalic_31,
+.tit_ebItalic_32 {
+  font-family: var(--font_tit);
+  line-height: var(--line_height_tit);
+  letter-spacing: 0;
+}
+
+.body_r_14,
+.body_m_14,
+.body_sb_14,
+.body_b_14,
+.tit_m_14,
+.tit_sb_14,
+.tit_b_14,
+.tit_eb_14,
+.tit_mItalic_14,
+.tit_sbItalic_14,
+.tit_bItalic_14,
+.tit_ebItalic_14 {
+  font-size: var(--font_size_14);
+}
+
+.body_r_15,
+.body_m_15,
+.body_sb_15,
+.body_b_15,
+.tit_m_15,
+.tit_sb_15,
+.tit_b_15,
+.tit_eb_15,
+.tit_mItalic_15,
+.tit_sbItalic_15,
+.tit_bItalic_15,
+.tit_ebItalic_15 {
+  font-size: var(--font_size_15);
+}
+
+.body_r_16,
+.body_m_16,
+.body_sb_16,
+.body_b_16,
+.tit_m_16,
+.tit_sb_16,
+.tit_b_16,
+.tit_eb_16,
+.tit_mItalic_16,
+.tit_sbItalic_16,
+.tit_bItalic_16,
+.tit_ebItalic_16 {
+  font-size: var(--font_size_16);
+}
+
+.body_r_17,
+.body_m_17,
+.body_sb_17,
+.body_b_17,
+.tit_m_17,
+.tit_sb_17,
+.tit_b_17,
+.tit_eb_17,
+.tit_mItalic_17,
+.tit_sbItalic_17,
+.tit_bItalic_17,
+.tit_ebItalic_17 {
+  font-size: var(--font_size_17);
+}
+
+.body_r_18,
+.body_m_18,
+.body_sb_18,
+.body_b_18,
+.tit_m_18,
+.tit_sb_18,
+.tit_b_18,
+.tit_eb_18,
+.tit_mItalic_18,
+.tit_sbItalic_18,
+.tit_bItalic_18,
+.tit_ebItalic_18 {
+  font-size: var(--font_size_18);
+}
+
+.body_r_19,
+.body_m_19,
+.body_sb_19,
+.body_b_19,
+.tit_m_19,
+.tit_sb_19,
+.tit_b_19,
+.tit_eb_19,
+.tit_mItalic_19,
+.tit_sbItalic_19,
+.tit_bItalic_19,
+.tit_ebItalic_19 {
+  font-size: var(--font_size_19);
+}
+
+.body_r_20,
+.body_m_20,
+.body_sb_20,
+.body_b_20,
+.tit_m_20,
+.tit_sb_20,
+.tit_b_20,
+.tit_eb_20,
+.tit_mItalic_20,
+.tit_sbItalic_20,
+.tit_bItalic_20,
+.tit_ebItalic_20 {
+  font-size: var(--font_size_20);
+}
+
+.body_r_21,
+.body_m_21,
+.body_sb_21,
+.body_b_21,
+.tit_m_21,
+.tit_sb_21,
+.tit_b_21,
+.tit_eb_21,
+.tit_mItalic_21,
+.tit_sbItalic_21,
+.tit_bItalic_21,
+.tit_ebItalic_21 {
+  font-size: var(--font_size_21);
+}
+
+.body_r_22,
+.body_m_22,
+.body_sb_22,
+.body_b_22,
+.tit_m_22,
+.tit_sb_22,
+.tit_b_22,
+.tit_eb_22,
+.tit_mItalic_22,
+.tit_sbItalic_22,
+.tit_bItalic_22,
+.tit_ebItalic_22 {
+  font-size: var(--font_size_22);
+}
+
+.body_r_23,
+.body_m_23,
+.body_sb_23,
+.body_b_23,
+.tit_m_23,
+.tit_sb_23,
+.tit_b_23,
+.tit_eb_23,
+.tit_mItalic_23,
+.tit_sbItalic_23,
+.tit_bItalic_23,
+.tit_ebItalic_23 {
+  font-size: var(--font_size_23);
+}
+
+.body_r_24,
+.body_m_24,
+.body_sb_24,
+.body_b_24,
+.tit_m_24,
+.tit_sb_24,
+.tit_b_24,
+.tit_eb_24,
+.tit_mItalic_24,
+.tit_sbItalic_24,
+.tit_bItalic_24,
+.tit_ebItalic_24 {
+  font-size: var(--font_size_24);
+}
+
+.body_r_25,
+.body_m_25,
+.body_sb_25,
+.body_b_25,
+.tit_m_25,
+.tit_sb_25,
+.tit_b_25,
+.tit_eb_25,
+.tit_mItalic_25,
+.tit_sbItalic_25,
+.tit_bItalic_25,
+.tit_ebItalic_25 {
+  font-size: var(--font_size_25);
+}
+
+.body_r_26,
+.body_m_26,
+.body_sb_26,
+.body_b_26,
+.tit_m_26,
+.tit_sb_26,
+.tit_b_26,
+.tit_eb_26,
+.tit_mItalic_26,
+.tit_sbItalic_26,
+.tit_bItalic_26,
+.tit_ebItalic_26 {
+  font-size: var(--font_size_26);
+}
+
+.body_r_27,
+.body_m_27,
+.body_sb_27,
+.body_b_27,
+.tit_m_27,
+.tit_sb_27,
+.tit_b_27,
+.tit_eb_27,
+.tit_mItalic_27,
+.tit_sbItalic_27,
+.tit_bItalic_27,
+.tit_ebItalic_27 {
+  font-size: var(--font_size_27);
+}
+
+.body_r_28,
+.body_m_28,
+.body_sb_28,
+.body_b_28,
+.tit_m_28,
+.tit_sb_28,
+.tit_b_28,
+.tit_eb_28,
+.tit_mItalic_28,
+.tit_sbItalic_28,
+.tit_bItalic_28,
+.tit_ebItalic_28 {
+  font-size: var(--font_size_28);
+}
+
+.body_r_29,
+.body_m_29,
+.body_sb_29,
+.body_b_29,
+.tit_m_29,
+.tit_sb_29,
+.tit_b_29,
+.tit_eb_29,
+.tit_mItalic_29,
+.tit_sbItalic_29,
+.tit_bItalic_29,
+.tit_ebItalic_29 {
+  font-size: var(--font_size_29);
+}
+
+.body_r_30,
+.body_m_30,
+.body_sb_30,
+.body_b_30,
+.tit_m_30,
+.tit_sb_30,
+.tit_b_30,
+.tit_eb_30,
+.tit_mItalic_30,
+.tit_sbItalic_30,
+.tit_bItalic_30,
+.tit_ebItalic_30 {
+  font-size: var(--font_size_30);
+}
+
+.body_r_31,
+.body_m_31,
+.body_sb_31,
+.body_b_31,
+.tit_m_31,
+.tit_sb_31,
+.tit_b_31,
+.tit_eb_31,
+.tit_mItalic_31,
+.tit_sbItalic_31,
+.tit_bItalic_31,
+.tit_ebItalic_31 {
+  font-size: var(--font_size_31);
+}
+
+.body_r_32,
+.body_m_32,
+.body_sb_32,
+.body_b_32,
+.tit_m_32,
+.tit_sb_32,
+.tit_b_32,
+.tit_eb_32,
+.tit_mItalic_32,
+.tit_sbItalic_32,
+.tit_bItalic_32,
+.tit_ebItalic_32 {
+  font-size: var(--font_size_32);
+}
+
+.tit_exbold_32 {
+  font-family: var(--font_tit);
+  font-weight: var(--font_eb);
+  font-style: normal;
+  font-size: var(--font_size_32);
+  line-height: var(--line_height_tit);
+  letter-spacing: 0;
+}
+
+.tit_italic_32 {
+  font-family: var(--font_tit);
+  font-weight: var(--font_m);
+  font-style: italic;
+  font-size: var(--font_size_32);
+  line-height: var(--line_height_tit);
+  letter-spacing: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+body {
+  margin: 0;
+  min-width: 1024px;
+  color: var(--text-main);
+  background: var(--bg-main);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
