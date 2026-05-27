@@ -1,5 +1,10 @@
 .true_focus {
-  --focus-color: var(--point-dark);
+  --note-hover-start: var(--prism-stone-start);
+  --note-hover-mid: var(--prism-stone-mid);
+  --note-hover-end: var(--prism-stone-end);
+  --note-hover-shadow-rgb: 181, 155, 184;
+  --note-hover-glow-rgb: 217, 202, 219;
+  --focus-color: var(--note-hover-start);
   --focus-offset: 7px;
   --focus-corner-size: 12px;
   --focus-line-width: 1.5px;
@@ -35,32 +40,32 @@
 .true_focus_corner_top_left {
   left: calc(var(--focus-offset) * -1);
   top: calc(var(--focus-offset) * -1);
-  border-left: var(--focus-line-width) solid;
-  border-top: var(--focus-line-width) solid;
+  border-left: var(--focus-line-width) solid var(--focus-color);
+  border-top: var(--focus-line-width) solid var(--focus-color);
   transform: translate(5px, 5px);
 }
 
 .true_focus_corner_top_right {
   right: calc(var(--focus-offset) * -1);
   top: calc(var(--focus-offset) * -1);
-  border-right: var(--focus-line-width) solid;
-  border-top: var(--focus-line-width) solid;
+  border-right: var(--focus-line-width) solid var(--focus-color);
+  border-top: var(--focus-line-width) solid var(--focus-color);
   transform: translate(-5px, 5px);
 }
 
 .true_focus_corner_bottom_left {
   left: calc(var(--focus-offset) * -1);
   bottom: calc(var(--focus-offset) * -1);
-  border-left: var(--focus-line-width) solid;
-  border-bottom: var(--focus-line-width) solid;
+  border-left: var(--focus-line-width) solid var(--focus-color);
+  border-bottom: var(--focus-line-width) solid var(--focus-color);
   transform: translate(5px, -5px);
 }
 
 .true_focus_corner_bottom_right {
   right: calc(var(--focus-offset) * -1);
   bottom: calc(var(--focus-offset) * -1);
-  border-right: var(--focus-line-width) solid;
-  border-bottom: var(--focus-line-width) solid;
+  border-right: var(--focus-line-width) solid var(--focus-color);
+  border-bottom: var(--focus-line-width) solid var(--focus-color);
   transform: translate(-5px, -5px);
 }
 
@@ -68,8 +73,8 @@
 .home_note:focus-visible .true_focus_content {
   filter:
     contrast(1.05)
-    drop-shadow(0 0 8px rgba(181, 155, 184, 0.44))
-    drop-shadow(0 12px 24px rgba(181, 155, 184, 0.32));
+    drop-shadow(0 0 8px rgba(var(--note-hover-glow-rgb), 0.44))
+    drop-shadow(0 12px 24px rgba(var(--note-hover-shadow-rgb), 0.32));
   transform: translateY(-1px);
 }
 
@@ -79,9 +84,9 @@
 .home_note:focus-visible .true_focus_content .tit_italic_32 {
   background: linear-gradient(
     100deg,
-    var(--prism-stone-start) 0%,
-    var(--prism-stone-mid) 54%,
-    var(--prism-stone-start) 100%
+    var(--note-hover-start) 0%,
+    var(--note-hover-mid) 54%,
+    var(--note-hover-end) 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -92,9 +97,18 @@
 .home_note:focus-visible .true_focus_corner {
   opacity: 1;
   transform: translate(0, 0);
-  filter: drop-shadow(0 0 8px rgba(181, 155, 184, 0.76));
+  filter: drop-shadow(0 0 8px rgba(var(--note-hover-glow-rgb), 0.76));
 }
 
 .home_note .true_focus {
-  --focus-color: var(--prism-stone-start);
+  --focus-color: var(--note-hover-start);
+}
+
+.home_note_work .true_focus {
+  --note-hover-start: var(--hover-charcoal);
+  --note-hover-mid: var(--hover-charcoal-soft);
+  --note-hover-end: var(--hover-charcoal);
+  --note-hover-shadow-rgb: var(--hover-charcoal-rgb);
+  --note-hover-glow-rgb: var(--hover-charcoal-mist-rgb);
+  --focus-color: var(--hover-charcoal);
 }

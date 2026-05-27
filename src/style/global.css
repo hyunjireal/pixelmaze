@@ -1,5 +1,5 @@
 ﻿@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500..800;1,500..800&family=Exo+2:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500..800;1,500..800&family=Exo+2:wght@100..900&family=Roboto:wght@300;400&display=swap');
 
 :root {
   --bg-main: #F3F2F2;
@@ -14,6 +14,9 @@
   --hover-silver: #8A8A8A;
   --hover-taupe: #9B9188;
   --hover-charcoal: #2B2B2C;
+  --hover-charcoal-soft: #6E6E70;
+  --hover-charcoal-rgb: 43, 43, 44;
+  --hover-charcoal-mist-rgb: 207, 207, 209;
   --prism-stone-start: #B59BB8;
   --prism-stone-mid: #D9CADB;
   --prism-stone-end: #B59BB8;

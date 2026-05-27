@@ -1,4 +1,5 @@
 import type { RefObject } from 'react'
+import PageHeader from '../../components/PageHeader'
 import profileImage from '../../assets/images/me_profile01.png'
 import profileImage02 from '../../assets/images/me_profile02.png'
 import './AboutPage.css'
@@ -6,9 +7,10 @@ import './AboutPage.css'
 interface AboutPageProps {
   isOpen: boolean
   pageRef: RefObject<HTMLElement | null>
+  onHomeClick: () => void
 }
 
-function AboutPage({ isOpen, pageRef }: AboutPageProps) {
+function AboutPage({ isOpen, pageRef, onHomeClick }: AboutPageProps) {
   return (
     <section
       ref={pageRef}
@@ -17,15 +19,7 @@ function AboutPage({ isOpen, pageRef }: AboutPageProps) {
       data-lenis-prevent
       tabIndex={-1}
     >
-      <nav className="about_topbar" aria-label="About page navigation">
-        <a className="about_logo" href="#main">M</a>
-        <div className="about_nav_links">
-          <a className="about_nav_active" href="#about">About</a>
-          <a href="#work">Works</a>
-          <a href="#favorite">Favorite</a>
-          <a href="#contact">Contact</a>
-        </div>
-      </nav>
+      <PageHeader activePage="about" ariaLabel="About page navigation" onHomeClick={onHomeClick} />
 
       <header className="about_hero about_reveal">
         <h1>About Me</h1>
@@ -54,24 +48,24 @@ function AboutPage({ isOpen, pageRef }: AboutPageProps) {
           <h2>My Values</h2>
           <ul className="about_value_grid">
             <li>
-              <span>@</span>
-              <strong>Curiosity</strong>
-              <p>끊임없이 배우고 탐구합니다.</p>
+              <span>R</span>
+              <strong>Responsibility</strong>
+              <p>맡은 일은 끝까지 책임지고 완성합니다.</p>
             </li>
             <li>
-              <span>♡</span>
-              <strong>Empathy</strong>
-              <p>사용자의 입장에서 생각합니다.</p>
+              <span>P</span>
+              <strong>Persistence</strong>
+              <p>쉽게 포기하지 않고 방법을 찾아갑니다.</p>
             </li>
             <li>
-              <span>∞</span>
-              <strong>Challenge</strong>
-              <p>새로운 시도를 두려워하지 않습니다.</p>
+              <span>D</span>
+              <strong>Direction</strong>
+              <p>과정이 복잡해져도 방향을 잃지 않습니다.</p>
             </li>
             <li>
-              <span>&</span>
-              <strong>Collaboration</strong>
-              <p>함께 성장하는 협업을 지향합니다.</p>
+              <span>O</span>
+              <strong>Observation</strong>
+              <p>작은 불편함도 그냥 지나치지 않고 살핍니다.</p>
             </li>
           </ul>
         </div>

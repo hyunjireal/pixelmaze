@@ -24,42 +24,6 @@
   transform: translateY(0);
 }
 
-.about_topbar {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 66px;
-  padding: 0 clamp(28px, 4.6vw, 72px);
-  border-bottom: 1px solid rgba(174, 174, 175, 0.55);
-  background: rgba(250, 249, 249, 0.88);
-  backdrop-filter: blur(14px);
-}
-
-.about_logo {
-  color: var(--text-main);
-  font: var(--font_b) var(--font_size_28) / var(--line_height_tit) var(--font_tit);
-  text-decoration: none;
-}
-
-.about_nav_links {
-  display: flex;
-  gap: clamp(22px, 3.1vw, 52px);
-}
-
-.about_nav_links a {
-  color: var(--text-main);
-  font: var(--font_sb) var(--font_size_14) / var(--line_height_body) var(--font_body);
-  text-decoration: none;
-}
-
-.about_nav_active {
-  padding-bottom: 5px;
-  border-bottom: 2px solid var(--text-main);
-}
-
 .about_hero {
   min-height: 352px;
   padding: 114px clamp(28px, 16vw, 300px) 54px;

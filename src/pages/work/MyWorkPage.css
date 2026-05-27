@@ -1,0 +1,110 @@
+.work_page {
+  position: fixed;
+  inset: 0;
+  z-index: 12;
+  height: 100svh;
+  min-height: 100svh;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: var(--bg-light);
+  color: var(--text-main);
+  opacity: 1;
+  pointer-events: none;
+  transform: translateY(0);
+  clip-path: circle(0 at 37vw 57vh);
+  -webkit-clip-path: circle(0 at 37vw 57vh);
+  transition:
+    clip-path 0.92s cubic-bezier(0.2, 0, 0.1, 1),
+    -webkit-clip-path 0.92s cubic-bezier(0.2, 0, 0.1, 1);
+}
+
+.home_page_work_open .work_page {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  clip-path: circle(150vmax at 37vw 57vh);
+  -webkit-clip-path: circle(150vmax at 37vw 57vh);
+}
+
+.work_split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  min-height: 100svh;
+  isolation: isolate;
+}
+
+.work_mask_viewport {
+  position: relative;
+  contain: layout paint;
+  isolation: isolate;
+  min-height: 100svh;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.work_mask_panel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  backface-visibility: hidden;
+  contain: paint;
+  transform: translateZ(0);
+  transition:
+    clip-path 0.82s cubic-bezier(0.65, 0.05, 0.36, 1),
+    -webkit-clip-path 0.82s cubic-bezier(0.65, 0.05, 0.36, 1);
+  will-change: clip-path;
+}
+
+.work_mask_panel_active {
+  z-index: 2;
+  clip-path: inset(0 0 0 0);
+}
+
+.work_mask_viewport_left .work_mask_panel_before {
+  z-index: 1;
+  clip-path: inset(0 0 100% 0);
+}
+
+.work_mask_viewport_left .work_mask_panel_after {
+  z-index: 1;
+  clip-path: inset(100% 0 0 0);
+}
+
+.work_mask_viewport_right .work_mask_panel_before {
+  z-index: 1;
+  clip-path: inset(100% 0 0 0);
+}
+
+.work_mask_viewport_right .work_mask_panel_after {
+  z-index: 1;
+  clip-path: inset(0 0 100% 0);
+}
+
+@media (max-width: 900px) {
+  .work_page {
+    overflow-y: auto;
+  }
+
+  .work_split {
+    grid-template-columns: 1fr;
+  }
+
+  .work_mask_viewport,
+  .work_showcase,
+  .work_detail_panel,
+  .work_detail_panel_inner {
+    min-height: 56svh;
+  }
+
+  .work_detail_panel {
+    border-left: 0;
+    border-top: 1px solid rgba(43, 43, 44, 0.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work_page,
+  .work_mask_panel {
+    transition-duration: 0.01ms;
+  }
+}

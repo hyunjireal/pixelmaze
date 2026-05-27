@@ -1,13 +1,14 @@
 ﻿import { useEffect, useRef, useState } from 'react'
 import './HomeSection.css'
 import AboutPage from '../about/AboutPage'
+import MyWorkPage from '../work/MyWorkPage'
 import TitAboutMe from '../../components/TitAboutMe'
 import TrueFocus from '../../components/TrueFocus'
 import homeMazePath01 from '../../assets/icons/home_maze_path01.svg?raw'
 import homeMazePath02 from '../../assets/icons/home_maze_path02.svg?raw'
 import homeMazePath03 from '../../assets/icons/home_maze_path03.svg?raw'
 import homeMazePath04 from '../../assets/icons/home_maze_path04.svg?raw'
-import symbol from '../../assets/icons/symbol.svg'
+import logo from '../../assets/icons/logo.svg'
 
 type RouteKey = 'profile' | 'work' | 'favorite' | 'contact'
 
@@ -178,6 +179,7 @@ function HomeSection({ isActive }: HomeSectionProps) {
   const [activeRoute, setActiveRoute] = useState<RouteKey | null>(null)
   const [routeRun, setRouteRun] = useState(0)
   const [aboutOpen, setAboutOpen] = useState(false)
+  const [workOpen, setWorkOpen] = useState(false)
   const [routeProgress, setRouteProgress] = useState(0)
   const routeMeasureRef = useRef<SVGPathElement | null>(null)
   const animationFrameRef = useRef<number | null>(null)
@@ -186,7 +188,9 @@ function HomeSection({ isActive }: HomeSectionProps) {
   const activeRouteRef = useRef<RouteKey | null>(null)
   const destinationTimerRef = useRef<number | null>(null)
   const aboutPageRef = useRef<HTMLElement | null>(null)
+  const workPageRef = useRef<HTMLElement | null>(null)
   const currentRoute = activeRoute ? routeConfigs[activeRoute] : null
+  const animatedRoute = activeRoute === 'work' ? null : currentRoute
 
   const stopRouteAnimation = () => {
     if (animationFrameRef.current) {
@@ -214,6 +218,13 @@ function HomeSection({ isActive }: HomeSectionProps) {
     aboutPageRef.current?.focus({ preventScroll: true })
     aboutPageRef.current?.scrollTo({ top: 0 })
   }, [aboutOpen])
+
+  useEffect(() => {
+    if (!workOpen) return
+
+    workPageRef.current?.focus({ preventScroll: true })
+    workPageRef.current?.scrollTo({ top: 0 })
+  }, [workOpen])
 
   const updateRoutePosition = (progress: number) => {
     const routePath = routeMeasureRef.current
@@ -251,6 +262,10 @@ function HomeSection({ isActive }: HomeSectionProps) {
       if (route === 'profile') {
         setAboutOpen(true)
       }
+
+      if (route === 'work') {
+        setWorkOpen(true)
+      }
     }
 
     animationFrameRef.current = window.requestAnimationFrame(step)
@@ -276,6 +291,20 @@ function HomeSection({ isActive }: HomeSectionProps) {
     }
 
     setAboutOpen(false)
+    setWorkOpen(false)
+
+    if (route === 'work') {
+      stopRouteAnimation()
+      pendingRouteRef.current = null
+      progressRef.current = 0
+      setRouteProgress(0)
+      setActiveRoute(route)
+      destinationTimerRef.current = window.setTimeout(() => {
+        destinationTimerRef.current = null
+        setWorkOpen(true)
+      }, 1250)
+      return
+    }
 
     const routeInFlight = activeRouteRef.current === route
     const sameRouteIsPending = pendingRouteRef.current === route
@@ -307,11 +336,28 @@ function HomeSection({ isActive }: HomeSectionProps) {
     setRouteRun((run) => run + 1)
   }
 
+  const goHome = () => {
+    stopRouteAnimation()
+
+    if (destinationTimerRef.current) {
+      window.clearTimeout(destinationTimerRef.current)
+      destinationTimerRef.current = null
+    }
+
+    pendingRouteRef.current = null
+    progressRef.current = 0
+    setRouteProgress(0)
+    setActiveRoute(null)
+    setAboutOpen(false)
+    setWorkOpen(false)
+  }
+
   return (
     <main
+      id="main"
       className={`home_page${isActive ? ' home_page_active' : ''}${
         aboutOpen ? ' home_page_about_open' : ''
-      }`}
+      }${workOpen ? ' home_page_work_open' : ''}`}
     >
       <section className="home_view">
         <div className="home_stage">
@@ -362,18 +408,18 @@ function HomeSection({ isActive }: HomeSectionProps) {
                 <circle className="home_maze_extension_end" cx="6195" cy="3646" r="48" />
               </g>
 
-              {currentRoute ? (
+              {animatedRoute ? (
                 <g className="home_route_layer">
                   <path
                     ref={routeMeasureRef}
                     className="home_route_measure_path"
-                    d={currentRoute.path}
+                    d={animatedRoute.path}
                   />
                   {routeTrailOffsets.map((offset, index) => (
                     <path
                       key={`${activeRoute}_route_trace_${routeRun}_${index}`}
                       className="home_route_trace_dash"
-                      d={currentRoute.path}
+                      d={animatedRoute.path}
                       pathLength="1"
                       style={{
                         opacity: routeProgress > offset ? clamp(0.78 - index * 0.09, 0.06, 0.78) : 0,
@@ -386,7 +432,7 @@ function HomeSection({ isActive }: HomeSectionProps) {
               ) : (
                 <image
                   className="home_maze_symbol"
-                  href={symbol}
+                  href={logo}
                   x={centerSymbolPoint.x - 90}
                   y={centerSymbolPoint.y - 90}
                   width="180"
@@ -394,7 +440,20 @@ function HomeSection({ isActive }: HomeSectionProps) {
                 />
               )}
               {activeRoute === 'profile' ? (
-                <circle className="home_destination_bloom" cx="995" cy="700" r="34" />
+                <circle
+                  className="home_destination_bloom home_destination_bloom_profile"
+                  cx="995"
+                  cy="700"
+                  r="34"
+                />
+              ) : null}
+              {activeRoute === 'work' ? (
+                <circle
+                  className="home_destination_bloom home_destination_bloom_work"
+                  cx="570"
+                  cy="2490"
+                  r="34"
+                />
               ) : null}
             </svg>
           </div>
@@ -459,7 +518,14 @@ function HomeSection({ isActive }: HomeSectionProps) {
         </div>
       </section>
 
-      <AboutPage isOpen={aboutOpen} pageRef={aboutPageRef} />
+      <span
+        className={`home_work_reveal_bloom${
+          activeRoute === 'work' ? ' home_work_reveal_bloom_active' : ''
+        }`}
+        aria-hidden="true"
+      />
+      <AboutPage isOpen={aboutOpen} pageRef={aboutPageRef} onHomeClick={goHome} />
+      <MyWorkPage isOpen={workOpen} pageRef={workPageRef} onHomeClick={goHome} />
     </main>
   )
 }

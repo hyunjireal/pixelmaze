@@ -1,0 +1,203 @@
+import { useEffect, useRef, useState, type RefObject, type WheelEvent } from 'react'
+import PageHeader from '../../components/PageHeader'
+import WorkDetailPanel from '../../components/WorkDetailPanel'
+import WorkShowcase from '../../components/WorkShowcase'
+import gunitLogo from '../../assets/icons/work_gunit_logo.svg?raw'
+import simmonsLogo from '../../assets/icons/work_simmons_logo.svg?raw'
+import gunitBackground from '../../assets/images/work_gunit_lbg.png'
+import gunitDetailBackground from '../../assets/images/work_gunit_rbg.png'
+import gunitMockup from '../../assets/images/work_gunit_mokup.png'
+import gunitShowcase01 from '../../assets/images/work_gunit_showcase01.png'
+import simmonsBackground from '../../assets/images/work_simmons_lbg.png'
+import simmonsDetailBackground from '../../assets/images/work_simmons_rbg.png'
+import simmonsShowcase01 from '../../assets/images/work_simmons_showcase01.png'
+import './MyWorkPage.css'
+
+interface MyWorkPageProps {
+  isOpen: boolean
+  pageRef: RefObject<HTMLElement | null>
+  onHomeClick: () => void
+}
+
+const workImageUrls = [
+  gunitBackground,
+  gunitDetailBackground,
+  gunitMockup,
+  gunitShowcase01,
+  simmonsBackground,
+  simmonsDetailBackground,
+  simmonsShowcase01,
+]
+
+const works = [
+  {
+    id: 'gunit',
+    detail: {
+      ariaLabel: 'G-UNIT project detail',
+      backgroundImage: gunitDetailBackground,
+      mockupAlt: 'G-UNIT mobile app mockup',
+      mockupImage: gunitMockup,
+    },
+    showcase: {
+      ariaLabel: 'G-UNIT project overview',
+      backgroundImage: gunitBackground,
+      captionItems: ['Team Project', 'AI 챗봇 팬덤 커뮤니티', '2026'] as [string, string, string],
+      copyLines: [
+        { strong: '에어소프트 입문', text: '부터' },
+        { strong: '커뮤니티, 팀매칭, 장비관리', text: '까지' },
+      ],
+      frameImageAlt: 'G-UNIT app showcase',
+      frameImageSrc: gunitShowcase01,
+      logoAriaLabel: 'G-UNIT',
+      logoColor: 'rgba(255, 255, 255, 0.84)',
+      logoSvg: gunitLogo,
+      metaEnd: '2026',
+      metaLabel: 'AI MOBILE APP',
+    },
+  },
+  {
+    id: 'simmons',
+    detail: {
+      ariaLabel: 'Simmons project detail',
+      backgroundImage: simmonsDetailBackground,
+    },
+    showcase: {
+      ariaLabel: 'Simmons project overview',
+      backgroundImage: simmonsBackground,
+      copyLines: [
+        { strong: '좋은 잠', text: '이라는' },
+        { strong: '라이프 스타일 가치', text: '를 전달합니다.' },
+      ],
+      frameImageAlt: 'Simmons renewal showcase',
+      frameImageSrc: simmonsShowcase01,
+      logoAriaLabel: 'Simmons',
+      logoColor: '#5F3336',
+      logoSvg: simmonsLogo,
+      metaEnd: '2026',
+      metaLabel: 'WEB RENEWAL',
+      tagline: (
+        <>
+          Beyond the expecation, <strong>always.</strong>
+        </>
+      ),
+    },
+  },
+  {
+    id: 'stanley',
+    detail: {
+      ariaLabel: 'Stanley project detail',
+      backgroundColor: '#2F493F',
+      projectName: 'STANLEY',
+    },
+    showcase: {
+      ariaLabel: 'Stanley project overview',
+      backgroundColor: '#B7A16B',
+      metaEnd: '2026',
+      metaLabel: 'COMING SOON',
+      projectName: 'STANLEY',
+    },
+  },
+  {
+    id: 'camping-camfit',
+    detail: {
+      ariaLabel: 'Camping Camfit project detail',
+      backgroundColor: '#D8D5C6',
+      projectName: 'CAMPING CAMFIT',
+    },
+    showcase: {
+      ariaLabel: 'Camping Camfit project overview',
+      backgroundColor: '#6E7664',
+      metaEnd: '2026',
+      metaLabel: 'COMING SOON',
+      projectName: 'CAMPING CAMFIT',
+    },
+  },
+]
+
+function MyWorkPage({ isOpen, pageRef, onHomeClick }: MyWorkPageProps) {
+  const [activeWorkIndex, setActiveWorkIndex] = useState(0)
+  const [previousWorkIndex, setPreviousWorkIndex] = useState<number | null>(null)
+  const [direction, setDirection] = useState<'next' | 'prev'>('next')
+  const preloadedImagesRef = useRef<HTMLImageElement[]>([])
+  const wheelLockRef = useRef(false)
+
+  useEffect(() => {
+    if (!isOpen || preloadedImagesRef.current.length > 0) return
+
+    preloadedImagesRef.current = workImageUrls.map((url) => {
+      const image = new Image()
+      image.decoding = 'async'
+      image.src = url
+      image.decode?.().catch(() => undefined)
+      return image
+    })
+  }, [isOpen])
+
+  const getPanelState = (index: number) => {
+    if (index === activeWorkIndex) return 'active'
+    if (index === previousWorkIndex) {
+      return direction === 'next' ? 'before' : 'after'
+    }
+    return direction === 'next' ? 'after' : 'before'
+  }
+
+  const handleWheel = (event: WheelEvent<HTMLElement>) => {
+    if (!isOpen || wheelLockRef.current || Math.abs(event.deltaY) < 24) return
+
+    const nextDirection = event.deltaY > 0 ? 'next' : 'prev'
+    const nextIndex =
+      nextDirection === 'next'
+        ? (activeWorkIndex + 1) % works.length
+        : (activeWorkIndex - 1 + works.length) % works.length
+
+    wheelLockRef.current = true
+    setDirection(nextDirection)
+    setPreviousWorkIndex(activeWorkIndex)
+    setActiveWorkIndex(nextIndex)
+
+    window.setTimeout(() => {
+      wheelLockRef.current = false
+    }, 900)
+  }
+
+  return (
+    <section
+      ref={pageRef}
+      className="work_page"
+      aria-hidden={!isOpen}
+      data-lenis-prevent
+      tabIndex={-1}
+      onWheel={handleWheel}
+    >
+      <PageHeader
+        activePage="work"
+        ariaLabel="Works page navigation"
+        onHomeClick={onHomeClick}
+        position="fixed"
+      />
+
+      <div className={`work_split work_mask_${direction}`} id="work">
+        <div className="work_mask_viewport work_mask_viewport_left">
+          {works.map((work, index) => (
+            <WorkShowcase
+              key={`${work.id}-showcase`}
+              {...work.showcase}
+              className={`work_mask_panel work_mask_panel_${getPanelState(index)}`}
+            />
+          ))}
+        </div>
+        <div className="work_mask_viewport work_mask_viewport_right">
+          {works.map((work, index) => (
+            <WorkDetailPanel
+              key={`${work.id}-detail`}
+              {...work.detail}
+              className={`work_mask_panel work_mask_panel_${getPanelState(index)}`}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default MyWorkPage
