@@ -42,11 +42,50 @@
   position: absolute;
 }
 
+.home_work_quick_link {
+  position: absolute;
+  z-index: 8;
+  left: 24px;
+  top: 24px;
+  min-height: 30px;
+  padding: 0 11px;
+  border: 1px solid rgba(43, 43, 44, 0.22);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.56);
+  color: rgba(43, 43, 44, 0.72);
+  font: 500 12px/1 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+  letter-spacing: 0;
+  cursor: pointer;
+  opacity: 0;
+  backdrop-filter: blur(8px);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.7s ease 0.2s;
+}
+
+.home_page_active .home_work_quick_link {
+  opacity: 1;
+}
+
+.home_work_quick_link:hover,
+.home_work_quick_link:focus-visible {
+  border-color: rgba(43, 43, 44, 0.42);
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--text-main);
+}
+
+.home_work_quick_link:focus-visible {
+  outline: 2px solid rgba(43, 43, 44, 0.28);
+  outline-offset: 3px;
+}
+
 .home_maze_nav {
   z-index: 3;
   left: 50vw;
   top: 50vh;
-  width: min(52vw, 1086px);
+  width: min(38vw, 794px);
   aspect-ratio: 1;
   opacity: 0;
   transform: translate(-50%, -50%);
@@ -93,23 +132,6 @@
   fill: var(--point-dark);
   opacity: 0;
   transition: opacity 0.18s ease;
-}
-
-.home_route_measure_path {
-  fill: none;
-  stroke: none;
-  pointer-events: none;
-  visibility: hidden;
-}
-
-.home_route_trace_dash {
-  fill: none;
-  stroke: var(--hover-charcoal);
-  stroke-width: 7;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  pointer-events: none;
-  transition: opacity 0.12s ease;
 }
 
 .home_maze_extension_line {
@@ -163,6 +185,77 @@
   animation: home_menu_dot_in 0.65s ease 1.22s forwards;
 }
 
+.home_project_dot {
+  fill: #e53935;
+  stroke: #e53935;
+  stroke-width: 5;
+  opacity: 0;
+  filter:
+    drop-shadow(0 0 6px rgba(229, 57, 53, 0.42))
+    drop-shadow(0 8px 16px rgba(229, 57, 53, 0.18));
+}
+
+.home_project_line,
+.home_blue_line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 8;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.home_project_line {
+  stroke: #e53935;
+}
+
+.home_blue_line {
+  stroke: #2f80ed;
+}
+
+.home_page_active .home_project_line,
+.home_page_active .home_blue_line {
+  animation: home_color_line_in 0.72s ease 1.18s forwards;
+}
+
+.home_page_active .home_project_dot_simmons {
+  animation: home_menu_dot_in 0.65s ease 1.38s forwards;
+}
+
+.home_page_active .home_project_dot_gunit {
+  animation: home_menu_dot_in 0.65s ease 1.52s forwards;
+}
+
+.home_page_active .home_project_dot_stanley {
+  animation: home_menu_dot_in 0.65s ease 1.66s forwards;
+}
+
+.home_page_active .home_project_dot_camping {
+  animation: home_menu_dot_in 0.65s ease 1.8s forwards;
+}
+
+.home_blue_dot {
+  fill: #2f80ed;
+  stroke: #2f80ed;
+  stroke-width: 5;
+  opacity: 0;
+  filter:
+    drop-shadow(0 0 6px rgba(47, 128, 237, 0.4))
+    drop-shadow(0 8px 16px rgba(47, 128, 237, 0.16));
+}
+
+.home_page_active .home_blue_dot_me {
+  animation: home_menu_dot_in 0.65s ease 1.32s forwards;
+}
+
+.home_page_active .home_blue_dot_favorite {
+  animation: home_menu_dot_in 0.65s ease 1.46s forwards;
+}
+
+.home_page_active .home_blue_dot_attitude {
+  animation: home_menu_dot_in 0.65s ease 1.6s forwards;
+}
+
 .home_note {
   z-index: 5;
   color: rgba(43, 43, 44, 0.64);
@@ -197,8 +290,6 @@
 .home_stage:has(.home_note_profile:focus-visible) .home_maze_extension_line_profile,
 .home_stage:has(.home_note_work:hover) .home_maze_extension_line_work,
 .home_stage:has(.home_note_work:focus-visible) .home_maze_extension_line_work,
-.home_stage:has(.home_note_about:hover) .home_maze_extension_line_about,
-.home_stage:has(.home_note_about:focus-visible) .home_maze_extension_line_about,
 .home_stage:has(.home_note_contact:hover) .home_maze_extension_line_contact,
 .home_stage:has(.home_note_contact:focus-visible) .home_maze_extension_line_contact {
   stroke: var(--prism-stone-start);
@@ -213,8 +304,6 @@
 .home_stage:has(.home_note_profile:focus-visible) .home_maze_extension_line_profile path,
 .home_stage:has(.home_note_work:hover) .home_maze_extension_line_work path,
 .home_stage:has(.home_note_work:focus-visible) .home_maze_extension_line_work path,
-.home_stage:has(.home_note_about:hover) .home_maze_extension_line_about path,
-.home_stage:has(.home_note_about:focus-visible) .home_maze_extension_line_about path,
 .home_stage:has(.home_note_contact:hover) .home_maze_extension_line_contact path,
 .home_stage:has(.home_note_contact:focus-visible) .home_maze_extension_line_contact path {
   stroke: var(--prism-stone-start);
@@ -224,8 +313,6 @@
 .home_stage:has(.home_note_profile:focus-visible) .home_maze_extension_line_profile circle,
 .home_stage:has(.home_note_work:hover) .home_maze_extension_line_work circle,
 .home_stage:has(.home_note_work:focus-visible) .home_maze_extension_line_work circle,
-.home_stage:has(.home_note_about:hover) .home_maze_extension_line_about circle,
-.home_stage:has(.home_note_about:focus-visible) .home_maze_extension_line_about circle,
 .home_stage:has(.home_note_contact:hover) .home_maze_extension_line_contact circle,
 .home_stage:has(.home_note_contact:focus-visible) .home_maze_extension_line_contact circle {
   fill: var(--prism-stone-start);
@@ -371,13 +458,6 @@
     drop-shadow(0 8px 16px rgba(var(--hover-charcoal-rgb), 0.36));
 }
 
-.home_note_about {
-  left: 80.1%;
-  top: 25.2%;
-  font-size: clamp(12px, 1.17vw, 24px);
-  transform: translate(0, 0); /* My Favorite ?꾩튂 議곗젙 */
-}
-
 .home_note_contact {
   left: 84.7%;
   top: 63.5%;
@@ -399,12 +479,8 @@
   animation-delay: 1.3s;
 }
 
-.home_note_about {
-  animation-delay: 1.45s;
-}
-
 .home_note_contact {
-  animation-delay: 1.6s;
+  animation-delay: 1.45s;
 }
 
 @keyframes home_menu_dot_in {
@@ -418,6 +494,16 @@
     opacity: 1;
     transform: scale(1);
     transform-origin: center;
+  }
+}
+
+@keyframes home_color_line_in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.96;
   }
 }
 

@@ -1,8 +1,6 @@
-﻿import { memo, useEffect, useRef } from 'react'
+import { memo, useEffect, useRef } from 'react'
 import './SharedMaze.css'
 import homeMaze from '../assets/icons/home_maze.svg?raw'
-import homeMazeConnect from '../assets/icons/home_maze_connect.svg?raw'
-import homeMazeDot from '../assets/icons/home_maze_dot.svg?raw'
 
 interface InlineSvgProps {
   className: string
@@ -32,16 +30,8 @@ function SharedMaze() {
   return (
     <div className="shared_maze" aria-hidden="true" ref={mazeRef}>
       <InlineSvg
-        className="shared_maze_connect shared_maze_draw shared_maze_svg_layer"
-        svg={homeMazeConnect}
-      />
-      <InlineSvg
         className="shared_maze_line shared_maze_draw shared_maze_svg_layer"
         svg={homeMaze}
-      />
-      <InlineSvg
-        className="shared_maze_dot shared_maze_points shared_maze_svg_layer"
-        svg={homeMazeDot}
       />
     </div>
   )
