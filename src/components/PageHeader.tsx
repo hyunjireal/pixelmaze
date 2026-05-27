@@ -1,3 +1,4 @@
+import logo from '../assets/icons/logo.svg'
 import './PageHeader.css'
 
 type PageHeaderItem = {
@@ -36,7 +37,8 @@ function PageHeader({
           onHomeClick()
         }}
       >
-        hyunji
+        <img className="page_header_logo_mark" src={logo} alt="" aria-hidden="true" />
+        <span className="page_header_logo_text">hyunji</span>
       </a>
       <span className="page_header_pattern" aria-hidden="true" />
       <div className="page_header_nav_links">
