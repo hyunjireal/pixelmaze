@@ -1,4 +1,11 @@
 import logo from '../../assets/icons/logo.svg'
+import attitudeRoute from '../../assets/icons/path_attitude.svg?raw'
+import campingRoute from '../../assets/icons/path_camping.svg?raw'
+import favoriteRoute from '../../assets/icons/path_favorite.svg?raw'
+import gunitRoute from '../../assets/icons/path_gunit.svg?raw'
+import meRoute from '../../assets/icons/path_me.svg?raw'
+import simmonsRoute from '../../assets/icons/path_simmons.svg?raw'
+import stanleyRoute from '../../assets/icons/path_stanley.svg?raw'
 import type { RouteKey } from './homeTypes'
 
 interface HomeMazeNavProps {
@@ -6,6 +13,10 @@ interface HomeMazeNavProps {
 }
 
 const mazeCenter = { x: 2188, y: 2188 }
+
+function getSvgPaths(svg: string) {
+  return svg.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '')
+}
 
 function HomeMazeNav({ activeRoute }: HomeMazeNavProps) {
   return (
@@ -47,6 +58,26 @@ function HomeMazeNav({ activeRoute }: HomeMazeNavProps) {
         </g>
 
         <g className="home_project_dot_layer">
+          <g
+            className="home_route home_route_gunit"
+            transform="translate(2188 2188) rotate(-0.90) scale(0.9599) translate(-1896.65 -105.003)"
+            dangerouslySetInnerHTML={{ __html: getSvgPaths(gunitRoute) }}
+          />
+          <g
+            className="home_route home_route_simmons"
+            transform="translate(2188 2188) rotate(1.01) scale(0.9751) translate(-1372.48 -1857.84)"
+            dangerouslySetInnerHTML={{ __html: getSvgPaths(simmonsRoute) }}
+          />
+          <g
+            className="home_route home_route_stanley"
+            transform="translate(2188 2188) rotate(-0.39) scale(0.9689) translate(-3.63 -2.5)"
+            dangerouslySetInnerHTML={{ __html: getSvgPaths(stanleyRoute) }}
+          />
+          <g
+            className="home_route home_route_camping"
+            transform="translate(2174 2188) rotate(3.72) scale(0.9748) translate(-527.051 -1390.11)"
+            dangerouslySetInnerHTML={{ __html: getSvgPaths(campingRoute) }}
+          />
           <path className="home_project_line" d="M1990 375L2220 80L2600 80" />
           <path className="home_project_line" d="M385 2118L170 2250L-600 2250" />
           <path className="home_project_line" d="M2405 3682L2240 4200L1550 4200" />
@@ -90,6 +121,21 @@ function HomeMazeNav({ activeRoute }: HomeMazeNavProps) {
           height="180"
         />
         <g className="home_blue_dot_layer">
+          <g
+            className="home_route home_route_me"
+            transform="translate(2188 2188) rotate(6.08) scale(1.7672) translate(-721.049 -341.685)"
+            dangerouslySetInnerHTML={{ __html: getSvgPaths(meRoute) }}
+          />
+          <g
+            className="home_route home_route_favorite"
+            transform="translate(2188 2188) rotate(2.31) scale(0.9393) translate(-2.5 -535.171)"
+            dangerouslySetInnerHTML={{ __html: getSvgPaths(favoriteRoute) }}
+          />
+          <g
+            className="home_route home_route_attitude"
+            transform="translate(2188 2188) rotate(-10.91) scale(0.9158) translate(-3.63 -2.5)"
+            dangerouslySetInnerHTML={{ __html: getSvgPaths(attitudeRoute) }}
+          />
           <path className="home_blue_line" d="M1126 1472L700 1300L100 1300" />
           <path className="home_blue_line" d="M3946 1758L4200 2050L4800 2050" />
           <path className="home_blue_line" d="M2996 2738L3500 3350L4600 3350" />

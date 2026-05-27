@@ -205,6 +205,26 @@
   pointer-events: none;
 }
 
+.home_route {
+  pointer-events: none;
+}
+
+.home_route path {
+  fill: none;
+}
+
+.home_route_gunit path {
+  stroke: #000;
+  opacity: 0.6;
+  stroke-dasharray: none;
+}
+
+.home_route_me,
+.home_route_favorite,
+.home_route_attitude {
+  display: none;
+}
+
 .home_project_line {
   stroke: #e53935;
 }
