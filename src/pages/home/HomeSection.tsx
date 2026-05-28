@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react'
 import './HomeSection.css'
+import MainTabClickTransition, {
+  useMainTabClickTransition,
+} from '../../components/MainTabClickTransition'
 import AboutPage from '../about/AboutPage'
 import MyWorkPage from '../work/MyWorkPage'
 import HomeMazeNav, { type ProjectKey } from './HomeMazeNav'
@@ -18,6 +21,22 @@ function HomeSection({ isActive }: HomeSectionProps) {
   const [hoveredProject, setHoveredProject] = useState<ProjectKey | null>(null)
   const aboutPageRef = useRef<HTMLElement | null>(null)
   const workPageRef = useRef<HTMLElement | null>(null)
+  const routeTransition = useMainTabClickTransition({
+    onClearHover: () => setHoveredProject(null),
+    onOpenRoute: (route) => {
+      if (route === 'profile') {
+        setAboutOpen(true)
+      }
+
+      if (route === 'work') {
+        setWorkOpen(true)
+      }
+    },
+    onResetPages: () => {
+      setAboutOpen(false)
+      setWorkOpen(false)
+    },
+  })
 
   useEffect(() => {
     if (!aboutOpen) return
@@ -34,21 +53,12 @@ function HomeSection({ isActive }: HomeSectionProps) {
   }, [workOpen])
 
   const startRoute = (route: RouteKey) => {
-    setAboutOpen(false)
-    setWorkOpen(false)
     setActiveRoute(route)
-    setHoveredProject(null)
-
-    if (route === 'profile') {
-      setAboutOpen(true)
-    }
-
-    if (route === 'work') {
-      setWorkOpen(true)
-    }
+    routeTransition.startTransition(route)
   }
 
   const goHome = () => {
+    routeTransition.resetTransition()
     setActiveRoute(null)
     setAboutOpen(false)
     setWorkOpen(false)
@@ -94,7 +104,9 @@ function HomeSection({ isActive }: HomeSectionProps) {
       id="main"
       className={`home_page${isActive ? ' home_page_active' : ''}${
         aboutOpen ? ' home_page_about_open' : ''
-      }${workOpen ? ' home_page_work_open' : ''}`}
+      }${workOpen ? ' home_page_work_open' : ''}${
+        routeTransition.transitionClassName ? ` ${routeTransition.transitionClassName}` : ''
+      }`}
     >
       <section className="home_view">
         <div
@@ -104,6 +116,10 @@ function HomeSection({ isActive }: HomeSectionProps) {
           onMouseMove={handleStageMouseMove}
         >
           <HomeBackground />
+          <MainTabClickTransition
+            activeRoute={routeTransition.activeRoute}
+            state={routeTransition.state}
+          />
 
           <button
             className="home_work_quick_link"
