@@ -13,6 +13,10 @@
   animation: home_route_note_exit 0.34s cubic-bezier(0.2, 0, 0.1, 1) 0.96s both;
 }
 
+.main_tab_click_route_exiting .home_case_card {
+  animation: home_route_aux_dot_exit 0.34s ease 0.96s both;
+}
+
 .main_tab_click_route_exiting .home_project_dot,
 .main_tab_click_route_exiting .home_blue_dot {
   animation: home_route_aux_dot_exit 0.34s ease 0.96s both;

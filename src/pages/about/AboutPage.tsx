@@ -1,14 +1,16 @@
 import type { RefObject } from 'react'
+import HomeLogoLink from '../../components/HomeLogoLink'
 import profileImage from '../../assets/images/me_profile01.png'
 import profileImage02 from '../../assets/images/me_profile02.png'
 import './AboutPage.css'
 
 interface AboutPageProps {
   isOpen: boolean
+  onHomeClick: () => void
   pageRef: RefObject<HTMLElement | null>
 }
 
-function AboutPage({ isOpen, pageRef }: AboutPageProps) {
+function AboutPage({ isOpen, onHomeClick, pageRef }: AboutPageProps) {
   return (
     <section
       ref={pageRef}
@@ -17,6 +19,7 @@ function AboutPage({ isOpen, pageRef }: AboutPageProps) {
       data-lenis-prevent
       tabIndex={-1}
     >
+      <HomeLogoLink onClick={onHomeClick} position="topRight" />
       <header className="about_hero about_reveal">
         <h1>About Me</h1>
         <p>기술로 생각을 연결하고, 사용자 경험을 설계합니다.</p>
