@@ -35,6 +35,13 @@
 .home_stage {
   position: absolute;
   inset: 0;
+  --home-profile-dot-x: calc(50vw - min(34.536vw, 721.63px));
+  --home-profile-dot-y: calc(50vh - min(15.354vw, 320.81px));
+  --home-work-dot-x: calc(50vw - min(36.281vw, 758.08px));
+  --home-work-dot-y: calc(50vh + min(9.463vw, 197.73px));
+  --home-contact-dot-x: calc(50vw + min(34.797vw, 727.27px));
+  --home-contact-dot-y: calc(50vh + min(12.658vw, 264.49px));
+  --home-tab-offset-y: calc(-100% + 12px);
 }
 
 .home_maze_nav,
@@ -110,7 +117,7 @@
 .home_maze_extension {
   z-index: 3;
   overflow: visible;
-  pointer-events: none;
+  pointer-events: auto;
   stroke: var(--line-soft);
   stroke-width: 4.2;
   stroke-linecap: round;
@@ -137,6 +144,7 @@
 .home_maze_extension_line {
   fill: none;
   opacity: 0.58;
+  pointer-events: none;
   transition:
     stroke 0.45s ease,
     opacity 0.45s ease,
@@ -195,6 +203,23 @@
     drop-shadow(0 8px 16px rgba(229, 57, 53, 0.18));
 }
 
+.home_project_dot_simmons {
+  fill: #5f3336;
+  stroke: #5f3336;
+  cursor: pointer;
+  filter:
+    drop-shadow(0 0 6px rgba(95, 51, 54, 0.38))
+    drop-shadow(0 8px 16px rgba(95, 51, 54, 0.16));
+}
+
+.home_project_hit {
+  cursor: pointer;
+  fill: transparent;
+  opacity: 0;
+  pointer-events: all;
+  stroke: transparent;
+}
+
 .home_project_line,
 .home_blue_line {
   fill: none;
@@ -209,14 +234,102 @@
   pointer-events: none;
 }
 
+.home_project_dot_layer .home_route,
+.home_blue_dot_layer .home_route {
+  display: none;
+}
+
+.home_project_dot_layer .home_route.home_route_simmons {
+  display: block;
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+
+.home_project_dot_layer .home_route.home_route_simmons_hovered {
+  opacity: 1;
+}
+
+.home_project_dot_layer {
+  pointer-events: auto;
+}
+
 .home_route path {
   fill: none;
 }
 
+.home_project_dot_layer .home_route.home_route_stanley path,
+.home_project_dot_layer .home_route.home_route_camping path {
+  stroke: #c99ac4;
+  stroke-width: 16px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 34 34;
+  opacity: 0.72;
+}
+
+.home_route_simmons_runner path {
+  fill: none;
+  opacity: 0;
+  stroke: #d7a8d2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 760 5200;
+  stroke-dashoffset: 0;
+}
+
+.home_route_simmons_runner_lead path {
+  stroke-width: 20px;
+  filter:
+    drop-shadow(0 0 6px rgba(215, 168, 210, 0.82))
+    drop-shadow(0 0 16px rgba(215, 168, 210, 0.42));
+}
+
+.home_route_simmons_hovered .home_route_simmons_runner_lead path {
+  animation: home_simmons_route_lead 4.6s cubic-bezier(0.34, 0, 0.16, 1) forwards;
+}
+
 .home_route_gunit path {
   stroke: #000;
+  stroke-width: 3px;
   opacity: 0.6;
+}
+
+.home_route_gunit_pathwork path {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.home_route_gunit_pathwork path:nth-of-type(1),
+.home_route_gunit_pathwork path:nth-of-type(5),
+.home_route_gunit_pathwork path:nth-of-type(8),
+.home_route_gunit_pathwork path:nth-of-type(11) {
+  stroke-width: 2px;
+  stroke-dasharray: 28 22;
+  opacity: 0.82;
+}
+
+.home_route_gunit_pathwork path:nth-of-type(2),
+.home_route_gunit_pathwork path:nth-of-type(6),
+.home_route_gunit_pathwork path:nth-of-type(9) {
+  stroke-width: 5px;
   stroke-dasharray: none;
+  opacity: 0.72;
+}
+
+.home_route_gunit_pathwork path:nth-of-type(3),
+.home_route_gunit_pathwork path:nth-of-type(4),
+.home_route_gunit_pathwork path:nth-of-type(7),
+.home_route_gunit_pathwork path:nth-of-type(10) {
+  stroke-width: 3px;
+  stroke-dasharray: 42 24;
+  opacity: 0.66;
+}
+
+.home_route_gunit_markers circle {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.6);
+  stroke-width: 3px;
+  opacity: 1;
 }
 
 .home_route_me,
@@ -231,6 +344,11 @@
 
 .home_blue_line {
   stroke: #2f80ed;
+}
+
+.home_project_line,
+.home_blue_line {
+  display: none;
 }
 
 .home_page_active .home_project_line,
@@ -287,6 +405,11 @@
   text-decoration: none;
   white-space: nowrap;
   opacity: 0;
+}
+
+.home_note .true_focus {
+  position: relative;
+  z-index: 1;
 }
 
 .home_page_active .home_note {
@@ -412,9 +535,9 @@
 }
 
 .home_note_profile {
-  left: 7.8%;
-  top: 26.2%;
-  transform: translate(0, 0); /* About Me ?꾩튂 議곗젙 */
+  left: var(--home-profile-dot-x);
+  top: var(--home-profile-dot-y);
+  transform: translate(-62%, var(--home-tab-offset-y));
 }
 
 .home_note .tit_exbold_32,
@@ -430,9 +553,9 @@
   --note-hover-glow-rgb: var(--hover-charcoal-mist-rgb);
   --focus-color: var(--hover-charcoal);
 
-  left: 5.8%;
-  top: 57.6%;
-  transform: translate(0, 0); /* My Works ?꾩튂 議곗젙 */
+  left: var(--home-work-dot-x);
+  top: var(--home-work-dot-y);
+  transform: translate(-62%, var(--home-tab-offset-y));
 }
 
 .home_stage:has(.home_note_work:hover) .home_maze_extension_line_work,
@@ -479,9 +602,9 @@
 }
 
 .home_note_contact {
-  left: 84.7%;
-  top: 63.5%;
-  transform: translate(0, 0); /* Contact Me ?꾩튂 議곗젙 */
+  left: var(--home-contact-dot-x);
+  top: var(--home-contact-dot-y);
+  transform: translate(-62%, var(--home-tab-offset-y));
 }
 
 @media (max-aspect-ratio: 16 / 9) {
@@ -536,6 +659,26 @@
   to {
     opacity: 1;
     filter: blur(0);
+  }
+}
+
+@keyframes home_simmons_route_lead {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 5960;
+  }
+
+  18% {
+    opacity: 0.78;
+  }
+
+  72% {
+    opacity: 0.64;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dashoffset: 0;
   }
 }
 

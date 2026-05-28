@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState, type RefObject, type WheelEvent } from 'react'
-import PageHeader from '../../components/PageHeader'
 import WorkDetailPanel from '../../components/WorkDetailPanel'
 import WorkShowcase from '../../components/WorkShowcase'
 import gunitLogo from '../../assets/icons/work_gunit_logo.svg?raw'
@@ -7,9 +6,11 @@ import simmonsLogo from '../../assets/icons/work_simmons_logo.svg?raw'
 import gunitBackground from '../../assets/images/work_gunit_lbg.png'
 import gunitDetailBackground from '../../assets/images/work_gunit_rbg.png'
 import gunitMockup from '../../assets/images/work_gunit_mokup.png'
+import gunitFrame from '../../assets/images/work_gunit_frame.png'
 import gunitShowcase01 from '../../assets/images/work_gunit_showcase01.png'
 import simmonsBackground from '../../assets/images/work_simmons_lbg.png'
 import simmonsDetailBackground from '../../assets/images/work_simmons_rbg.png'
+import simmonsFrame from '../../assets/images/work_simmons_frame.png'
 import simmonsShowcase01 from '../../assets/images/work_simmons_showcase01.png'
 import './MyWorkPage.css'
 
@@ -22,10 +23,12 @@ interface MyWorkPageProps {
 const workImageUrls = [
   gunitBackground,
   gunitDetailBackground,
+  gunitFrame,
   gunitMockup,
   gunitShowcase01,
   simmonsBackground,
   simmonsDetailBackground,
+  simmonsFrame,
   simmonsShowcase01,
 ]
 
@@ -48,6 +51,7 @@ const works = [
       ],
       frameImageAlt: 'G-UNIT app showcase',
       frameImageSrc: gunitShowcase01,
+      frameTextureSrc: gunitFrame,
       logoAriaLabel: 'G-UNIT',
       logoColor: 'rgba(255, 255, 255, 0.84)',
       logoSvg: gunitLogo,
@@ -60,26 +64,24 @@ const works = [
     detail: {
       ariaLabel: 'Simmons project detail',
       backgroundImage: simmonsDetailBackground,
+      homeLogoColorOverride: '#5F3336',
     },
     showcase: {
       ariaLabel: 'Simmons project overview',
       backgroundImage: simmonsBackground,
+      captionItems: ['Team Project', 'K-Brand Contents', '2026'] as [string, string, string],
       copyLines: [
         { strong: '좋은 잠', text: '이라는' },
         { strong: '라이프 스타일 가치', text: '를 전달합니다.' },
       ],
       frameImageAlt: 'Simmons renewal showcase',
       frameImageSrc: simmonsShowcase01,
+      frameTextureSrc: simmonsFrame,
       logoAriaLabel: 'Simmons',
       logoColor: '#5F3336',
       logoSvg: simmonsLogo,
       metaEnd: '2026',
       metaLabel: 'WEB RENEWAL',
-      tagline: (
-        <>
-          Beyond the expecation, <strong>always.</strong>
-        </>
-      ),
     },
   },
   {
@@ -169,13 +171,6 @@ function MyWorkPage({ isOpen, pageRef, onHomeClick }: MyWorkPageProps) {
       tabIndex={-1}
       onWheel={handleWheel}
     >
-      <PageHeader
-        activePage="work"
-        ariaLabel="Works page navigation"
-        onHomeClick={onHomeClick}
-        position="fixed"
-      />
-
       <div className={`work_split work_mask_${direction}`} id="work">
         <div className="work_mask_viewport work_mask_viewport_left">
           {works.map((work, index) => (
@@ -191,6 +186,7 @@ function MyWorkPage({ isOpen, pageRef, onHomeClick }: MyWorkPageProps) {
             <WorkDetailPanel
               key={`${work.id}-detail`}
               {...work.detail}
+              onHomeClick={onHomeClick}
               className={`work_mask_panel work_mask_panel_${getPanelState(index)}`}
             />
           ))}

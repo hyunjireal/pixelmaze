@@ -1,5 +1,4 @@
 import type { RefObject } from 'react'
-import PageHeader from '../../components/PageHeader'
 import profileImage from '../../assets/images/me_profile01.png'
 import profileImage02 from '../../assets/images/me_profile02.png'
 import './AboutPage.css'
@@ -7,10 +6,9 @@ import './AboutPage.css'
 interface AboutPageProps {
   isOpen: boolean
   pageRef: RefObject<HTMLElement | null>
-  onHomeClick: () => void
 }
 
-function AboutPage({ isOpen, pageRef, onHomeClick }: AboutPageProps) {
+function AboutPage({ isOpen, pageRef }: AboutPageProps) {
   return (
     <section
       ref={pageRef}
@@ -19,8 +17,6 @@ function AboutPage({ isOpen, pageRef, onHomeClick }: AboutPageProps) {
       data-lenis-prevent
       tabIndex={-1}
     >
-      <PageHeader activePage="about" ariaLabel="About page navigation" onHomeClick={onHomeClick} />
-
       <header className="about_hero about_reveal">
         <h1>About Me</h1>
         <p>기술로 생각을 연결하고, 사용자 경험을 설계합니다.</p>

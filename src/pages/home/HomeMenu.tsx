@@ -1,13 +1,13 @@
-import TitAboutMe from '../../components/TitAboutMe'
+import MenuLockup from '../../components/MenuLockup'
 import TrueFocus from '../../components/TrueFocus'
 import type { RouteKey } from './homeTypes'
 
 type HomeMenuItem = {
+  backdrop: string
   classSuffix: string
-  exbold: string
   href: string
-  italic: string
   route: RouteKey
+  script: string
 }
 
 interface HomeMenuProps {
@@ -17,25 +17,25 @@ interface HomeMenuProps {
 
 const homeMenuItems: HomeMenuItem[] = [
   {
+    backdrop: 'about',
     classSuffix: 'profile',
-    exbold: 'About',
     href: '#about',
-    italic: 'Me',
     route: 'profile',
+    script: 'ME',
   },
   {
+    backdrop: 'portfolio',
     classSuffix: 'work',
-    exbold: 'My',
     href: '#work',
-    italic: 'Works',
     route: 'work',
+    script: 'WORKS',
   },
   {
+    backdrop: 'contact',
     classSuffix: 'contact',
-    exbold: 'Contact',
     href: '#contact',
-    italic: 'Me',
     route: 'contact',
+    script: 'ME',
   },
 ]
 
@@ -55,7 +55,7 @@ function HomeMenu({ activeRoute, onRouteStart }: HomeMenuProps) {
           }}
         >
           <TrueFocus>
-            <TitAboutMe exbold={item.exbold} italic={item.italic} />
+            <MenuLockup backdrop={item.backdrop} script={item.script} />
           </TrueFocus>
         </a>
       ))}

@@ -42,15 +42,76 @@
   background: #030303;
 }
 
+.work_showcase_frame_textured {
+  border: 0;
+  background: var(--work-showcase-frame-texture) center / cover no-repeat;
+  box-shadow:
+    0 14px 24px rgba(0, 0, 0, 0.34),
+    0 30px 48px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -10px 16px rgba(0, 0, 0, 0.34),
+    inset -10px 0 16px rgba(0, 0, 0, 0.24);
+}
+
 .work_showcase_frame::before {
   content: '';
   position: absolute;
   inset: 16px;
   border: 1px solid rgba(236, 236, 232, 0.38);
   pointer-events: none;
+  z-index: 1;
+}
+
+.work_showcase_frame_textured::before {
+  inset: 0;
+  border: 1px solid rgba(236, 236, 232, 0.18);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 24%),
+    linear-gradient(315deg, rgba(0, 0, 0, 0.34), rgba(0, 0, 0, 0) 30%);
+  mix-blend-mode: normal;
+  opacity: 0.62;
+}
+
+.work_showcase_frame_textured::after {
+  content: '';
+  position: absolute;
+  inset: 16px;
+  z-index: 3;
+  pointer-events: none;
+  box-shadow:
+    0 0 0 1px rgba(236, 236, 232, 0.1),
+    0 6px 12px rgba(0, 0, 0, 0.48),
+    inset 0 2px 7px rgba(0, 0, 0, 0.58);
+}
+
+.work_showcase:has(.work_showcase_logo[aria-label='Simmons']) .work_showcase_frame_textured {
+  box-shadow:
+    0 8px 14px rgba(95, 51, 54, 0.08),
+    0 16px 24px rgba(95, 51, 54, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -8px 12px rgba(95, 51, 54, 0.1),
+    inset -8px 0 12px rgba(95, 51, 54, 0.08);
+}
+
+.work_showcase:has(.work_showcase_logo[aria-label='Simmons']) .work_showcase_frame_textured::before {
+  border-color: rgba(95, 51, 54, 0.13);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 26%),
+    linear-gradient(315deg, rgba(95, 51, 54, 0.18), rgba(95, 51, 54, 0) 32%);
+  mix-blend-mode: normal;
+  opacity: 0.56;
+}
+
+.work_showcase:has(.work_showcase_logo[aria-label='Simmons']) .work_showcase_frame_textured::after {
+  box-shadow:
+    0 0 0 1px rgba(95, 51, 54, 0.1),
+    0 4px 8px rgba(95, 51, 54, 0.1),
+    inset 0 2px 6px rgba(95, 51, 54, 0.12);
 }
 
 .work_showcase_frame img {
+  position: relative;
+  z-index: 2;
   display: block;
   width: 100%;
   height: 100%;
@@ -114,6 +175,26 @@
 .work_showcase_logo svg * {
   fill: currentColor;
   stroke: none;
+}
+
+.work_showcase_logo[aria-label='Simmons'] {
+  height: 142px;
+  margin-bottom: 40px;
+}
+
+.work_showcase_logo[aria-label='Simmons'] svg {
+  width: auto;
+  height: 100%;
+}
+
+.work_showcase:has(.work_showcase_logo[aria-label='Simmons']) .work_showcase_meta,
+.work_showcase:has(.work_showcase_logo[aria-label='Simmons']) .work_showcase_copy,
+.work_showcase:has(.work_showcase_logo[aria-label='Simmons']) .work_showcase_caption {
+  color: #5F3336;
+}
+
+.work_showcase:has(.work_showcase_logo[aria-label='Simmons']) .work_showcase_caption_item i {
+  background: #5F3336;
 }
 
 .work_showcase_name_logo {

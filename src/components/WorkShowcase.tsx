@@ -15,6 +15,7 @@ interface WorkShowcaseProps {
   copyLines?: HighlightText[]
   frameImageAlt?: string
   frameImageSrc?: string
+  frameTextureSrc?: string
   logoAriaLabel?: string
   logoColor?: string
   logoSvg?: string
@@ -33,6 +34,7 @@ function WorkShowcase({
   copyLines = [],
   frameImageAlt,
   frameImageSrc,
+  frameTextureSrc,
   logoAriaLabel,
   logoColor = 'rgba(255, 255, 255, 0.84)',
   logoSvg,
@@ -46,9 +48,11 @@ function WorkShowcase({
       ? `url(${backgroundImage}) center / cover no-repeat`
       : backgroundColor,
     '--work-showcase-logo-color': logoColor,
+    '--work-showcase-frame-texture': frameTextureSrc ? `url(${frameTextureSrc})` : 'none',
   } as CSSProperties & {
     '--work-showcase-bg': string
     '--work-showcase-logo-color': string
+    '--work-showcase-frame-texture': string
   }
 
   return (
@@ -62,7 +66,11 @@ function WorkShowcase({
           <span>{metaLabel}</span>
           <span>{metaEnd}</span>
         </div>
-        <div className={`work_showcase_frame${frameImageSrc ? '' : ' work_showcase_frame_placeholder'}`}>
+        <div
+          className={`work_showcase_frame${frameImageSrc ? '' : ' work_showcase_frame_placeholder'}${
+            frameTextureSrc ? ' work_showcase_frame_textured' : ''
+          }`}
+        >
           {frameImageSrc ? (
             <img src={frameImageSrc} alt={frameImageAlt ?? ''} />
           ) : (

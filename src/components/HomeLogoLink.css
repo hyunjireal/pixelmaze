@@ -1,0 +1,130 @@
+.home_logo_link {
+  --home-logo-color: #BDBAB6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(68px, 4.8vw, 88px);
+  height: clamp(66px, 4.7vw, 86px);
+  border: 0;
+  color: inherit;
+  text-decoration: none;
+  isolation: isolate;
+  transition:
+    transform 0.24s ease,
+    width 0.46s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home_logo_link:hover,
+.home_logo_link:focus-visible {
+  transform: translateY(-2px);
+  width: clamp(172px, 12.8vw, 224px);
+}
+
+.home_logo_link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 6px;
+}
+
+.home_logo_link_topRight {
+  position: absolute;
+  top: clamp(24px, 3vw, 44px);
+  right: clamp(24px, 3vw, 44px);
+  z-index: 5;
+}
+
+.home_logo_orbit {
+  position: absolute;
+  inset: 0;
+  display: block;
+  margin: auto;
+  width: clamp(68px, 4.8vw, 88px);
+  height: clamp(66px, 4.7vw, 86px);
+  pointer-events: none;
+  transform: translateX(0);
+  transition:
+    transform 0.46s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home_logo_orbit svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.home_logo_orbit path {
+  fill: none;
+  stroke: var(--home-logo-color);
+  stroke-linecap: round;
+}
+
+.home_logo_orbit path:not(:first-child) {
+  fill: var(--home-logo-color);
+}
+
+.home_logo_orbit path:first-child {
+  stroke-width: 10;
+}
+
+.home_logo_initial {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  width: clamp(68px, 4.8vw, 88px);
+  height: clamp(66px, 4.7vw, 86px);
+  color: var(--home-logo-color);
+  font-family: Philosopher, var(--font_body);
+  font-size: clamp(18px, 3vw, 36px);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  pointer-events: none;
+  transition:
+    opacity 0.18s ease,
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.home_logo_text {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  color: var(--home-logo-color);
+  font-family: Philosopher, var(--font_body);
+  font-size: clamp(18px, 3vw, 36px);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  opacity: 0;
+  transform: translateY(-1px);
+  transition:
+    max-width 0.46s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.2s ease 0.08s;
+  white-space: nowrap;
+}
+
+.home_logo_link:hover .home_logo_orbit_left,
+.home_logo_link:focus-visible .home_logo_orbit_left {
+  transform: translateX(calc(clamp(24px, 2.4vw, 38px) * -1));
+}
+
+.home_logo_link:hover .home_logo_orbit_right,
+.home_logo_link:focus-visible .home_logo_orbit_right {
+  transform: translateX(clamp(24px, 2.4vw, 38px));
+}
+
+.home_logo_link:hover .home_logo_initial,
+.home_logo_link:focus-visible .home_logo_initial {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+.home_logo_link:hover .home_logo_text,
+.home_logo_link:focus-visible .home_logo_text {
+  max-width: 4.8em;
+  opacity: 1;
+}
