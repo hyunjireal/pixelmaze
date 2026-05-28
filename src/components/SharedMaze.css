@@ -1,12 +1,18 @@
 .shared_maze {
   position: fixed;
+  inset: 0;
   z-index: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.shared_maze_core {
+  position: absolute;
   left: 50vw;
   top: 50vh;
   width: min(38vw, 794px);
   aspect-ratio: 1;
-  opacity: 0.64;
-  pointer-events: none;
+  opacity: 0.82;
   transform: translate(
     calc(-50% + var(--maze_tx, 0px)),
     calc(-50% + var(--maze_ty, 0px))
@@ -19,29 +25,78 @@
 .shared_maze_draw circle,
 .shared_maze_draw ellipse,
 .shared_maze_draw line {
+  stroke: rgba(96, 96, 98, 0.82);
+}
+
+.shared_maze_decor path,
+.shared_maze_decor circle,
+.shared_maze_decor ellipse,
+.shared_maze_decor line {
   stroke: var(--maze-line);
 }
 
-.shared_maze_svg_layer,
-.shared_maze_svg_layer svg {
-  position: absolute;
-  left: 50%;
-  top: 50%;
+.shared_maze_core,
+.shared_maze_core svg,
+.shared_maze_decor,
+.shared_maze_decor svg {
   display: block;
   pointer-events: none;
   user-select: none;
-  transform: translate(-50%, -50%);
 }
 
-.shared_maze_svg_layer svg {
+.shared_maze_core svg,
+.shared_maze_decor svg {
   width: 100%;
   height: 100%;
   overflow: visible;
 }
 
-.shared_maze_line {
-  width: 100%;
-  height: 100%;
+.shared_maze_decor {
+  position: absolute;
+  color: var(--maze-line);
+  transition: transform 0.38s ease-out;
+}
+
+.shared_maze_decor_connect {
+  left: 50vw;
+  top: 50vh;
+  width: min(43vw, 919px);
+  aspect-ratio: 919 / 912;
+  opacity: 0.22;
+  transform: translate(
+    calc(-50% + var(--maze_tx, 0px)),
+    calc(-50% + var(--maze_ty, 0px))
+  );
+}
+
+.shared_maze_decor_dot {
+  display: none;
+}
+
+.shared_maze_orbit_dots {
+  position: absolute;
+  left: 50vw;
+  top: 50vh;
+  width: min(54vw, 1120px);
+  aspect-ratio: 1;
+  transform: translate(
+    calc(-50% + var(--maze_tx, 0px)),
+    calc(-50% + var(--maze_ty, 0px))
+  );
+  transition: transform 0.38s ease-out;
+}
+
+.shared_maze_orbit_dot {
+  position: absolute;
+  left: var(--dot-x);
+  top: var(--dot-y);
+  width: var(--dot-size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #9f9f9f;
+  opacity: var(--dot-opacity);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px rgba(120, 120, 120, 0.12);
 }
 
 .shared_maze_draw path,
@@ -51,6 +106,16 @@
   opacity: 0;
   animation: shared_maze_draw 2.8s cubic-bezier(0.38, 0, 0.16, 1) forwards;
   animation-delay: var(--segment_delay, 0s);
+}
+
+.app_shell:has(.home_page_about_open) .shared_maze_core,
+.app_shell:has(.home_page_work_open) .shared_maze_core,
+.app_shell:has(.home_page_about_open) .shared_maze_decor,
+.app_shell:has(.home_page_work_open) .shared_maze_decor,
+.app_shell:has(.home_page_about_open) .shared_maze_orbit_dots,
+.app_shell:has(.home_page_work_open) .shared_maze_orbit_dots {
+  opacity: 0;
+  animation: none;
 }
 
 @keyframes shared_maze_draw {
@@ -68,8 +133,36 @@
   }
 }
 
+@keyframes shared_maze_erase {
+  0% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  82% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dashoffset: var(--segment_length, 12000);
+  }
+}
+
+@keyframes shared_maze_decor_exit {
+  to {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .shared_maze {
+    transition: none;
+  }
+
+  .shared_maze_core,
+  .shared_maze_decor,
+  .shared_maze_orbit_dots {
     transition: none;
   }
 

@@ -1,0 +1,163 @@
+.main_tab_click_transition {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.main_tab_click_route_exiting .home_stage {
+  pointer-events: none;
+}
+
+.main_tab_click_route_exiting .home_note {
+  animation: home_route_note_exit 0.34s cubic-bezier(0.2, 0, 0.1, 1) 0.96s both;
+}
+
+.main_tab_click_route_exiting .home_project_dot,
+.main_tab_click_route_exiting .home_blue_dot {
+  animation: home_route_aux_dot_exit 0.34s ease 0.96s both;
+}
+
+.main_tab_click_route_exiting .home_stage .home_maze_extension_line.home_maze_extension_line {
+  opacity: 1;
+  stroke-width: 4.2;
+  filter: none;
+}
+
+.main_tab_click_route_exiting .home_stage .home_maze_extension_line .home_maze_extension_path_base,
+.main_tab_click_route_exiting .home_stage .home_maze_extension_line_active .home_maze_extension_path_progress {
+  opacity: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: home_route_line_erase 0.58s cubic-bezier(0.2, 0, 0.1, 1) 0.28s both;
+}
+
+.main_tab_click_route_exiting .home_stage .home_maze_extension_line .home_maze_extension_path_base {
+  stroke: var(--line-soft);
+}
+
+.main_tab_click_route_exiting .home_stage .home_maze_extension_line.home_maze_extension_line .home_maze_extension_start {
+  opacity: 1;
+  fill: var(--point-dark);
+  stroke: var(--point-dark);
+  filter: none;
+  animation: home_route_start_dot_exit 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.main_tab_click_route_exiting .home_stage .home_maze_extension_line.home_maze_extension_line .home_maze_extension_end {
+  opacity: 1;
+  fill: var(--point-dark);
+  stroke: var(--point-dark);
+  filter: none;
+  animation: home_route_end_dot_exit 0.34s cubic-bezier(0.22, 1, 0.36, 1) 0.96s both;
+}
+
+.main_tab_click_route_exiting .home_route_project_dash,
+.main_tab_click_route_exiting .home_route_project_runner {
+  opacity: 0;
+  animation: none;
+}
+
+.main_tab_click_maze_erasing .home_maze_logo {
+  animation: home_logo_route_transfer 0.62s cubic-bezier(0.22, 1, 0.36, 1) 1.42s both;
+  pointer-events: none;
+}
+
+.app_shell:has(.main_tab_click_maze_erasing) .shared_maze_draw path,
+.app_shell:has(.main_tab_click_maze_erasing) .shared_maze_draw circle,
+.app_shell:has(.main_tab_click_maze_erasing) .shared_maze_draw ellipse,
+.app_shell:has(.main_tab_click_maze_erasing) .shared_maze_draw line {
+  animation: shared_maze_erase 1.32s cubic-bezier(0.38, 0, 0.16, 1) both;
+  animation-delay: var(--segment_reverse_delay, 0s);
+}
+
+.app_shell:has(.main_tab_click_maze_erasing) .shared_maze_decor,
+.app_shell:has(.main_tab_click_maze_erasing) .shared_maze_orbit_dots {
+  animation: shared_maze_decor_exit 0.38s ease 1.88s forwards;
+}
+
+@keyframes home_route_line_erase {
+  0% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    opacity: 0;
+    stroke-dashoffset: -1;
+  }
+}
+
+@keyframes home_route_start_dot_exit {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.48);
+  }
+}
+
+@keyframes home_route_end_dot_exit {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.48);
+  }
+}
+
+@keyframes home_route_note_exit {
+  0% {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  48% {
+    opacity: 1;
+    filter:
+      drop-shadow(0 0 10px rgba(var(--hover-charcoal-mist-rgb), 0.34))
+      drop-shadow(0 14px 28px rgba(var(--hover-charcoal-rgb), 0.14));
+  }
+
+  100% {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translate(-62%, var(--home-tab-offset-y)) scale(0.96);
+  }
+}
+
+@keyframes home_route_aux_dot_exit {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes home_logo_route_transfer {
+  0% {
+    left: 50%;
+    top: 50%;
+    width: clamp(68px, 4.8vw, 88px);
+    height: clamp(66px, 4.7vw, 86px);
+    opacity: 0.95;
+    scale: 1;
+  }
+
+  100% {
+    left: calc(50% + 50vw - var(--route-logo-edge) - (var(--route-logo-size) / 2));
+    top: calc(50% - 50vh + var(--route-logo-edge) + (var(--route-logo-size) / 2));
+    width: var(--route-logo-size);
+    height: var(--route-logo-size);
+    opacity: 0.92;
+    scale: 0.9;
+  }
+}

@@ -14,8 +14,8 @@
     width 0.46s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.home_logo_link:hover,
-.home_logo_link:focus-visible {
+.home_logo_link:not(.home_maze_logo):hover,
+.home_logo_link:not(.home_maze_logo):focus-visible {
   transform: translateY(-2px);
   width: clamp(172px, 12.8vw, 224px);
 }
@@ -107,24 +107,24 @@
   white-space: nowrap;
 }
 
-.home_logo_link:hover .home_logo_orbit_left,
-.home_logo_link:focus-visible .home_logo_orbit_left {
+.home_logo_link:not(.home_maze_logo):hover .home_logo_orbit_left,
+.home_logo_link:not(.home_maze_logo):focus-visible .home_logo_orbit_left {
   transform: translateX(calc(clamp(24px, 2.4vw, 38px) * -1));
 }
 
-.home_logo_link:hover .home_logo_orbit_right,
-.home_logo_link:focus-visible .home_logo_orbit_right {
+.home_logo_link:not(.home_maze_logo):hover .home_logo_orbit_right,
+.home_logo_link:not(.home_maze_logo):focus-visible .home_logo_orbit_right {
   transform: translateX(clamp(24px, 2.4vw, 38px));
 }
 
-.home_logo_link:hover .home_logo_initial,
-.home_logo_link:focus-visible .home_logo_initial {
+.home_logo_link:not(.home_maze_logo):hover .home_logo_initial,
+.home_logo_link:not(.home_maze_logo):focus-visible .home_logo_initial {
   opacity: 0;
   transform: scale(0.96);
 }
 
-.home_logo_link:hover .home_logo_text,
-.home_logo_link:focus-visible .home_logo_text {
+.home_logo_link:not(.home_maze_logo):hover .home_logo_text,
+.home_logo_link:not(.home_maze_logo):focus-visible .home_logo_text {
   max-width: 4.8em;
   opacity: 1;
 }

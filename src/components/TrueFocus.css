@@ -69,6 +69,7 @@
   transform: translate(-5px, -5px);
 }
 
+/* Temporarily disabled so home tab click activation can be reviewed without hover overlap.
 .home_note:hover .true_focus_content,
 .home_note:focus-visible .true_focus_content {
   filter:
@@ -99,6 +100,7 @@
   transform: translate(0, 0);
   filter: drop-shadow(0 0 8px rgba(var(--note-hover-glow-rgb), 0.76));
 }
+*/
 
 .home_note .true_focus {
   --focus-color: var(--note-hover-start);

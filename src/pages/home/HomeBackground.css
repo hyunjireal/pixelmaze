@@ -1,0 +1,295 @@
+.home_background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  color: rgba(43, 43, 44, 0.16);
+  opacity: 0.58;
+  transform: translate(
+    calc(var(--content_tx, 0px) * 0.32),
+    calc(var(--content_ty, 0px) * 0.32)
+  );
+  transition: transform 0.42s ease-out;
+}
+
+.home_background_wash,
+.home_background_grid,
+.home_background_grain {
+  position: absolute;
+  inset: -3%;
+}
+
+.home_background_wash {
+  background:
+    radial-gradient(circle at 50% 46%, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0) 32%),
+    radial-gradient(circle at 20% 78%, rgba(211, 214, 217, 0.18), rgba(211, 214, 217, 0) 27%),
+    radial-gradient(circle at 82% 18%, rgba(212, 216, 218, 0.16), rgba(212, 216, 218, 0) 24%);
+}
+
+.home_background_grid {
+  opacity: 0.22;
+  background-image:
+    linear-gradient(rgba(43, 43, 44, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(43, 43, 44, 0.07) 1px, transparent 1px);
+  background-size: 18.2vw 23.4vh;
+}
+
+.home_background_panel,
+.home_background_line,
+.home_background_dots,
+.home_background_circle,
+.home_background_chip,
+.home_background_rule {
+  position: absolute;
+  display: block;
+}
+
+.home_background_panel {
+  border: 1px solid rgba(43, 43, 44, 0.055);
+  border-radius: 22px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(214, 216, 218, 0.08)),
+    rgba(244, 244, 243, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.58),
+    0 22px 64px rgba(70, 70, 70, 0.022);
+}
+
+.home_background_panel_tl {
+  left: -3vw;
+  top: -4vh;
+  width: 28vw;
+  height: 46vh;
+}
+
+.home_background_panel_top {
+  left: 37vw;
+  top: -8vh;
+  width: 16vw;
+  height: 26vh;
+  border-radius: 0 0 36px 36px;
+}
+
+.home_background_panel_tr {
+  right: 4vw;
+  top: 9vh;
+  width: 20vw;
+  height: 34vh;
+}
+
+.home_background_panel_left {
+  left: 4vw;
+  bottom: 8vh;
+  width: 18vw;
+  height: 34vh;
+}
+
+.home_background_panel_bottom_left {
+  left: 26vw;
+  bottom: -5vh;
+  width: 22vw;
+  height: 20vh;
+  border-radius: 18px 18px 0 0;
+}
+
+.home_background_panel_bottom {
+  left: 43vw;
+  bottom: -7vh;
+  width: 32vw;
+  height: 24vh;
+  border-radius: 22px 22px 0 0;
+}
+
+.home_background_panel_right {
+  right: -1vw;
+  bottom: 14vh;
+  width: 13vw;
+  height: 30vh;
+}
+
+.home_background_panel_br {
+  right: 8vw;
+  bottom: -12vh;
+  width: 18vw;
+  height: 28vh;
+  border-radius: 50%;
+  background: linear-gradient(90deg, rgba(226, 227, 228, 0.22) 0 50%, rgba(255, 255, 255, 0.25) 50% 100%);
+}
+
+.home_background_line {
+  background: rgba(43, 43, 44, 0.052);
+  transform-origin: center;
+}
+
+.home_background_line_v1 {
+  left: 14vw;
+  top: 0;
+  width: 1px;
+  height: 100%;
+}
+
+.home_background_line_v2 {
+  left: 59.7vw;
+  top: 0;
+  width: 1px;
+  height: 100%;
+}
+
+.home_background_line_v3 {
+  right: 9.8vw;
+  top: 0;
+  width: 1px;
+  height: 100%;
+}
+
+.home_background_line_h1 {
+  left: 0;
+  top: 28.5vh;
+  width: 100%;
+  height: 1px;
+}
+
+.home_background_line_h2 {
+  left: 0;
+  top: 72vh;
+  width: 100%;
+  height: 1px;
+}
+
+.home_background_line_h3 {
+  left: 18vw;
+  top: 53.7vh;
+  width: 48vw;
+  height: 1px;
+}
+
+.home_background_line_diag {
+  left: 7vw;
+  top: 2vh;
+  width: 19vw;
+  height: 1px;
+  transform: rotate(-38deg);
+}
+
+.home_background_dots {
+  width: 76px;
+  height: 92px;
+  opacity: 0.18;
+  background-image: radial-gradient(circle, rgba(43, 43, 44, 0.2) 1px, transparent 1.4px);
+  background-size: 11px 11px;
+}
+
+.home_background_dots_lt {
+  left: 5vw;
+  top: 14vh;
+}
+
+.home_background_dots_rt {
+  right: 7vw;
+  top: 4vh;
+}
+
+.home_background_dots_mid {
+  right: 31vw;
+  top: 66vh;
+  opacity: 0.16;
+}
+
+.home_background_dots_rb {
+  right: 4vw;
+  bottom: 12vh;
+  opacity: 0.18;
+}
+
+.home_background_circle {
+  border: 1px solid rgba(43, 43, 44, 0.065);
+  border-radius: 50%;
+  opacity: 0.32;
+}
+
+.home_background_circle_left {
+  left: 7vw;
+  bottom: 20vh;
+  width: 7.4vw;
+  aspect-ratio: 1;
+}
+
+.home_background_circle_right {
+  right: 22vw;
+  bottom: 6vh;
+  width: 13vw;
+  aspect-ratio: 1;
+}
+
+.home_background_chip {
+  border-radius: 2px;
+  background: rgba(43, 43, 44, 0.09);
+}
+
+.home_background_chip_left {
+  left: 32vw;
+  top: 45vh;
+  width: 5px;
+  height: 5px;
+}
+
+.home_background_chip_right {
+  right: 3vw;
+  top: 46vh;
+  width: 9px;
+  height: 9px;
+}
+
+.home_background_rule {
+  width: 5.2vw;
+  height: 1px;
+  background: rgba(43, 43, 44, 0.08);
+  box-shadow:
+    0 17px 0 rgba(43, 43, 44, 0.052),
+    0 34px 0 rgba(43, 43, 44, 0.04);
+}
+
+.home_background_rule_bottom {
+  left: 58vw;
+  bottom: 13vh;
+}
+
+.home_background_rule_lower {
+  left: 10vw;
+  bottom: 20vh;
+  width: 9vw;
+  opacity: 0.4;
+}
+
+.home_background_grain {
+  opacity: 0.09;
+  mix-blend-mode: multiply;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(43, 43, 44, 0.16) 0 0.7px, transparent 0.8px),
+    radial-gradient(circle at 78% 32%, rgba(43, 43, 44, 0.12) 0 0.6px, transparent 0.7px);
+  background-size: 17px 19px, 23px 29px;
+}
+
+@media (max-width: 760px) {
+  .home_background_grid {
+    background-size: 34vw 18vh;
+  }
+
+  .home_background_panel_tl,
+  .home_background_panel_tr,
+  .home_background_panel_right {
+    opacity: 0.58;
+  }
+
+  .home_background_panel_bottom,
+  .home_background_panel_bottom_left {
+    opacity: 0.42;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home_background {
+    transition: none;
+  }
+}

@@ -2,7 +2,8 @@ import { useEffect, useRef, useState, type MouseEvent, type PointerEvent } from 
 import './HomeSection.css'
 import AboutPage from '../about/AboutPage'
 import MyWorkPage from '../work/MyWorkPage'
-import HomeMazeNav from './HomeMazeNav'
+import HomeMazeNav, { type ProjectKey } from './HomeMazeNav'
+import HomeBackground from './HomeBackground'
 import HomeMenu from './HomeMenu'
 import type { RouteKey } from './homeTypes'
 
@@ -14,7 +15,7 @@ function HomeSection({ isActive }: HomeSectionProps) {
   const [activeRoute, setActiveRoute] = useState<RouteKey | null>(null)
   const [aboutOpen, setAboutOpen] = useState(false)
   const [workOpen, setWorkOpen] = useState(false)
-  const [hoveredProject, setHoveredProject] = useState<'simmons' | null>(null)
+  const [hoveredProject, setHoveredProject] = useState<ProjectKey | null>(null)
   const aboutPageRef = useRef<HTMLElement | null>(null)
   const workPageRef = useRef<HTMLElement | null>(null)
 
@@ -36,6 +37,15 @@ function HomeSection({ isActive }: HomeSectionProps) {
     setAboutOpen(false)
     setWorkOpen(false)
     setActiveRoute(route)
+    setHoveredProject(null)
+
+    if (route === 'profile') {
+      setAboutOpen(true)
+    }
+
+    if (route === 'work') {
+      setWorkOpen(true)
+    }
   }
 
   const goHome = () => {
@@ -53,10 +63,24 @@ function HomeSection({ isActive }: HomeSectionProps) {
     }
 
     const rect = mazeNav.getBoundingClientRect()
-    const simmonsX = rect.left + (1990 / 4377) * rect.width
-    const simmonsY = rect.top + (375 / 4377) * rect.height
-    const distance = Math.hypot(clientX - simmonsX, clientY - simmonsY)
-    const nextHoveredProject = distance <= 38 ? 'simmons' : null
+    const projects: Array<{ key: ProjectKey; x: number; y: number }> = [
+      { key: 'simmons', x: 1990, y: 375 },
+      { key: 'gunit', x: 385, y: 2118 },
+      { key: 'stanley', x: 2405, y: 3682 },
+      { key: 'camping', x: 3198, y: 1342 },
+    ]
+    const nearestProject = projects
+      .map((project) => {
+        const x = rect.left + (project.x / 4377) * rect.width
+        const y = rect.top + (project.y / 4377) * rect.height
+
+        return {
+          key: project.key,
+          distance: Math.hypot(clientX - x, clientY - y),
+        }
+      })
+      .sort((a, b) => a.distance - b.distance)[0]
+    const nextHoveredProject = nearestProject.distance <= 38 ? nearestProject.key : null
 
     setHoveredProject((current) => (current === nextHoveredProject ? current : nextHoveredProject))
   }
@@ -79,13 +103,12 @@ function HomeSection({ isActive }: HomeSectionProps) {
           onPointerMove={handleStageMouseMove}
           onMouseMove={handleStageMouseMove}
         >
+          <HomeBackground />
+
           <button
             className="home_work_quick_link"
             type="button"
-            onClick={() => {
-              setAboutOpen(false)
-              setWorkOpen(true)
-            }}
+            onClick={() => startRoute('work')}
           >
             My Works
           </button>
@@ -93,18 +116,13 @@ function HomeSection({ isActive }: HomeSectionProps) {
           <HomeMazeNav
             activeRoute={activeRoute}
             hoveredProject={hoveredProject}
+            onHomeClick={goHome}
             onProjectHover={setHoveredProject}
           />
           <HomeMenu activeRoute={activeRoute} onRouteStart={startRoute} />
         </div>
       </section>
 
-      <span
-        className={`home_work_reveal_bloom${
-          activeRoute === 'work' ? ' home_work_reveal_bloom_active' : ''
-        }`}
-        aria-hidden="true"
-      />
       <AboutPage isOpen={aboutOpen} pageRef={aboutPageRef} />
       <MyWorkPage isOpen={workOpen} pageRef={workPageRef} onHomeClick={goHome} />
     </main>
