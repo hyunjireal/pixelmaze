@@ -1,8 +1,5 @@
 import HomeLogoLink from '../../components/HomeLogoLink'
-import attitudeRoute from '../../assets/icons/path_attitude.svg?raw'
 import campingRoute from '../../assets/icons/path_camping.svg?raw'
-import favoriteRoute from '../../assets/icons/path_favorite.svg?raw'
-import meRoute from '../../assets/icons/path_me.svg?raw'
 import ProjectHoverRoute from './ProjectHoverRoute'
 import type { RouteKey } from './homeTypes'
 
@@ -13,10 +10,6 @@ interface HomeMazeNavProps {
   hoveredProject: ProjectKey | null
   onHomeClick: () => void
   onProjectHover: (project: ProjectKey | null) => void
-}
-
-function getSvgPaths(svg: string) {
-  return svg.replace(/^[\s\S]*?<svg[^>]*>/, '').replace(/<\/svg>\s*$/, '')
 }
 
 function getSvgPathData(svg: string) {
@@ -77,6 +70,8 @@ const projectHoverRoutes: Record<
 }
 
 function HomeMazeNav({ activeRoute, hoveredProject, onHomeClick, onProjectHover }: HomeMazeNavProps) {
+  const shouldRenderProjectHoverRoutes = false
+
   return (
     <div className="home_maze_nav">
       <svg
@@ -128,18 +123,16 @@ function HomeMazeNav({ activeRoute, hoveredProject, onHomeClick, onProjectHover 
         </g>
 
         <g className="home_project_dot_layer">
-          {(['gunit', 'simmons', 'stanley', 'camping'] as const).map((project) => (
-            <ProjectHoverRoute
-              key={project}
-              {...projectHoverRoutes[project]}
-              isHovered={hoveredProject === project}
-              project={project}
-            />
-          ))}
-          <path className="home_project_line" d="M1990 375L2220 80L2600 80" />
-          <path className="home_project_line" d="M385 2118L170 2250L-600 2250" />
-          <path className="home_project_line" d="M2405 3682L2240 4200L1550 4200" />
-          <path className="home_project_line" d="M3198 1342L3650 1342L3850 560L4450 560" />
+          {shouldRenderProjectHoverRoutes
+            ? (['gunit', 'simmons', 'stanley', 'camping'] as const).map((project) => (
+                <ProjectHoverRoute
+                  key={project}
+                  {...projectHoverRoutes[project]}
+                  isHovered={hoveredProject === project}
+                  project={project}
+                />
+              ))
+            : null}
           <circle
             className={`home_project_dot home_project_dot_simmons${
               hoveredProject === 'simmons' ? ' home_project_dot_hovered' : ''
@@ -223,33 +216,6 @@ function HomeMazeNav({ activeRoute, hoveredProject, onHomeClick, onProjectHover 
         </g>
 
         <g className="home_blue_dot_layer">
-          <g
-            className="home_route home_route_me"
-            transform="translate(2188 2188) rotate(6.08) scale(1.7672) translate(-721.049 -341.685)"
-            dangerouslySetInnerHTML={{ __html: getSvgPaths(meRoute) }}
-          />
-          <g
-            className="home_route home_route_favorite"
-            transform="translate(2188 2188) rotate(2.31) scale(0.9393) translate(-2.5 -535.171)"
-            dangerouslySetInnerHTML={{ __html: getSvgPaths(favoriteRoute) }}
-          />
-          <g
-            className="home_route home_route_attitude"
-            transform="translate(2188 2188) rotate(-10.91) scale(0.9158) translate(-3.63 -2.5)"
-            dangerouslySetInnerHTML={{ __html: getSvgPaths(attitudeRoute) }}
-          />
-          <path
-            className="home_blue_line home_blue_line_me"
-            d="M1126 1472L1460 780L2570 780"
-          />
-          <path
-            className="home_blue_line home_blue_line_favorite"
-            d="M3946 1758L4215 1470L5060 1470"
-          />
-          <path
-            className="home_blue_line home_blue_line_attitude"
-            d="M3396 2488L3860 2488L4150 1980L5060 1980"
-          />
           <circle
             className="home_blue_dot home_blue_dot_me"
             cx="1126"

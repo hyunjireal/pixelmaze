@@ -1,7 +1,13 @@
-import type { RefObject } from 'react'
+import { useEffect, useState, type RefObject } from 'react'
+import {
+  Trophy,
+  X,
+} from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 import HomeLogoLink from '../../components/HomeLogoLink'
-import profileImage from '../../assets/images/me_profile01.png'
-import profileImage02 from '../../assets/images/me_profile02.png'
+import TetrisGame from './components/TetrisGame'
+import PortfolioSections from './components/PortfolioSections'
+import { sfx } from './utils/audio'
 import './AboutPage.css'
 
 interface AboutPageProps {
@@ -11,6 +17,78 @@ interface AboutPageProps {
 }
 
 function AboutPage({ isOpen, onHomeClick, pageRef }: AboutPageProps) {
+  const [totalLinesCleared, setTotalLinesCleared] = useState(0)
+  const [score, setScore] = useState(0)
+  const [gameStatus, setGameStatus] = useState<
+    'BEFORE_START' | 'PLAYING' | 'PAUSED' | 'GAME_OVER'
+  >('BEFORE_START')
+  const [triggerUnlockAll, setTriggerUnlockAll] = useState(false)
+  const [activeUnlockToast, setActiveUnlockToast] = useState<{
+    show: boolean
+    title: string
+    description: string
+    sectionName: string
+  } | null>(null)
+
+  useEffect(() => {
+    if (!activeUnlockToast?.show) return
+
+    const timer = window.setTimeout(() => {
+      setActiveUnlockToast((current) => (current ? { ...current, show: false } : current))
+    }, 4500)
+
+    return () => window.clearTimeout(timer)
+  }, [activeUnlockToast])
+
+  const handleLineClear = (clearedCount: number, clearedNames: string[]) => {
+    const predictedTotal = totalLinesCleared + clearedCount
+    let title = 'Portfolio block cleared'
+    let description = `Matched ${clearedNames.join(', ') || 'skill blocks'} into a clean row.`
+    let sectionName = `Score ${score + clearedCount * 100}`
+
+    if (predictedTotal >= 1 && totalLinesCleared < 1) {
+      title = 'Core skill set unlocked'
+      sectionName = 'Level 1'
+      description = 'Design and frontend skill cards are now available.'
+      sfx.playUnlock()
+    } else if (predictedTotal >= 2 && totalLinesCleared < 2) {
+      title = 'Traits unlocked'
+      sectionName = 'Level 2'
+      description = 'Strengths, working style, and growth notes have opened.'
+      sfx.playUnlock()
+    } else if (predictedTotal >= 3 && totalLinesCleared < 3) {
+      title = 'Hobbies unlocked'
+      sectionName = 'Level 3'
+      description = 'Personal interests and off-screen rhythms are revealed.'
+      sfx.playUnlock()
+    } else if (predictedTotal >= 4 && totalLinesCleared < 4) {
+      title = 'Portfolio fully unlocked'
+      sectionName = 'Master clear'
+      description = 'The final contact trophy is open.'
+      sfx.playUnlock()
+    }
+
+    setActiveUnlockToast({
+      show: true,
+      title,
+      description,
+      sectionName,
+    })
+  }
+
+  const triggerMasterUnlock = () => {
+    sfx.playUnlock()
+    setTriggerUnlockAll(true)
+    setTotalLinesCleared(4)
+    setScore(500)
+    setActiveUnlockToast({
+      show: true,
+      title: 'All portfolio cards unlocked',
+      sectionName: 'Full profile',
+      description: 'Everything is open for quick browsing.',
+    })
+  }
+
   return (
     <section
       ref={pageRef}
@@ -19,111 +97,85 @@ function AboutPage({ isOpen, onHomeClick, pageRef }: AboutPageProps) {
       data-lenis-prevent
       tabIndex={-1}
     >
-      <HomeLogoLink onClick={onHomeClick} position="topRight" />
-      <header className="about_hero about_reveal">
-        <h1>About Me</h1>
-        <p>기술로 생각을 연결하고, 사용자 경험을 설계합니다.</p>
-      </header>
+      <div
+        className="about_tetris min-h-screen bg-zinc-950 text-zinc-100 flex flex-col font-sans select-none relative overflow-x-hidden"
+        id="about-tetris-portfolio"
+      >
+        <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-zinc-900/10 via-zinc-950/0 to-transparent pointer-events-none z-0" />
 
-      <article className="about_section about_intro about_reveal">
-        <span className="about_section_number">01</span>
-        <div className="about_section_body">
-          <div className="about_intro_text">
-            <p>사용자와 문제를 깊이 이해하고,</p>
-            <p>기술로 해결책을 제시하는 개발자가 되고자 합니다.</p>
-            <p>새로운 기술을 배우는 것을 즐기며,</p>
-            <p>알아감 통해 더 큰 가치를 만듭니다.</p>
-          </div>
-          <div className="about_photo_pair" aria-label="Profile photos">
-            <img src={profileImage} alt="Jang Hyunji profile 01" />
-            <img src={profileImage02} alt="Jang Hyunji profile 02" />
-          </div>
-        </div>
-      </article>
+        <HomeLogoLink color="#BDBAB6" onClick={onHomeClick} position="topRight" />
 
-      <article className="about_section about_values about_reveal" id="values">
-        <span className="about_section_number">02</span>
-        <div className="about_section_body">
-          <h2>My Values</h2>
-          <ul className="about_value_grid">
-            <li>
-              <span>R</span>
-              <strong>Responsibility</strong>
-              <p>맡은 일은 끝까지 책임지고 완성합니다.</p>
-            </li>
-            <li>
-              <span>P</span>
-              <strong>Persistence</strong>
-              <p>쉽게 포기하지 않고 방법을 찾아갑니다.</p>
-            </li>
-            <li>
-              <span>D</span>
-              <strong>Direction</strong>
-              <p>과정이 복잡해져도 방향을 잃지 않습니다.</p>
-            </li>
-            <li>
-              <span>O</span>
-              <strong>Observation</strong>
-              <p>작은 불편함도 그냥 지나치지 않고 살핍니다.</p>
-            </li>
-          </ul>
-        </div>
-      </article>
+        <main className="flex-1 max-w-6xl w-full mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-12 gap-8 items-start relative z-10">
+          <section className="col-span-12 md:col-span-5 lg:col-span-4 flex flex-col gap-4 self-center md:self-start md:sticky md:top-24">
+            <div className="text-center mb-1">
+              <p className="font-mono text-[10px] text-zinc-400 font-bold uppercase tracking-widest leading-none">
+                interactive controller
+              </p>
+            </div>
+            <TetrisGame
+              onLineClear={handleLineClear}
+              gameStatus={gameStatus}
+              setGameStatus={setGameStatus}
+              totalLinesCleared={totalLinesCleared}
+              setTotalLinesCleared={setTotalLinesCleared}
+              score={score}
+              setScore={setScore}
+            />
+          </section>
 
-      <article className="about_section about_skills about_reveal">
-        <span className="about_section_number">03</span>
-        <div className="about_section_body">
-          <h2>My Skills</h2>
-          <div className="about_skill_columns">
-            {[
-              ['HTML / CSS', '90%'],
-              ['JavaScript', '85%'],
-              ['React', '80%'],
-              ['TypeScript', '75%'],
-              ['Next.js', '70%'],
-              ['Figma', '85%'],
-            ].map(([name, value]) => (
-              <div className="about_skill_bar" key={name}>
-                <div>
-                  <strong>{name}</strong>
-                  <span>{value}</span>
+          <section className="col-span-12 md:col-span-7 lg:col-span-8 flex flex-col gap-4">
+            <PortfolioSections
+              totalLinesCleared={totalLinesCleared}
+              triggerUnlockAll={triggerUnlockAll}
+              setTriggerUnlockAll={setTriggerUnlockAll}
+              onInstantUnlock={triggerMasterUnlock}
+            />
+          </section>
+        </main>
+
+        <AnimatePresence>
+          {activeUnlockToast?.show ? (
+            <div className="fixed bottom-6 right-6 z-50 max-w-sm w-full px-4 sm:px-0">
+              <motion.div
+                initial={{ opacity: 0, y: 50, scale: 0.85 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 20, scale: 0.9 }}
+                className="p-4 rounded-2xl border-2 shadow-[0_10px_30px_rgba(0,0,0,0.7)] bg-zinc-950 flex gap-3 relative overflow-hidden border-zinc-700"
+              >
+                <div className="absolute top-0 left-0 w-1.5 h-full bg-gradient-to-b from-zinc-500 to-white" />
+                <div className="p-2 bg-zinc-900 border border-zinc-800 rounded-xl shrink-0 self-start text-white animate-pulse">
+                  <Trophy className="w-5 h-5" />
                 </div>
-                <i style={{ width: value }} />
-              </div>
-            ))}
+                <div className="flex-1 flex flex-col gap-0.5 text-left pr-2">
+                  <span className="font-mono text-[8px] text-zinc-400 font-extrabold tracking-widest uppercase">
+                    {activeUnlockToast.sectionName}
+                  </span>
+                  <h4 className="text-xs sm:text-sm font-extrabold text-white leading-tight">
+                    {activeUnlockToast.title}
+                  </h4>
+                  <p className="text-[10px] sm:text-xs text-zinc-400 leading-snug mt-1">
+                    {activeUnlockToast.description}
+                  </p>
+                </div>
+                <button
+                  onClick={() => setActiveUnlockToast((current) => current ? { ...current, show: false } : current)}
+                  className="p-1 rounded-lg text-zinc-500 hover:text-white hover:bg-zinc-900 transition self-start"
+                  type="button"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </motion.div>
+            </div>
+          ) : null}
+        </AnimatePresence>
+
+        <footer className="mt-auto px-6 py-6 border-t border-zinc-900 bg-zinc-950 text-center font-mono text-[10px] text-zinc-500 tracking-wide">
+          <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
+            <p>2026 Hyunji. All rights reserved.</p>
+            <p>React 19 + Tetris portfolio interaction</p>
           </div>
-        </div>
-      </article>
-
-      <article className="about_section about_journey about_reveal">
-        <span className="about_section_number">04</span>
-        <div className="about_section_body">
-          <h2>My Journey</h2>
-          <ol className="about_timeline">
-            <li>
-              <strong>2021</strong>
-              <p>웹 개발 입문 기초 학습 시작</p>
-            </li>
-            <li>
-              <strong>2022</strong>
-              <p>개인 프로젝트 경험 포트폴리오 제작</p>
-            </li>
-            <li>
-              <strong>2023</strong>
-              <p>실무 프로젝트 참여 협업 경험 확대</p>
-            </li>
-            <li>
-              <strong>2024 - Now</strong>
-              <p>프로덕트에 기여하고 성장 중</p>
-            </li>
-          </ol>
-        </div>
-      </article>
-
-      <footer className="about_footer">
-        <span>© 2024 M. All rights reserved.</span>
-        <span>hello@m-portfolio.dev</span>
-      </footer>
+        </footer>
+      </div>
     </section>
   )
 }

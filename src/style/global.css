@@ -1,5 +1,6 @@
 ﻿@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Nothing+You+Could+Do&family=Playfair+Display:ital,wght@0,500..800;1,500..800&family=Exo+2:wght@100..900&family=Philosopher:wght@400&family=Prompt:wght@400&family=Roboto:wght@300;400&family=Righteous&display=swap');
+@import "tailwindcss";
 
 :root {
   --bg-main: #F3F2F2;
@@ -1028,9 +1029,10 @@ html {
 
 body {
   margin: 0;
-  min-width: 1024px;
+  min-width: 0;
   color: var(--text-main);
   background: var(--bg-main);
+  overflow-x: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }

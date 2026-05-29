@@ -1,10 +1,23 @@
-import type { PointerEvent } from 'react'
+import { useCallback, useRef, useState, type PointerEvent } from 'react'
 import SharedMaze from './components/SharedMaze'
 import HomeSection from './pages/home/HomeSection'
+import IntroSection from './pages/intro/IntroSection'
+import MyWorkPage from './pages/work/MyWorkPage'
 import './App.css'
 
+type AppPhase = 'intro' | 'home' | 'work'
+
 function App() {
-  const phase = 'home'
+  const [phase, setPhase] = useState<AppPhase>('intro')
+  const workPageRef = useRef<HTMLElement | null>(null)
+
+  const enterHome = useCallback(() => {
+    setPhase('home')
+  }, [])
+
+  const openWork = useCallback(() => {
+    setPhase('work')
+  }, [])
 
   const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
     const x = event.clientX / window.innerWidth - 0.5
@@ -25,8 +38,27 @@ function App() {
       className={`app_shell app_shell_${phase}`}
       onPointerMove={handlePointerMove}
     >
-      <SharedMaze />
-      <HomeSection isActive={phase === 'home'} />
+      <SharedMaze showDecor={phase === 'home'} />
+      {phase === 'intro' ? (
+        <IntroSection
+          onEnter={enterHome}
+        />
+      ) : null}
+      {phase === 'home' ? (
+        <HomeSection
+          isActive
+          onWorkRouteStart={openWork}
+        />
+      ) : null}
+      {phase === 'work' ? (
+        <div className="home_page_work_open">
+          <MyWorkPage
+            isOpen
+            pageRef={workPageRef}
+            onHomeClick={() => setPhase('home')}
+          />
+        </div>
+      ) : null}
     </div>
   )
 }

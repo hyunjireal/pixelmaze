@@ -550,16 +550,6 @@
     drop-shadow(0 10px 22px rgba(0, 62, 54, 0.2));
 }
 
-.home_project_line,
-.home_blue_line {
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 8;
-  opacity: 0;
-  pointer-events: none;
-}
-
 .home_route {
   pointer-events: none;
 }
@@ -628,46 +618,6 @@
   animation: home_project_route_lead 3s linear infinite;
 }
 
-.home_route_me,
-.home_route_favorite,
-.home_route_attitude {
-  display: none;
-}
-
-.home_project_line {
-  stroke: #e53935;
-}
-
-.home_blue_line {
-  stroke: #2f80ed;
-  stroke-width: 14;
-  filter:
-    drop-shadow(0 0 5px rgba(47, 128, 237, 0.22))
-    drop-shadow(0 8px 16px rgba(47, 128, 237, 0.1));
-}
-
-.home_blue_line_me {
-  stroke-width: 15;
-}
-
-.home_blue_line_favorite {
-  stroke-width: 13;
-}
-
-.home_blue_line_attitude {
-  stroke-width: 15;
-}
-
-.home_project_line,
-.home_blue_line {
-  display: none;
-}
-
-.home_page_active .home_project_line,
-.home_page_active .home_blue_line {
-  animation: home_color_line_in 0.72s ease 1.18s forwards;
-}
-
 .home_page_active .home_project_dot_simmons {
   animation: home_menu_dot_in 0.65s ease 1.38s forwards;
 }
@@ -709,6 +659,9 @@
 .home_note {
   --tab-note-color: var(--prism-stone-start);
   --tab-note-glow-rgb: 217, 202, 219;
+  --menu-lockup-backdrop-size: clamp(74px, 6.6vw, 126px);
+  --menu-lockup-script-size: clamp(46px, 4.2vw, 80px);
+  --menu-lockup-overlap: clamp(-108px, -5.65vw, -64px);
   z-index: 5;
   color: rgba(43, 43, 44, 0.64);
   font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
@@ -973,16 +926,6 @@
     filter:
       drop-shadow(0 0 8px rgba(var(--tab-note-glow-rgb), 0.36))
       drop-shadow(0 10px 20px rgba(var(--tab-note-glow-rgb), 0.18));
-  }
-}
-
-@keyframes home_color_line_in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 0.96;
   }
 }
 

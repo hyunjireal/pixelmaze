@@ -1,16 +1,13 @@
 .intro_page {
   position: absolute;
   inset: 0;
+  z-index: 10;
   height: 100svh;
   background: transparent;
   display: grid;
   place-items: center;
   overflow: hidden;
   pointer-events: auto;
-}
-
-.intro_page_leaving {
-  pointer-events: none;
 }
 
 .intro_content {
@@ -48,6 +45,8 @@
 }
 
 .intro_enter {
+  position: relative;
+  z-index: 3;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -63,17 +62,13 @@
   color: var(--text-main);
   text-transform: uppercase;
   transform: translate(var(--button_tx), var(--button_ty));
-  transition: background 0.2s, color 0.2s, transform 0.24s ease-out;
+  transition: border-color 0.2s, color 0.2s, transform 0.24s ease-out;
 }
 
 .intro_enter:hover {
-  background: var(--hover-charcoal);
-  border-color: var(--hover-charcoal);
-  color: var(--bg-light);
-}
-
-.intro_page_leaving .intro_content {
-  animation: intro_content_exit 1s ease forwards;
+  background: transparent;
+  border-color: var(--text-main);
+  color: var(--text-main);
 }
 
 @keyframes intro_content_reveal {
@@ -88,22 +83,13 @@
   }
 }
 
-@keyframes intro_content_exit {
-  to {
-    opacity: 0;
-    filter: blur(5px);
-    transform: translate(var(--content_tx), calc(var(--content_ty) - 12px));
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .intro_content,
   .intro_enter {
     transition: none;
   }
 
-  .intro_content,
-  .intro_page_leaving .intro_content {
+  .intro_content {
     animation-duration: 0.01ms;
     animation-delay: 0s;
   }

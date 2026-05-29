@@ -22,7 +22,11 @@ const mazeDots = [
   { x: '23%', y: '82%', size: '7px', opacity: 0.28 },
 ]
 
-function SharedMaze() {
+interface SharedMazeProps {
+  showDecor?: boolean
+}
+
+function SharedMaze({ showDecor = true }: SharedMazeProps) {
   const mazeRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -32,9 +36,10 @@ function SharedMaze() {
 
     drawableSegments?.forEach((segment, index) => {
       const length = segment.getTotalLength()
+      const originalDashArray = segment.getAttribute('stroke-dasharray')
       const forwardDelay = Math.min(index * 0.035, 1.45)
       const reverseDelay = Math.max(1.45 - forwardDelay, 0) * 0.42
-      segment.style.strokeDasharray = `${length}`
+      segment.style.strokeDasharray = originalDashArray ?? `${length}`
       segment.style.strokeDashoffset = `${length}`
       segment.style.setProperty('--segment_length', `${length}`)
       segment.style.setProperty('--segment_delay', `${forwardDelay}s`)
@@ -48,26 +53,30 @@ function SharedMaze() {
         className="shared_maze_core shared_maze_draw"
         svg={homeMaze}
       />
-      <InlineSvg
-        className="shared_maze_decor shared_maze_decor_connect shared_maze_draw"
-        svg={homeMazeConnect}
-      />
-      <div className="shared_maze_orbit_dots">
-        {mazeDots.map((dot) => (
-          <span
-            className="shared_maze_orbit_dot"
-            key={`${dot.x}-${dot.y}`}
-            style={
-              {
-                '--dot-x': dot.x,
-                '--dot-y': dot.y,
-                '--dot-size': dot.size,
-                '--dot-opacity': dot.opacity,
-              } as CSSProperties
-            }
+      {showDecor ? (
+        <>
+          <InlineSvg
+            className="shared_maze_decor shared_maze_decor_connect shared_maze_draw"
+            svg={homeMazeConnect}
           />
-        ))}
-      </div>
+          <div className="shared_maze_orbit_dots">
+            {mazeDots.map((dot) => (
+              <span
+                className="shared_maze_orbit_dot"
+                key={`${dot.x}-${dot.y}`}
+                style={
+                  {
+                    '--dot-x': dot.x,
+                    '--dot-y': dot.y,
+                    '--dot-size': dot.size,
+                    '--dot-opacity': dot.opacity,
+                  } as CSSProperties
+                }
+              />
+            ))}
+          </div>
+        </>
+      ) : null}
     </div>
   )
 }
