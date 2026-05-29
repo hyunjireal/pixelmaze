@@ -1,4 +1,5 @@
 import HomeLogoLink from '../../components/HomeLogoLink'
+import aboutT from '../../assets/icons/about_t.svg?raw'
 import campingRoute from '../../assets/icons/path_camping.svg?raw'
 import ProjectHoverRoute from './ProjectHoverRoute'
 import type { RouteKey } from './homeTypes'
@@ -15,6 +16,8 @@ interface HomeMazeNavProps {
 function getSvgPathData(svg: string) {
   return Array.from(svg.matchAll(/<path d="([^"]+)"/g), (match) => match[1])
 }
+
+const aboutTetrisPiece = aboutT.replace(/<\/?svg[^>]*>/g, '')
 
 const projectHoverRoutes: Record<
   ProjectKey,
@@ -88,7 +91,12 @@ function HomeMazeNav({ activeRoute, hoveredProject, onHomeClick, onProjectHover 
         >
           <path className="home_maze_extension_path_base" d="M1035 780L300 420L-1790 420" pathLength="1" />
           <path className="home_maze_extension_path_progress" d="M1035 780L300 420L-1790 420" pathLength="1" />
-          <circle className="home_maze_extension_start" cx="1035" cy="780" r="54" />
+          <g transform="translate(821 639) scale(0.55)">
+            <g
+              className="home_maze_about_t_piece"
+              dangerouslySetInnerHTML={{ __html: aboutTetrisPiece }}
+            />
+          </g>
           <circle className="home_maze_extension_end" cx="-1790" cy="420" r="54" />
         </g>
 

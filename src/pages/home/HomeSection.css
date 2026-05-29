@@ -408,6 +408,28 @@
   animation: home_menu_dot_in 0.65s ease 1.05s forwards;
 }
 
+.home_maze_about_t_piece {
+  opacity: 0;
+  pointer-events: none;
+  transform-box: fill-box;
+  transform-origin: center;
+  filter:
+    drop-shadow(16px 18px 13px rgba(50, 50, 50, 0.22))
+    drop-shadow(4px 6px 4px rgba(50, 50, 50, 0.18));
+}
+
+.home_maze_about_t_piece rect {
+  fill: #f8f7f4;
+  stroke: rgba(204, 202, 197, 0.68);
+  stroke-width: 4;
+  rx: 30px;
+  ry: 30px;
+}
+
+.home_page_active .home_maze_about_t_piece {
+  animation: home_menu_dot_in 0.65s ease 1.05s forwards;
+}
+
 .home_maze_extension_end {
   fill: var(--point-dark);
   stroke: var(--point-dark);

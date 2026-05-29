@@ -6,26 +6,67 @@
   user-select: none;
 }
 
-.shared_maze_core {
+.shared_maze_core_stack {
   position: absolute;
   left: 50vw;
   top: 50vh;
   width: min(38vw, 794px);
   aspect-ratio: 1;
-  opacity: 0.92;
   transform: translate(
     calc(-50% + var(--maze_tx, 0px)),
     calc(-50% + var(--maze_ty, 0px))
   );
-  filter: contrast(1.08);
   transition: transform 0.32s ease-out;
 }
 
-.shared_maze_draw path,
-.shared_maze_draw circle,
-.shared_maze_draw ellipse,
-.shared_maze_draw line {
-  stroke: rgba(76, 76, 78, 0.9);
+.shared_maze_core,
+.shared_maze_core_depth {
+  position: absolute;
+  inset: 0;
+}
+
+.shared_maze_core {
+  opacity: 0.82;
+  filter: contrast(1.02);
+}
+
+.shared_maze_core_depth {
+  opacity: 0;
+  transform-origin: center;
+  animation: shared_maze_depth_in 1.2s ease 0.5s forwards;
+}
+
+.shared_maze_core_depth_shadow {
+  transform: translate(2.2px, 2.8px);
+  filter: blur(0.38px);
+}
+
+.shared_maze_core_depth_highlight {
+  transform: translate(-1.4px, -1.8px);
+  filter: blur(0.16px);
+}
+
+.shared_maze_core path,
+.shared_maze_core circle,
+.shared_maze_core ellipse,
+.shared_maze_core line {
+  stroke: rgba(76, 76, 78, 0.62);
+}
+
+.shared_maze_core_depth_shadow path,
+.shared_maze_core_depth_shadow circle,
+.shared_maze_core_depth_shadow ellipse,
+.shared_maze_core_depth_shadow line {
+  stroke: rgba(48, 48, 50, 0.3);
+  stroke-width: 10px;
+}
+
+.shared_maze_core_depth_highlight path,
+.shared_maze_core_depth_highlight circle,
+.shared_maze_core_depth_highlight ellipse,
+.shared_maze_core_depth_highlight line {
+  stroke: rgba(255, 255, 255, 0.86);
+  stroke-width: 7px;
 }
 
 .shared_maze_decor path,
@@ -35,8 +76,11 @@
   stroke: var(--maze-line);
 }
 
+.shared_maze_core_stack,
 .shared_maze_core,
+.shared_maze_core_depth,
 .shared_maze_core svg,
+.shared_maze_core_depth svg,
 .shared_maze_decor,
 .shared_maze_decor svg {
   display: block;
@@ -45,6 +89,7 @@
 }
 
 .shared_maze_core svg,
+.shared_maze_core_depth svg,
 .shared_maze_decor svg {
   width: 100%;
   height: 100%;
@@ -108,8 +153,8 @@
   animation-delay: var(--segment_delay, 0s);
 }
 
-.app_shell:has(.home_page_about_open) .shared_maze_core,
-.app_shell:has(.home_page_work_open) .shared_maze_core,
+.app_shell:has(.home_page_about_open) .shared_maze_core_stack,
+.app_shell:has(.home_page_work_open) .shared_maze_core_stack,
 .app_shell:has(.home_page_about_open) .shared_maze_decor,
 .app_shell:has(.home_page_work_open) .shared_maze_decor,
 .app_shell:has(.home_page_about_open) .shared_maze_orbit_dots,
@@ -130,6 +175,12 @@
   100% {
     opacity: 1;
     stroke-dashoffset: 0;
+  }
+}
+
+@keyframes shared_maze_depth_in {
+  to {
+    opacity: 1;
   }
 }
 
@@ -160,7 +211,7 @@
     transition: none;
   }
 
-  .shared_maze_core,
+  .shared_maze_core_stack,
   .shared_maze_decor,
   .shared_maze_orbit_dots {
     transition: none;

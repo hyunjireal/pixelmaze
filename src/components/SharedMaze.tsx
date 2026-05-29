@@ -49,10 +49,20 @@ function SharedMaze({ showDecor = true }: SharedMazeProps) {
 
   return (
     <div className="shared_maze" aria-hidden="true" ref={mazeRef}>
-      <InlineSvg
-        className="shared_maze_core shared_maze_draw"
-        svg={homeMaze}
-      />
+      <div className="shared_maze_core_stack">
+        <InlineSvg
+          className="shared_maze_core_depth shared_maze_core_depth_shadow"
+          svg={homeMaze}
+        />
+        <InlineSvg
+          className="shared_maze_core_depth shared_maze_core_depth_highlight"
+          svg={homeMaze}
+        />
+        <InlineSvg
+          className="shared_maze_core shared_maze_draw"
+          svg={homeMaze}
+        />
+      </div>
       {showDecor ? (
         <>
           <InlineSvg
