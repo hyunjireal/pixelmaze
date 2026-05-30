@@ -1,6 +1,7 @@
 import HomeLogoLink from '../../components/HomeLogoLink'
-import aboutT from '../../assets/icons/about_t.svg?raw'
 import campingRoute from '../../assets/icons/path_camping.svg?raw'
+import contactEmail from '../../assets/images/contact_email.png'
+import meT from '../../assets/images/me_t.png'
 import ProjectHoverRoute from './ProjectHoverRoute'
 import type { RouteKey } from './homeTypes'
 
@@ -16,8 +17,6 @@ interface HomeMazeNavProps {
 function getSvgPathData(svg: string) {
   return Array.from(svg.matchAll(/<path d="([^"]+)"/g), (match) => match[1])
 }
-
-const aboutTetrisPiece = aboutT.replace(/<\/?svg[^>]*>/g, '')
 
 const projectHoverRoutes: Record<
   ProjectKey,
@@ -89,16 +88,19 @@ function HomeMazeNav({ activeRoute, hoveredProject, onHomeClick, onProjectHover 
             activeRoute === 'profile' ? ' home_maze_extension_line_active' : ''
           }`}
         >
-          <path className="home_maze_extension_path_base" d="M1035 780L300 420L-1790 420" pathLength="1" />
-          <path className="home_maze_extension_path_progress" d="M1035 780L300 420L-1790 420" pathLength="1" />
-          <g transform="translate(821 639) scale(0.55)">
-            <g
-              className="home_maze_about_t_piece"
-              dangerouslySetInnerHTML={{ __html: aboutTetrisPiece }}
-            />
-          </g>
+          <path className="home_maze_extension_path_base" d="M2335 1280L300 420L-1790 420" pathLength="1" />
+          <path className="home_maze_extension_path_progress" d="M2335 1280L300 420L-1790 420" pathLength="1" />
           <circle className="home_maze_extension_end" cx="-1790" cy="420" r="54" />
         </g>
+        <image
+          className="home_maze_about_t_piece"
+          href={meT}
+          x="2035"
+          y="1082"
+          width="600"
+          height="396"
+          preserveAspectRatio="xMidYMid meet"
+        />
 
         <g
           className={`home_maze_extension_line home_maze_extension_line_work${
@@ -118,17 +120,25 @@ function HomeMazeNav({ activeRoute, hoveredProject, onHomeClick, onProjectHover 
         >
           <path
             className="home_maze_extension_path_base"
-            d="M2278 3450L4568 3440L5065 3668L6195 3646"
+            d="M2878 3450L4568 3440L5065 3668L6195 3646"
             pathLength="1"
           />
           <path
             className="home_maze_extension_path_progress"
-            d="M2278 3450L4568 3440L5065 3668L6195 3646"
+            d="M2878 3450L4568 3440L5065 3668L6195 3646"
             pathLength="1"
           />
-          <circle className="home_maze_extension_start" cx="2278" cy="3450" r="54" />
           <circle className="home_maze_extension_end" cx="6195" cy="3646" r="54" />
         </g>
+        <image
+          className="home_maze_extension_contact_icon"
+          href={contactEmail}
+          x="2738"
+          y="3310"
+          width="280"
+          height="280"
+          preserveAspectRatio="xMidYMid meet"
+        />
 
         <g className="home_project_dot_layer">
           {shouldRenderProjectHoverRoutes

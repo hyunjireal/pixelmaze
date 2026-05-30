@@ -15,7 +15,7 @@
 
 .work_detail_artboard {
   position: relative;
-  width: clamp(520px, 58vw, 760px);
+  width: clamp(560px, 44vw, 700px);
   max-width: 100%;
   aspect-ratio: 720 / 900;
 }
@@ -23,10 +23,10 @@
 .work_detail_mockup {
   display: block;
   position: absolute;
-  left: 88%;
+  left: 82%;
   top: 50%;
-  width: clamp(360px, 38vw, 520px);
-  max-width: 72%;
+  width: clamp(380px, 30vw, 500px);
+  max-width: 70%;
   max-height: 86%;
   object-fit: contain;
   transform: translate(-50%, -50%);

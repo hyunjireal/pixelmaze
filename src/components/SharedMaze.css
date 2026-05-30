@@ -26,8 +26,10 @@
 }
 
 .shared_maze_core {
-  opacity: 0.82;
-  filter: contrast(1.02);
+  opacity: 0.92;
+  filter:
+    drop-shadow(0 10px 16px rgba(52, 52, 54, 0.07))
+    contrast(1.01);
 }
 
 .shared_maze_core_depth {
@@ -37,36 +39,36 @@
 }
 
 .shared_maze_core_depth_shadow {
-  transform: translate(2.2px, 2.8px);
-  filter: blur(0.38px);
+  transform: translate(1px, 1.25px);
+  filter: blur(0.18px);
 }
 
 .shared_maze_core_depth_highlight {
-  transform: translate(-1.4px, -1.8px);
-  filter: blur(0.16px);
+  transform: translate(-0.65px, -0.75px);
+  filter: blur(0.08px);
 }
 
 .shared_maze_core path,
 .shared_maze_core circle,
 .shared_maze_core ellipse,
 .shared_maze_core line {
-  stroke: rgba(76, 76, 78, 0.62);
+  stroke: rgba(72, 72, 74, 0.68);
 }
 
 .shared_maze_core_depth_shadow path,
 .shared_maze_core_depth_shadow circle,
 .shared_maze_core_depth_shadow ellipse,
 .shared_maze_core_depth_shadow line {
-  stroke: rgba(48, 48, 50, 0.3);
-  stroke-width: 10px;
+  stroke: rgba(40, 40, 42, 0.15);
+  stroke-width: 3.2px;
 }
 
 .shared_maze_core_depth_highlight path,
 .shared_maze_core_depth_highlight circle,
 .shared_maze_core_depth_highlight ellipse,
 .shared_maze_core_depth_highlight line {
-  stroke: rgba(255, 255, 255, 0.86);
-  stroke-width: 7px;
+  stroke: rgba(255, 255, 255, 0.56);
+  stroke-width: 2px;
 }
 
 .shared_maze_decor path,
@@ -107,7 +109,7 @@
   top: 50vh;
   width: min(43vw, 919px);
   aspect-ratio: 919 / 912;
-  opacity: 0.22;
+  opacity: 0.08;
   transform: translate(
     calc(-50% + var(--maze_tx, 0px)),
     calc(-50% + var(--maze_ty, 0px))
@@ -138,10 +140,10 @@
   width: var(--dot-size);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: #9f9f9f;
+  background: #9a9a9a;
   opacity: var(--dot-opacity);
   transform: translate(-50%, -50%);
-  box-shadow: 0 0 10px rgba(120, 120, 120, 0.12);
+  box-shadow: 0 0 8px rgba(120, 120, 120, 0.08);
 }
 
 .shared_maze_draw path,

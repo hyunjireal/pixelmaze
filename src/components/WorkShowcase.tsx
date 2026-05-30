@@ -1,9 +1,15 @@
-import type { CSSProperties, ReactNode } from 'react'
+import { Fragment, type CSSProperties, type ReactNode } from 'react'
+import MagicHoverCta from './MagicHoverCta'
 import './WorkShowcase.css'
 
 type HighlightText = {
   strong: string
   text: string
+}
+
+type ShowcaseLink = {
+  href: string
+  label: string
 }
 
 interface WorkShowcaseProps {
@@ -13,6 +19,7 @@ interface WorkShowcaseProps {
   captionItems?: [string, string, string]
   className?: string
   copyLines?: HighlightText[]
+  ctaLinks?: ShowcaseLink[]
   frameImageAlt?: string
   frameImageSrc?: string
   frameTextureSrc?: string
@@ -32,6 +39,7 @@ function WorkShowcase({
   captionItems,
   className,
   copyLines = [],
+  ctaLinks = [],
   frameImageAlt,
   frameImageSrc,
   frameTextureSrc,
@@ -54,6 +62,7 @@ function WorkShowcase({
     '--work-showcase-logo-color': string
     '--work-showcase-frame-texture': string
   }
+  const ctaGlowColor = logoAriaLabel === 'Simmons' ? '95, 51, 54' : '228, 251, 46'
 
   return (
     <section
@@ -105,6 +114,25 @@ function WorkShowcase({
               </span>
             ))}
           </p>
+        ) : null}
+        {ctaLinks.length > 0 ? (
+          <MagicHoverCta
+            ariaLabel="Project links"
+            className="work_showcase_cta_group"
+            glowColor={ctaGlowColor}
+          >
+            {ctaLinks.map((link, index) => (
+              <Fragment key={link.label}>
+                {index === 1 ? (
+                  <span className="work_showcase_cta_divider" aria-hidden="true" />
+                ) : null}
+                <a className="work_showcase_cta" href={link.href}>
+                  <span className="work_showcase_cta_text body_m_16">{link.label}</span>
+                  <span className="work_showcase_cta_icon" aria-hidden="true" />
+                </a>
+              </Fragment>
+            ))}
+          </MagicHoverCta>
         ) : null}
       </div>
     </section>

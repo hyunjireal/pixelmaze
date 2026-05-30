@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, type RefObject, type WheelEvent } from 'react'
+import IndicatorBar from '../../components/IndicatorBar'
 import WorkDetailPanel from '../../components/WorkDetailPanel'
 import WorkShowcase from '../../components/WorkShowcase'
+import { getLuminanceFromColor, getLuminanceFromImage } from '../../utils/backgroundLuminance'
 import gunitLogo from '../../assets/icons/work_gunit_logo.svg?raw'
 import simmonsLogo from '../../assets/icons/work_simmons_logo.svg?raw'
 import gunitBackground from '../../assets/images/work_gunit_lbg.png'
@@ -32,6 +34,13 @@ const workImageUrls = [
   simmonsShowcase01,
 ]
 
+const LIGHT_INDICATOR_COLOR = '#E4FB2E'
+const DARK_INDICATOR_COLOR = '#5F3336'
+const LUMINANCE_THRESHOLD = 150
+
+const getIndicatorColorForLuminance = (luminance: number) =>
+  luminance > LUMINANCE_THRESHOLD ? DARK_INDICATOR_COLOR : LIGHT_INDICATOR_COLOR
+
 const works = [
   {
     id: 'gunit',
@@ -48,6 +57,10 @@ const works = [
       copyLines: [
         { strong: '에어소프트 입문', text: '부터' },
         { strong: '커뮤니티, 팀매칭, 장비관리', text: '까지' },
+      ],
+      ctaLinks: [
+        { label: 'Landing Page', href: '#work' },
+        { label: 'Live Site', href: '#work' },
       ],
       frameImageAlt: 'G-UNIT app showcase',
       frameImageSrc: gunitShowcase01,
@@ -73,6 +86,10 @@ const works = [
       copyLines: [
         { strong: '좋은 잠', text: '이라는' },
         { strong: '라이프 스타일 가치', text: '를 전달합니다.' },
+      ],
+      ctaLinks: [
+        { label: 'Landing Page', href: '#work' },
+        { label: 'Live Site', href: '#work' },
       ],
       frameImageAlt: 'Simmons renewal showcase',
       frameImageSrc: simmonsShowcase01,
@@ -118,6 +135,7 @@ const works = [
 
 function MyWorkPage({ isOpen, pageRef, onHomeClick }: MyWorkPageProps) {
   const [activeWorkIndex, setActiveWorkIndex] = useState(0)
+  const [indicatorColor, setIndicatorColor] = useState(LIGHT_INDICATOR_COLOR)
   const [previousWorkIndex, setPreviousWorkIndex] = useState<number | null>(null)
   const [direction, setDirection] = useState<'next' | 'prev'>('next')
   const preloadedImagesRef = useRef<HTMLImageElement[]>([])
@@ -134,6 +152,48 @@ function MyWorkPage({ isOpen, pageRef, onHomeClick }: MyWorkPageProps) {
       return image
     })
   }, [isOpen])
+
+  useEffect(() => {
+    let isCurrent = true
+    const activeShowcase = works[activeWorkIndex]?.showcase
+    const backgroundImage =
+      activeShowcase && 'backgroundImage' in activeShowcase
+        ? activeShowcase.backgroundImage
+        : undefined
+    const backgroundColor =
+      activeShowcase && 'backgroundColor' in activeShowcase
+        ? activeShowcase.backgroundColor
+        : undefined
+
+    if (backgroundImage) {
+      getLuminanceFromImage(backgroundImage, 'leftCenter')
+        .then((luminance) => {
+          if (isCurrent) setIndicatorColor(getIndicatorColorForLuminance(luminance))
+        })
+        .catch(() => {
+          if (isCurrent) setIndicatorColor(LIGHT_INDICATOR_COLOR)
+        })
+
+      return () => {
+        isCurrent = false
+      }
+    }
+
+    if (backgroundColor) {
+      const colorLuminance = getLuminanceFromColor(backgroundColor)
+      setIndicatorColor(
+        colorLuminance === null
+          ? LIGHT_INDICATOR_COLOR
+          : getIndicatorColorForLuminance(colorLuminance),
+      )
+    } else {
+      setIndicatorColor(LIGHT_INDICATOR_COLOR)
+    }
+
+    return () => {
+      isCurrent = false
+    }
+  }, [activeWorkIndex])
 
   const getPanelState = (index: number) => {
     if (index === activeWorkIndex) return 'active'
@@ -191,6 +251,12 @@ function MyWorkPage({ isOpen, pageRef, onHomeClick }: MyWorkPageProps) {
             />
           ))}
         </div>
+        <IndicatorBar
+          activeIndex={activeWorkIndex}
+          className="work_indicator_bar"
+          color={indicatorColor}
+          total={works.length}
+        />
       </div>
     </section>
   )

@@ -35,7 +35,7 @@
 .home_stage {
   position: absolute;
   inset: 0;
-  --home-profile-dot-x: calc(50vw - min(34.536vw, 721.63px));
+  --home-profile-dot-x: calc(50vw - min(31.536vw, 658.93px));
   --home-profile-dot-y: calc(50vh - min(15.354vw, 320.81px));
   --home-work-dot-x: calc(50vw - min(36.281vw, 758.08px));
   --home-work-dot-y: calc(50vh + min(9.463vw, 197.73px));
@@ -370,10 +370,12 @@
 .home_maze_extension_line_active,
 .home_stage:has(.home_note_profile:hover) .home_maze_extension_line_profile,
 .home_stage:has(.home_note_profile:focus-visible) .home_maze_extension_line_profile,
+.home_stage:has(.home_maze_about_t_piece:hover) .home_maze_extension_line_profile,
 .home_stage:has(.home_note_work:hover) .home_maze_extension_line_work,
 .home_stage:has(.home_note_work:focus-visible) .home_maze_extension_line_work,
 .home_stage:has(.home_note_contact:hover) .home_maze_extension_line_contact,
-.home_stage:has(.home_note_contact:focus-visible) .home_maze_extension_line_contact {
+.home_stage:has(.home_note_contact:focus-visible) .home_maze_extension_line_contact,
+.home_stage:has(.home_maze_extension_contact_icon:hover) .home_maze_extension_line_contact {
   opacity: 0.96;
   stroke-width: 5.2;
   filter:
@@ -383,10 +385,12 @@
 
 .home_stage:has(.home_note_profile:hover) .home_maze_extension_line_profile .home_maze_extension_path_progress,
 .home_stage:has(.home_note_profile:focus-visible) .home_maze_extension_line_profile .home_maze_extension_path_progress,
+.home_stage:has(.home_maze_about_t_piece:hover) .home_maze_extension_line_profile .home_maze_extension_path_progress,
 .home_stage:has(.home_note_work:hover) .home_maze_extension_line_work .home_maze_extension_path_progress,
 .home_stage:has(.home_note_work:focus-visible) .home_maze_extension_line_work .home_maze_extension_path_progress,
 .home_stage:has(.home_note_contact:hover) .home_maze_extension_line_contact .home_maze_extension_path_progress,
-.home_stage:has(.home_note_contact:focus-visible) .home_maze_extension_line_contact .home_maze_extension_path_progress {
+.home_stage:has(.home_note_contact:focus-visible) .home_maze_extension_line_contact .home_maze_extension_path_progress,
+.home_stage:has(.home_maze_extension_contact_icon:hover) .home_maze_extension_line_contact .home_maze_extension_path_progress {
   animation: home_tab_line_fill 0.42s cubic-bezier(0.2, 0, 0.12, 1) forwards;
 }
 
@@ -408,26 +412,32 @@
   animation: home_menu_dot_in 0.65s ease 1.05s forwards;
 }
 
+.home_maze_extension_contact_icon {
+  fill: none;
+  stroke: none;
+  opacity: 1;
+  filter:
+    drop-shadow(0 0 7px var(--tab-route-glow))
+    drop-shadow(0 8px 16px var(--tab-route-shadow));
+  cursor: pointer;
+  pointer-events: auto;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
 .home_maze_about_t_piece {
-  opacity: 0;
-  pointer-events: none;
+  opacity: 1;
+  cursor: pointer;
+  pointer-events: auto;
   transform-box: fill-box;
   transform-origin: center;
   filter:
-    drop-shadow(16px 18px 13px rgba(50, 50, 50, 0.22))
-    drop-shadow(4px 6px 4px rgba(50, 50, 50, 0.18));
-}
-
-.home_maze_about_t_piece rect {
-  fill: #f8f7f4;
-  stroke: rgba(204, 202, 197, 0.68);
-  stroke-width: 4;
-  rx: 30px;
-  ry: 30px;
+    drop-shadow(16px 18px 13px rgba(50, 50, 50, 0.28))
+    drop-shadow(4px 6px 4px rgba(50, 50, 50, 0.24));
 }
 
 .home_page_active .home_maze_about_t_piece {
-  animation: home_menu_dot_in 0.65s ease 1.05s forwards;
+  animation: none;
 }
 
 .home_maze_extension_end {
@@ -717,7 +727,9 @@
 }
 
 .home_note:hover .menu_lockup_script,
-.home_note:focus-visible .menu_lockup_script {
+.home_note:focus-visible .menu_lockup_script,
+.home_stage:has(.home_maze_about_t_piece:hover) .home_note_profile .menu_lockup_script,
+.home_stage:has(.home_maze_extension_contact_icon:hover) .home_note_contact .menu_lockup_script {
   animation: home_tab_script_fill 0.42s ease forwards;
 }
 

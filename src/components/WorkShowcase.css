@@ -237,6 +237,98 @@
   background: rgba(236, 236, 232, 0.28);
 }
 
+.work_showcase_cta_group {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr);
+  align-items: center;
+  width: min(450px, 100%);
+  margin-top: 26px;
+  padding: 10px 50px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  border-radius: 999px;
+  background: transparent;
+  color: #fff;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 0 0 rgba(228, 251, 46, 0);
+  transition:
+    background 0.2s ease;
+}
+
+.work_showcase_cta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 0;
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  isolation: isolate;
+  transition:
+    color 0.2s ease;
+}
+
+.work_showcase_cta:first-of-type {
+  grid-column: 1;
+  justify-self: start;
+}
+
+.work_showcase_cta:last-of-type {
+  grid-column: 3;
+  justify-self: end;
+  transform: translateX(-16px);
+}
+
+.work_showcase_cta_text,
+.work_showcase_cta_icon {
+  position: relative;
+  z-index: 1;
+}
+
+.work_showcase:has(.work_showcase_logo[aria-label='G-UNIT']) .work_showcase_cta:hover,
+.work_showcase:has(.work_showcase_logo[aria-label='G-UNIT']) .work_showcase_cta:focus-visible {
+  color: #E4FB2E;
+}
+
+.work_showcase:has(.work_showcase_logo[aria-label='Simmons']) .work_showcase_cta:hover,
+.work_showcase:has(.work_showcase_logo[aria-label='Simmons']) .work_showcase_cta:focus-visible {
+  color: #5F3336;
+}
+
+.work_showcase_cta_text {
+  line-height: 1.6;
+}
+
+.work_showcase_cta_icon {
+  display: block;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  background: currentColor;
+  mask: url('../assets/icons/arrow_page.svg') center / 24px 24px no-repeat;
+  -webkit-mask: url('../assets/icons/arrow_page.svg') center / 24px 24px no-repeat;
+}
+
+.work_showcase_cta_divider {
+  display: block;
+  position: relative;
+  z-index: 1;
+  grid-column: 2;
+  justify-self: center;
+  width: 1px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.work_showcase_cta_text {
+  font-weight: 700;
+}
+
 .work_showcase_tagline {
   min-height: 32px;
   margin: 0;
