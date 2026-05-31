@@ -1,0 +1,24 @@
+.work_logo_home_transition {
+  --work-logo-home-origin-x: 100%;
+  --work-logo-home-origin-y: 0%;
+
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  overflow: hidden;
+  background: var(--bg-main, #f3f2f2);
+  clip-path: circle(0% at var(--work-logo-home-origin-x) var(--work-logo-home-origin-y));
+  pointer-events: none;
+  transition: clip-path 680ms cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: clip-path;
+}
+
+.work_logo_home_transition_open {
+  clip-path: circle(150% at var(--work-logo-home-origin-x) var(--work-logo-home-origin-y));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work_logo_home_transition {
+    transition-duration: 0.01ms;
+  }
+}

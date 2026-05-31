@@ -7,7 +7,8 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { TETROMINOES } from "../data";
 import type { GameStatus, Position } from "../types";
 import { sfx } from "../utils/audio";
-import { Play, RotateCcw, ArrowDown, ArrowLeft, Zap, Trophy, ShieldAlert, Sparkles, Sliders } from "lucide-react";
+import { Play, RotateCcw, ArrowDown, ArrowLeft, ArrowRight, ShieldAlert, Sliders } from "lucide-react";
+import './TetrisGame.css';
 
 interface TetrisGameProps {
   onLineClear: (linesCleared: number, lastClearedNames: string[]) => void;
@@ -600,57 +601,6 @@ export default function TetrisGame({
     }
   }, [currentPiece, board, checkCollision, gameStatus]);
 
-  // Smart cheat button: fills a row except for 1 cell to make standard play easier!
-  const activateRowAssist = () => {
-    if (gameStatus !== "PLAYING") return;
-    sfx.playUnlock();
-    setBoard((prev) => {
-      const nextBoard = prev.map((row) => row.map((cell) => ({ ...cell })));
-      // Find the lowest empty row
-      let targetRowIndex = BOARD_HEIGHT - 1;
-      for (let r = BOARD_HEIGHT - 1; r >= 0; r--) {
-        const rowSample = nextBoard[r];
-        const isPartiallyFilled = rowSample.some(c => c.filled);
-        const isNotFull = !rowSample.every(c => c.filled);
-        if (!isPartiallyFilled || isNotFull) {
-          targetRowIndex = r;
-          break;
-        }
-      }
-
-      // Fill this whole row with glow blocks except for column 4 (empty gap!)
-      const assistColors = ["bg-cyan-500", "bg-purple-500", "bg-emerald-500", "bg-rose-500", "bg-yellow-500"];
-      for (let c = 0; c < BOARD_WIDTH; c++) {
-        if (c !== 4) {
-          const randColor = assistColors[Math.floor(Math.random() * assistColors.length)];
-          nextBoard[targetRowIndex][c] = {
-            filled: true,
-            color: randColor,
-            borderColor: "border-white/40",
-            glowColor: "shadow-white/20",
-            name: "Assist Block"
-          };
-        } else {
-          nextBoard[targetRowIndex][c] = { filled: false, color: "" };
-        }
-      }
-      return nextBoard;
-    });
-  };
-
-  // Instant Line Clear Cheat - immediately clears a simulated line to speed up unlocking
-  const forceLineClearUnlock = () => {
-    sfx.playClear();
-    setTotalLinesCleared((prev) => {
-      const newTotals = prev + 1;
-      setLevel(Math.floor(newTotals / 3) + 1);
-      return newTotals;
-    });
-    setScore((prev) => prev + 150);
-    // Notify clear with dummy names
-    onLineClear(1, ["디버그 찬스", "Figma", "React.js"]);
-  };
-
   // ----------------------------------------------------
   // Autoplay Smart Assistant Solver Heuristic
   // ----------------------------------------------------
@@ -801,290 +751,225 @@ export default function TetrisGame({
 
   const renderGrid = getRenderGrid();
 
+  // 셀 스타일 헬퍼 — 3D 블록 효과
+  const getCellStyle = (cell: GridCell): React.CSSProperties => {
+    if (cell.completed) {
+      return {
+        background: 'linear-gradient(135deg, #fff 0%, #f0ede8 100%)',
+        boxShadow: 'inset 0 1px 3px rgba(255,255,255,0.9), 0 0 6px rgba(255,255,255,0.5)',
+        border: '1px solid #e0ddd8',
+      }
+    }
+    if (cell.filled) {
+      let top = '#e8e4de', mid = '#d4cfc8', bot = '#c4bfb8'
+      const c = cell.color
+      if (c.includes('white') || c.includes('neutral-100'))
+        [top, mid, bot] = ['#f0ede8', '#e2ddd8', '#d2cdc8']
+      else if (c.includes('neutral-300') || c.includes('slate-300'))
+        [top, mid, bot] = ['#dedad4', '#cec9c2', '#bebab2']
+      else if (c.includes('zinc-4') || c.includes('neutral-4'))
+        [top, mid, bot] = ['#d0cbc4', '#c0bbb4', '#b0aba4']
+      else if (c.includes('stone-5') || c.includes('neutral-5'))
+        [top, mid, bot] = ['#c8c3bc', '#b8b3ac', '#a8a39c']
+      return {
+        background: `linear-gradient(150deg, ${top} 0%, ${mid} 50%, ${bot} 100%)`,
+        boxShadow: `inset 2px 2px 3px rgba(255,255,255,0.65), inset -1px -1px 2px rgba(0,0,0,0.14)`,
+        border: '1px solid rgba(190,185,178,0.5)',
+      }
+    }
+    return {
+      background: '#f5f3f0',
+      border: '1px solid #eae7e2',
+    }
+  }
+
+  const isPlaying = gameStatus === "PLAYING"
+
   return (
-    <div className="flex flex-col items-center bg-zinc-950/90 border-4 border-zinc-800 p-4 rounded-3xl shadow-2xl relative overflow-hidden backdrop-blur-md max-w-sm w-full mx-auto" id="tetris-cabinet">
-      {/* Visual Glitch/Scanlines overlay for authentic arcade console feel */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:16px_16px] opacity-20"></div>
+    <div className="tg_cabinet" id="tetris-cabinet">
 
-      {/* Header arcade light branding */}
-      <div className="flex justify-between items-center w-full mb-3 pb-2 border-b-2 border-zinc-850 z-10">
-        <div className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-white animate-pulse shadow-[0_0_8px_rgba(255,255,255,0.8)]"></span>
-          <span className="font-mono text-xs text-zinc-400 font-bold tracking-widest uppercase">
-            ARCADE CABINET v1.99
-          </span>
-        </div>
-        
-        <div className="flex gap-2.5" />
-      </div>
+      {/* ── 메인 게임 영역 ── */}
+      <div className="tg_game_area">
 
-      {/* Score and Stats Top Bar */}
-      <div className="grid grid-cols-3 gap-2 w-full mb-3 text-center">
-        <div className="bg-zinc-900/90 border border-zinc-850 p-1.5 rounded-xl">
-          <p className="font-mono text-[9px] text-zinc-500 leading-none mb-1">LINES</p>
-          <p className="font-mono text-base font-bold text-white leading-none">{totalLinesCleared}</p>
-        </div>
-        <div className="bg-zinc-900/90 border border-zinc-850 p-1.5 rounded-xl relative overflow-hidden">
-          <p className="font-mono text-[9px] text-zinc-500 leading-none mb-1">SCORE</p>
-          <p className="font-mono text-base font-bold text-zinc-100 leading-none">{score}</p>
-        </div>
-        <div className="bg-zinc-900/90 border border-zinc-850 p-1.5 rounded-xl">
-          <p className="font-mono text-[9px] text-zinc-500 leading-none mb-1">SPEED</p>
-          <p className="font-mono text-base font-bold text-zinc-300 leading-none">Lv.{level}</p>
-        </div>
-      </div>
-
-      {/* Main Screen containing Grid and Next Piece */}
-      <div className="flex gap-3 w-full justify-center relative">
-        {/* The 10x20 Tetris Grid Container */}
-        <div 
-          className="relative bg-zinc-950 border-2 border-zinc-850 rounded-lg overflow-hidden flex-1 aspect-[1/2] shadow-inner shadow-black/90 flex items-stretch"
-          style={{ width: "220px", maxHeight: "440px" }}
-          id="tetris-screen"
-        >
-          {/* Neon Grid gridlines */}
-          <div className="absolute inset-0 grid grid-cols-10 grid-rows-20 pointer-events-none opacity-[0.06]">
-            {Array.from({ length: 200 }).map((_, i) => (
-              <div key={i} className="border-[0.5px] border-white"></div>
-            ))}
+        {/* 왼쪽: 스탯 */}
+        <div className="tg_stats">
+          <div className="tg_stat_item">
+            <p className="tg_stat_label">SCORE</p>
+            <p className="tg_stat_value">{score.toLocaleString()}</p>
           </div>
+          <div className="tg_stat_item">
+            <p className="tg_stat_label">LINES</p>
+            <p className="tg_stat_value">{totalLinesCleared}</p>
+          </div>
+          <div className="tg_stat_item">
+            <p className="tg_stat_label">LEVEL</p>
+            <p className="tg_stat_value">{level}</p>
+          </div>
+          <div className="tg_stat_item">
+            <p className="tg_stat_label">SPEED</p>
+            <p className="tg_stat_value">Lv.{level}</p>
+            <div className="tg_speed_dots">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <span
+                  key={i}
+                  className={`tg_speed_dot${i <= level ? ' tg_speed_dot_active' : ''}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
 
-          <div className="flex-1 grid grid-cols-10 grid-rows-20 p-[1px] gap-[1px]">
+        {/* 중앙: 보드 */}
+        <div className="tg_board_wrap">
+          <div className="tg_board" id="tetris-screen">
             {renderGrid.map((row, rIdx) =>
               row.map((cell, cIdx) => (
                 <div
                   key={`${rIdx}-${cIdx}`}
-                  className={`relative rounded-[3px] transition-all duration-300 flex items-center justify-center ${
-                    cell.completed
-                      ? "bg-white border border-neutral-150 shadow-[inset_0_0_15px_rgba(255,255,255,1),0_0_12px_rgba(255,255,255,0.7)] opacity-100 animate-pulse"
-                      : cell.filled
-                      ? `${cell.color} border-2 ${cell.borderColor} ${cell.glowColor} `
-                      : "bg-zinc-950/40 border border-zinc-900/30"
-                  }`}
-                  style={{
-                    boxShadow: cell.completed
-                      ? "inset 0 2px 6px rgba(255,255,255,1), 0 0 14px rgba(255,255,255,0.8)"
-                      : cell.filled
-                      ? "inset 0 2px 4px rgba(255,255,255,0.4), 0 0 4px rgba(0,0,0,0.5)"
-                      : undefined,
-                  }}
-                >
-                  {/* Subtle retro pixel center dot on placed grid */}
-                  {cell.completed ? (
-                    <div className="w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_8px_rgba(255,255,255,1)]"></div>
-                  ) : cell.filled ? (
-                    <div className="w-1 h-1 bg-white/40 rounded-full"></div>
-                  ) : null}
-                </div>
+                  className={`tg_cell${cell.completed ? ' tg_cell_completed' : cell.filled ? ' tg_cell_filled' : ' tg_cell_empty'}`}
+                  style={getCellStyle(cell)}
+                />
               ))
             )}
           </div>
 
-          {/* Interactive Screen Overlay State */}
+          {/* 시작 전 오버레이 */}
           {gameStatus === "BEFORE_START" && (
-            <div className="absolute inset-0 bg-zinc-950/95 flex flex-col items-center justify-center p-4 text-center z-20 backdrop-blur-sm animate-fade-in">
-              <div className="p-3 bg-zinc-900 border border-zinc-800 rounded-full mb-3 animate-pulse">
-                <Sliders className="w-8 h-8 text-white" />
+            <div className="tg_overlay" id="overlay-start">
+              <div className="tg_overlay_icon">
+                <Sliders className="w-5 h-5" />
               </div>
-              <h3 className="font-mono text-base font-semibold text-white tracking-tight mb-2">
-                테트리스 포트폴리오
-              </h3>
-              <p className="font-mono text-[10px] text-zinc-400 max-w-[150px] mb-4 leading-normal">
-                블록을 쌓아 가로줄을 완성하면 나의 스킬과 장점 카드가 해제됩니다!
+              <p className="tg_overlay_title">테트리스 포트폴리오</p>
+              <p className="tg_overlay_desc">
+                블록을 쌓아 가로줄을 완성하면<br />스킬 카드가 해제됩니다!
               </p>
-              <button
-                onClick={startGame}
-                className="w-full max-w-[160px] py-2 px-4 rounded-xl font-mono text-xs font-bold text-zinc-950 bg-white hover:bg-zinc-200 active:scale-95 shadow-[0_0_15px_rgba(255,255,255,0.25)] transition cursor-pointer flex items-center justify-center gap-2"
-                id="btn-play-tetris"
-              >
+              <button onClick={startGame} className="tg_overlay_btn" id="btn-play-tetris">
                 <Play className="w-3.5 h-3.5 fill-current" />
                 게임 시작하기
               </button>
             </div>
           )}
 
+          {/* 게임 오버 오버레이 */}
           {gameStatus === "GAME_OVER" && (
-            <div className="absolute inset-0 bg-black/95 flex flex-col items-center justify-center p-4 text-center z-20 backdrop-blur-sm">
-              <div className="p-3 bg-zinc-900 border border-zinc-800 rounded-full mb-2">
-                <ShieldAlert className="w-7 h-7 text-zinc-400 animate-bounce" />
+            <div className="tg_overlay" id="overlay-gameover">
+              <div className="tg_overlay_icon">
+                <ShieldAlert className="w-5 h-5" />
               </div>
-              <h3 className="font-mono text-sm font-bold text-white tracking-widest uppercase mb-1">
-                GAME OVER
-              </h3>
-              <p className="font-mono text-[10px] text-zinc-400 max-w-[155px] mb-3 leading-tight">
-                다시 시작하거나 오른쪽 "치트키 해금" 버튼들을 눌러 편하게 프로필을 열어보세요!
+              <p className="tg_overlay_title">GAME OVER</p>
+              <p className="tg_overlay_desc">
+                다시 시작하거나 아래<br />치트키를 사용해 보세요.
               </p>
-              <button
-                onClick={startGame}
-                className="w-full max-w-[140px] py-1.5 px-3 rounded-lg font-mono text-xs font-bold text-black bg-white hover:bg-zinc-200 active:scale-95 transition flex items-center justify-center gap-1 cursor-pointer border border-zinc-300"
-                id="btn-restart"
-              >
+              <button onClick={startGame} className="tg_overlay_btn" id="btn-restart">
                 <RotateCcw className="w-3.5 h-3.5" />
                 다시 플레이
               </button>
             </div>
           )}
 
+          {/* 일시정지 오버레이 */}
           {gameStatus === "PAUSED" && (
-            <div className="absolute inset-0 bg-zinc-950/90 flex flex-col items-center justify-center p-4 text-center z-20 backdrop-blur-sm">
-              <h3 className="font-mono text-lg font-bold text-white tracking-widest leading-none mb-2 shadow-sm">
-                PAUSED
-              </h3>
-              <button
-                onClick={() => setGameStatus("PLAYING")}
-                className="py-1.5 px-4 rounded bg-white hover:bg-zinc-200 text-black text-xs font-mono font-bold transition"
-                id="btn-resume"
-              >
+            <div className="tg_overlay" id="overlay-paused">
+              <p className="tg_overlay_title">PAUSED</p>
+              <button onClick={() => setGameStatus("PLAYING")} className="tg_overlay_btn_sub" id="btn-resume">
                 계속 진행
               </button>
             </div>
           )}
         </div>
 
-        {/* Right Info Tray (Next Piece & Custom Block Metadata) */}
-        <div className="w-[85px] flex flex-col gap-2.5">
-          {/* Next Piece Display */}
-          <div className="bg-zinc-900/95 border border-zinc-850 p-2 rounded-xl text-center relative overflow-hidden">
-            <h4 className="font-mono text-[9px] text-zinc-500 uppercase leading-none mb-2 tracking-wider">NEXT</h4>
-            
-            <div className="h-12 flex items-center justify-center relative bg-zinc-950 rounded-md p-1 border border-zinc-900/80">
-              {gameStatus === "PLAYING" && (
-                <div className="grid gap-[2px]" style={{
-                  gridTemplateColumns: `repeat(${TETROMINOES[nextPieceType].matrix[0].length}, minmax(0, 1fr))`
-                }}>
+        {/* 오른쪽: NEXT / HOLD / AI ASSIST */}
+        <div className="tg_side">
+          {/* NEXT */}
+          <div className="tg_side_panel">
+            <p className="tg_side_label">NEXT</p>
+            <div className="tg_preview_box">
+              {isPlaying ? (
+                <div
+                  className="tg_preview_grid"
+                  style={{
+                    gridTemplateColumns: `repeat(${TETROMINOES[nextPieceType].matrix[0].length}, 10px)`,
+                  }}
+                >
                   {TETROMINOES[nextPieceType].matrix.map((row, rIdx) =>
                     row.map((cell, cIdx) => (
                       <div
                         key={`next-${rIdx}-${cIdx}`}
-                        className={`w-2.5 h-2.5 rounded-[1px] ${
-                          cell ? `${TETROMINOES[nextPieceType].color} border border-white/20` : "bg-transparent"
-                        }`}
+                        className="tg_preview_cell"
+                        style={cell ? {
+                          background: 'linear-gradient(135deg, #e8e4de 0%, #d0cbc4 100%)',
+                          boxShadow: 'inset 1px 1px 2px rgba(255,255,255,0.6)',
+                          border: '1px solid rgba(190,185,178,0.4)',
+                        } : { background: 'transparent' }}
                       />
                     ))
                   )}
                 </div>
+              ) : (
+                <span className="tg_preview_empty">--</span>
               )}
-              {gameStatus !== "PLAYING" && <span className="text-zinc-700 font-mono text-xs">--</span>}
             </div>
-            
-            {/* Show what skill this piece represents */}
-            {gameStatus === "PLAYING" && (
-              <div className="mt-2 pt-1 border-t border-zinc-800">
-                <span className="font-mono text-[9px] text-white font-semibold leading-none block line-clamp-2">
-                  {TETROMINOES[nextPieceType].name}
-                </span>
-                <span className="font-mono text-[8px] text-zinc-400 block leading-tight mt-0.5">
-                  해금 예정
-                </span>
-              </div>
-            )}
           </div>
 
-          {/* Active Piece Status Card */}
-          <div className="bg-zinc-900/95 border border-zinc-850 p-2 rounded-xl text-center flex-1 flex flex-col justify-between">
-            <div>
-              <h4 className="font-mono text-[8px] text-zinc-500 uppercase leading-tight mb-1">낙하 중인 스킬</h4>
-              {gameStatus === "PLAYING" && currentPiece ? (
-                <div className="p-1 rounded bg-zinc-950 border border-zinc-850/80">
-                  <span className="font-mono text-[10px] text-white font-extrabold block truncate">
-                    {currentPiece.name}
-                  </span>
-                  <span className="font-mono text-[7px] text-zinc-400 block mt-0.5">
-                    {currentPiece.type === "I" || currentPiece.type === "T" || currentPiece.type === "S" ? "🛠️ 개발 스킬" : "🎨 디자인 스킬"}
-                  </span>
-                </div>
-              ) : (
-                <span className="text-zinc-600 font-mono text-[10px] block my-2">-</span>
-              )}
+          {/* HOLD */}
+          <div className="tg_side_panel">
+            <p className="tg_side_label">HOLD</p>
+            <div className="tg_preview_box">
+              <span className="tg_preview_empty">--</span>
             </div>
+          </div>
 
-            {/* AI Autoplayer Toggle Button */}
-            <div className="pt-2 border-t border-zinc-850">
-              <button
-                onClick={toggleAutoPlay}
-                disabled={gameStatus !== "PLAYING"}
-                className={`w-full py-1 px-1 rounded-lg font-mono text-[8px] font-bold tracking-tight uppercase flex items-center justify-center gap-1 transition-all ${
-                  isAutoPlay
-                    ? "bg-white hover:bg-zinc-200 text-black shadow-[0_0_8px_rgba(255,255,255,0.4)] cursor-pointer"
-                    : "bg-zinc-800 hover:bg-zinc-700 text-zinc-400 disabled:opacity-40 cursor-pointer text-center border border-zinc-700"
-                }`}
-                id="btn-autoplay"
-              >
-                <Zap className={`w-2.5 h-2.5 ${isAutoPlay ? "text-amber-500 fill-amber-500 animate-pulse" : ""}`} />
-                {isAutoPlay ? "AI 주행 중" : "AI 자동완성"}
-              </button>
-            </div>
+          {/* AI ASSIST */}
+          <div className="tg_ai_panel">
+            <p className="tg_side_label">AI ASSIST</p>
+            <button
+              onClick={toggleAutoPlay}
+              disabled={!isPlaying}
+              className={`tg_ai_toggle${isAutoPlay ? ' tg_ai_toggle_on' : ''}`}
+              id="btn-autoplay"
+            >
+              {isAutoPlay ? 'ON' : 'OFF'}
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Retro Controller Pad (Visual Keyboard Overlay for Game cabinet interactivity) */}
-      <div className="w-full mt-3 pt-2.5 border-t border-zinc-800 grid grid-cols-5 gap-1.5" id="controls-panel">
-        <button
-          onClick={moveLeft}
-          disabled={gameStatus !== "PLAYING" || isAutoPlay}
-          className="p-1.5 rounded-xl border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 active:scale-95 transition flex items-center justify-center text-zinc-300 disabled:opacity-40"
-          title="왼쪽 이동"
-          id="btn-move-left"
-        >
-          <ArrowLeft className="w-4 h-4" />
+      {/* ── 컨트롤 버튼 ── */}
+      <div className="tg_controls" id="controls-panel">
+        <button onClick={moveLeft}    disabled={!isPlaying || isAutoPlay} className="tg_btn" title="왼쪽" id="btn-move-left">
+          <ArrowLeft  className="w-4 h-4" />
         </button>
-
-        <button
-          onClick={rotatePiece}
-          disabled={gameStatus !== "PLAYING" || isAutoPlay}
-          className="p-1.5 rounded-xl border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 active:scale-95 transition flex items-center justify-center text-zinc-300 disabled:opacity-40 col-span-1"
-          title="회전"
-          id="btn-rotate"
-        >
-          <RotateCcw className="w-4 h-4 text-white" />
+        <button onClick={rotatePiece} disabled={!isPlaying || isAutoPlay} className="tg_btn" title="회전" id="btn-rotate">
+          <RotateCcw  className="w-4 h-4" />
         </button>
-
-        <button
-          onClick={moveDown}
-          disabled={gameStatus !== "PLAYING" || isAutoPlay}
-          className="p-1.5 rounded-xl border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 active:scale-95 transition flex items-center justify-center text-zinc-300 disabled:opacity-40"
-          title="아래 이동"
-          id="btn-move-down"
-        >
-          <ArrowDown className="w-4 h-4" />
+        <button onClick={moveDown}    disabled={!isPlaying || isAutoPlay} className="tg_btn" title="아래" id="btn-move-down">
+          <ArrowDown  className="w-4 h-4" />
         </button>
-
-        <button
-          onClick={hardDrop}
-          disabled={gameStatus !== "PLAYING" || isAutoPlay}
-          className="col-span-2 px-2.5 py-1.5 rounded-xl border-2 border-dashed border-zinc-700 bg-zinc-900/30 hover:bg-zinc-800/40 active:scale-95 transition flex items-center justify-center font-mono text-[9px] font-extrabold text-white tracking-wider disabled:opacity-40 text-center uppercase"
-          title="즉시 수직 낙하"
-          id="btn-hard-drop"
-        >
-          HARD DROP
+        <button onClick={moveRight}   disabled={!isPlaying || isAutoPlay} className="tg_btn" title="오른쪽" id="btn-move-right">
+          <ArrowRight className="w-4 h-4" />
+        </button>
+        <button onClick={hardDrop}    disabled={!isPlaying || isAutoPlay} className="tg_btn_hard" title="하드드롭" id="btn-hard-drop">
+          HARD<br />DROP
         </button>
       </div>
 
-      {/* Recruiter Cheat / Quality-of-Life Helper Row */}
-      <div className="w-full mt-2.5 pt-2 border-t border-zinc-800 flex justify-between gap-1.5">
+      {/* ── 푸터 바 ── */}
+      <div className="tg_footer">
         <button
-          onClick={activateRowAssist}
-          disabled={gameStatus !== "PLAYING"}
-          className="flex-1 py-1 px-1 rounded-lg border border-zinc-850 bg-zinc-900 hover:bg-zinc-800 active:scale-95 transition font-mono text-[8px] text-zinc-400 hover:text-white disabled:opacity-30 cursor-pointer flex items-center justify-center gap-1"
-          title="줄을 거의 빈틈없이 채워줍니다"
-          id="btn-cheat-fill"
+          className="tg_footer_btn"
+          onClick={() => isPlaying ? setGameStatus("PAUSED") : (gameStatus === "PAUSED" ? setGameStatus("PLAYING") : undefined)}
+          id="btn-pause"
         >
-          <Sparkles className="w-2.5 h-2.5 text-zinc-400" />
-          한 줄 채워주기
+          P PAUSE
         </button>
-
-        <button
-          onClick={forceLineClearUnlock}
-          className="flex-1 py-1 px-1 rounded-lg border border-zinc-800 bg-zinc-900 hover:bg-zinc-800 active:scale-95 transition font-mono text-[8px] text-zinc-300 hover:text-white cursor-pointer flex items-center justify-center gap-1"
-          title="즉시 가상으로 한 줄을 터뜨려 포트폴리오 섹션을 해금합니다"
-          id="btn-cheat-unlock"
-          style={{ cursor: "pointer" }}
-        >
-          <Trophy className="w-2.5 h-2.5 text-zinc-400" />
-          치트키: 즉시 줄 제거
+        <span className="tg_footer_hint">
+          CLEAR {4 - Math.min(totalLinesCleared, 4)} MORE LINES TO UNLOCK
+        </span>
+        <button className="tg_footer_btn" onClick={startGame} id="btn-reset">
+          X RESET
         </button>
       </div>
+
     </div>
   );
 }

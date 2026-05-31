@@ -14,11 +14,13 @@ import type { RouteKey } from './homeTypes'
 
 interface HomeSectionProps {
   isActive: boolean
+  onHomeRouteStart?: () => void
   onWorkRouteStart?: () => void
 }
 
 function HomeSection({
   isActive,
+  onHomeRouteStart,
   onWorkRouteStart,
 }: HomeSectionProps) {
   const [activeRoute, setActiveRoute] = useState<RouteKey | null>(null)
@@ -56,6 +58,11 @@ function HomeSection({
   }
 
   const goHome = () => {
+    if (onHomeRouteStart && (aboutOpen || workOpen)) {
+      onHomeRouteStart()
+      return
+    }
+
     setActiveRoute(null)
     setAboutOpen(false)
     setWorkOpen(false)

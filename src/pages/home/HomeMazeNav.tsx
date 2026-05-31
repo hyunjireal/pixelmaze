@@ -1,7 +1,9 @@
 import HomeLogoLink from '../../components/HomeLogoLink'
 import campingRoute from '../../assets/icons/path_camping.svg?raw'
 import contactEmail from '../../assets/images/contact_email.png'
+import gunitFavicon from '../../assets/images/gunti_favicon.png'
 import meT from '../../assets/images/me_t.png'
+import simmonsFavicon from '../../assets/images/simmons_favicon.png'
 import ProjectHoverRoute from './ProjectHoverRoute'
 import type { RouteKey } from './homeTypes'
 
@@ -151,14 +153,17 @@ function HomeMazeNav({ activeRoute, hoveredProject, onHomeClick, onProjectHover 
                 />
               ))
             : null}
-          <circle
+          <image
             className={`home_project_dot home_project_dot_simmons${
               hoveredProject === 'simmons' ? ' home_project_dot_hovered' : ''
             }`}
-            cx="1990"
-            cy="375"
             data-dot-name="simmons"
-            r="34"
+            href={simmonsFavicon}
+            x="1898"
+            y="283"
+            width="184"
+            height="184"
+            preserveAspectRatio="xMidYMid meet"
           />
           <circle
             className="home_project_hit home_project_hit_simmons"
@@ -171,14 +176,17 @@ function HomeMazeNav({ activeRoute, hoveredProject, onHomeClick, onProjectHover 
             onPointerLeave={() => onProjectHover(null)}
             r="180"
           />
-          <circle
+          <image
             className={`home_project_dot home_project_dot_gunit${
               hoveredProject === 'gunit' ? ' home_project_dot_hovered' : ''
             }`}
-            cx="385"
-            cy="2118"
             data-dot-name="gunit"
-            r="34"
+            href={gunitFavicon}
+            x="293"
+            y="2026"
+            width="184"
+            height="184"
+            preserveAspectRatio="xMidYMid meet"
           />
           <circle
             className="home_project_hit home_project_hit_gunit"

@@ -409,7 +409,7 @@
 }
 
 .home_page_active .home_maze_extension_start {
-  animation: home_menu_dot_in 0.65s ease 1.05s forwards;
+  animation: home_menu_dot_in 0.65s ease 0.74s forwards;
 }
 
 .home_maze_extension_contact_icon {
@@ -455,7 +455,7 @@
 }
 
 .home_page_active .home_maze_extension_end {
-  animation: home_menu_dot_in 0.65s ease 1.22s forwards;
+  animation: home_menu_dot_in 0.65s ease 0.88s forwards;
 }
 
 .home_stage:has(.home_note_profile:hover) .home_maze_extension_line_profile .home_maze_extension_start,
@@ -493,9 +493,6 @@
 }
 
 .home_project_dot {
-  fill: #e53935;
-  stroke: #e53935;
-  stroke-width: 5;
   opacity: 0;
   transform-box: fill-box;
   transform-origin: center;
@@ -508,8 +505,6 @@
 }
 
 .home_project_dot_simmons {
-  fill: #5f3336;
-  stroke: #5f3336;
   cursor: pointer;
   filter:
     drop-shadow(0 0 6px rgba(95, 51, 54, 0.38))
@@ -517,8 +512,6 @@
 }
 
 .home_project_dot_gunit {
-  fill: #bbe21c;
-  stroke: #bbe21c;
   cursor: pointer;
   filter:
     drop-shadow(0 0 6px rgba(187, 226, 28, 0.42))
@@ -651,19 +644,19 @@
 }
 
 .home_page_active .home_project_dot_simmons {
-  animation: home_menu_dot_in 0.65s ease 1.38s forwards;
+  animation: home_menu_dot_in 0.65s ease 0.98s forwards;
 }
 
 .home_page_active .home_project_dot_gunit {
-  animation: home_menu_dot_in 0.65s ease 1.52s forwards;
+  animation: home_menu_dot_in 0.65s ease 1.08s forwards;
 }
 
 .home_page_active .home_project_dot_stanley {
-  animation: home_menu_dot_in 0.65s ease 1.66s forwards;
+  animation: home_menu_dot_in 0.65s ease 1.18s forwards;
 }
 
 .home_page_active .home_project_dot_camping {
-  animation: home_menu_dot_in 0.65s ease 1.8s forwards;
+  animation: home_menu_dot_in 0.65s ease 1.28s forwards;
 }
 
 .home_blue_dot {
@@ -677,15 +670,15 @@
 }
 
 .home_page_active .home_blue_dot_me {
-  animation: home_menu_dot_in 0.65s ease 1.32s forwards;
+  animation: home_menu_dot_in 0.65s ease 0.94s forwards;
 }
 
 .home_page_active .home_blue_dot_favorite {
-  animation: home_menu_dot_in 0.65s ease 1.46s forwards;
+  animation: home_menu_dot_in 0.65s ease 1.04s forwards;
 }
 
 .home_page_active .home_blue_dot_attitude {
-  animation: home_menu_dot_in 0.65s ease 1.6s forwards;
+  animation: home_menu_dot_in 0.65s ease 1.14s forwards;
 }
 
 .home_note {

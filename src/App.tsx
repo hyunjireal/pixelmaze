@@ -1,14 +1,17 @@
-import { useCallback, useRef, useState, type PointerEvent } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import SharedMaze from './components/SharedMaze'
+import WorkLogoHomeTransition from './components/WorkLogoHomeTransition'
+import usePointerParallax from './components/usePointerParallax'
 import HomeSection from './pages/home/HomeSection'
 import IntroSection from './pages/intro/IntroSection'
 import MyWorkPage from './pages/work/MyWorkPage'
 import './App.css'
 
-type AppPhase = 'intro' | 'home' | 'work'
+type AppPhase = 'intro' | 'home' | 'work' | 'work-to-home' | 'about-to-home'
 
 function App() {
   const [phase, setPhase] = useState<AppPhase>('intro')
+  const [homeResetKey, setHomeResetKey] = useState(0)
   const workPageRef = useRef<HTMLElement | null>(null)
 
   const enterHome = useCallback(() => {
@@ -19,19 +22,20 @@ function App() {
     setPhase('work')
   }, [])
 
-  const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
-    const x = event.clientX / window.innerWidth - 0.5
-    const y = event.clientY / window.innerHeight - 0.5
+  const returnHomeFromWork = useCallback(() => {
+    setPhase('work-to-home')
+  }, [])
 
-    event.currentTarget.style.setProperty('--maze_tx', `${x * 7}px`)
-    event.currentTarget.style.setProperty('--maze_ty', `${y * 7}px`)
-    event.currentTarget.style.setProperty('--point_tx', `${x * 18}px`)
-    event.currentTarget.style.setProperty('--point_ty', `${y * 16}px`)
-    event.currentTarget.style.setProperty('--content_tx', `${x * 5}px`)
-    event.currentTarget.style.setProperty('--content_ty', `${y * 4}px`)
-    event.currentTarget.style.setProperty('--button_tx', `${x * 8}px`)
-    event.currentTarget.style.setProperty('--button_ty', `${y * 6}px`)
-  }
+  const returnHomeFromAbout = useCallback(() => {
+    setPhase('about-to-home')
+  }, [])
+
+  const finishReveal = useCallback(() => {
+    setHomeResetKey((current) => current + 1)
+    setPhase('home')
+  }, [])
+
+  const handlePointerMove = usePointerParallax()
 
   return (
     <div
@@ -44,20 +48,27 @@ function App() {
           onEnter={enterHome}
         />
       ) : null}
-      {phase === 'home' ? (
+      {(phase === 'home' || phase === 'about-to-home') ? (
         <HomeSection
+          key={homeResetKey}
           isActive
+          onHomeRouteStart={returnHomeFromAbout}
           onWorkRouteStart={openWork}
         />
       ) : null}
-      {phase === 'work' ? (
+      {(phase === 'work' || phase === 'work-to-home') ? (
         <div className="home_page_work_open">
           <MyWorkPage
             isOpen
             pageRef={workPageRef}
-            onHomeClick={() => setPhase('home')}
+            onHomeClick={returnHomeFromWork}
           />
         </div>
+      ) : null}
+      {(phase === 'work-to-home' || phase === 'about-to-home') ? (
+        <WorkLogoHomeTransition onComplete={finishReveal}>
+          <HomeSection isActive={false} onHomeRouteStart={() => {}} onWorkRouteStart={() => {}} />
+        </WorkLogoHomeTransition>
       ) : null}
     </div>
   )
